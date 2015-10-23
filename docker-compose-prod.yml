@@ -1,0 +1,11 @@
+jhipster-prod-postgresql:
+  container_name: qorum-prod-postgresql
+  image: postgres
+  # volumes:
+  # - ~/volumes/jhipster/qorum/prod-postgresql/:/var/lib/postgresql/
+  environment:
+  - POSTGRES_USER=qorum
+  - POSTGRES_PASSWORD=
+  ports:
+  - "5432:5432"
+

@@ -1,0 +1,24 @@
+{
+  "generator-jhipster": {
+    "baseName": "qorum",
+    "packageName": "com.qorum",
+    "packageFolder": "com/qorum",
+    "authenticationType": "xauth",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": "no",
+    "useSass": false,
+    "buildTool": "maven",
+    "frontendBuilder": "grunt",
+    "enableTranslation": true,
+    "enableSocialSignIn": false,
+    "rememberMeKey": "ff20314236f8017e952ca19ea711f34a9a5de240",
+    "testFrameworks": [
+      "gatling"
+    ]
+  }
+}
