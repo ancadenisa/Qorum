@@ -1,0 +1,21 @@
+{
+    "qorumApp": {
+        "organisation" : {
+            "home": {
+                "title": "Organisations",
+                "createLabel": "Créer un nouveau Organisation",
+                "createOrEditLabel": "Créer ou éditer un Organisation"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Organisation {{ id }} ?"
+            },
+            "detail": {
+                "title": "Organisation"
+            },
+            "name": "Name",
+            "address": "Address",
+            "fk_org_user": "Fk_org_user"
+        }
+    }
+}
+

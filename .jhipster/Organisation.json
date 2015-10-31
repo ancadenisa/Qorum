@@ -1,0 +1,27 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "fk_org_user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "address",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20151031170554",
+    "dto": "mapstruct",
+    "pagination": "pager"
+}
