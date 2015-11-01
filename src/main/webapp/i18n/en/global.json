@@ -8,6 +8,7 @@
                 "main": "Entities",
                 "organization": "Organization",
                 "department": "Department",
+                "project": "Project",
                 "additionalEntity": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
