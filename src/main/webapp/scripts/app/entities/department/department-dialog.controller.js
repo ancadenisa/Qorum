@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('qorumApp').controller('DepartmentDialogController',
-    ['$scope', '$stateParams', '$modalInstance', 'entity', 'Department', 'User', 'Project',
-        function($scope, $stateParams, $modalInstance, entity, Department, User, Project) {
+    ['$scope', '$stateParams', '$modalInstance', 'entity', 'Department', 'User', 'Project', 'Issue',
+        function($scope, $stateParams, $modalInstance, entity, Department, User, Project, Issue) {
 
         $scope.department = entity;
         $scope.users = User.query();
         $scope.projects = Project.query();
+        $scope.issues = Issue.query();
         $scope.load = function(id) {
             Department.get({id : id}, function(result) {
                 $scope.department = result;

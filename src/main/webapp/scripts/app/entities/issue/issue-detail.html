@@ -1,0 +1,94 @@
+
+<div>
+    <h2><span translate="qorumApp.issue.detail.title">Issue</span> {{issue.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th translate="entity.detail.field">Field</th>
+                <th translate="entity.detail.value">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span translate="qorumApp.issue.name">Name</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{issue.name}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="qorumApp.issue.content">Content</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{issue.content}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="qorumApp.issue.last_updated">Last_updated</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{issue.last_updated | date:'medium'}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="qorumApp.issue.created_date">Created_date</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{issue.created_date | date:'medium'}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="qorumApp.issue.rating">Rating</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{issue.rating}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="qorumApp.issue.is_public">Is_public</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{issue.is_public}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="qorumApp.issue.user">user</span>
+                </td>
+                <td>
+                    {{issue.user.id}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="qorumApp.issue.project">project</span>
+                </td>
+                <td>
+                    <a class="form-control-static" ui-sref="project.detail({id:issue.project.id})">{{issue.project.id}}</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="qorumApp.issue.department">department</span>
+                </td>
+                <td>
+                    <a class="form-control-static" ui-sref="department.detail({id:issue.department.id})">{{issue.department.id}}</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

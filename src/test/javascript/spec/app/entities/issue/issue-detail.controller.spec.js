@@ -1,38 +1,38 @@
 'use strict';
 
-describe('Department Detail Controller', function() {
+describe('Issue Detail Controller', function() {
     var $scope, $rootScope;
-    var MockEntity, MockDepartment, MockUser, MockProject, MockIssue;
+    var MockEntity, MockIssue, MockUser, MockProject, MockDepartment;
     var createController;
 
     beforeEach(inject(function($injector) {
         $rootScope = $injector.get('$rootScope');
         $scope = $rootScope.$new();
         MockEntity = jasmine.createSpy('MockEntity');
-        MockDepartment = jasmine.createSpy('MockDepartment');
+        MockIssue = jasmine.createSpy('MockIssue');
         MockUser = jasmine.createSpy('MockUser');
         MockProject = jasmine.createSpy('MockProject');
-        MockIssue = jasmine.createSpy('MockIssue');
+        MockDepartment = jasmine.createSpy('MockDepartment');
         
 
         var locals = {
             '$scope': $scope,
             '$rootScope': $rootScope,
             'entity': MockEntity ,
-            'Department': MockDepartment,
+            'Issue': MockIssue,
             'User': MockUser,
             'Project': MockProject,
-            'Issue': MockIssue
+            'Department': MockDepartment
         };
         createController = function() {
-            $injector.get('$controller')("DepartmentDetailController", locals);
+            $injector.get('$controller')("IssueDetailController", locals);
         };
     }));
 
 
     describe('Root Scope Listening', function() {
         it('Unregisters root scope listener upon scope destruction', function() {
-            var eventType = 'qorumApp:departmentUpdate';
+            var eventType = 'qorumApp:issueUpdate';
 
             createController();
             expect($rootScope.$$listenerCount[eventType]).toEqual(1);

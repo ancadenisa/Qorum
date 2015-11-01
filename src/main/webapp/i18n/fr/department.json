@@ -14,7 +14,8 @@
             },
             "name": "Name",
             "user": "User",
-            "project": "Project"
+            "project": "Project",
+            "issue": "Issue"
         }
     }
 }

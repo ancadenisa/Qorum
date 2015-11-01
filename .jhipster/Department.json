@@ -15,6 +15,13 @@
             "relationshipType": "many-to-many",
             "ownerSide": false,
             "otherEntityRelationshipName": "department"
+        },
+		{
+            "relationshipId": 3,
+            "relationshipName": "issue",
+            "otherEntityName": "issue",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "department"
         }
     ],
     "fields": [

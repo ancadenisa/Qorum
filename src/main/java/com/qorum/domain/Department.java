@@ -36,6 +36,11 @@ public class Department implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Project> projects = new HashSet<>();
 
+    @OneToMany(mappedBy = "department")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Issue> issues = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -66,6 +71,14 @@ public class Department implements Serializable {
 
     public void setProjects(Set<Project> projects) {
         this.projects = projects;
+    }
+
+    public Set<Issue> getIssues() {
+        return issues;
+    }
+
+    public void setIssues(Set<Issue> issues) {
+        this.issues = issues;
     }
 
     @Override

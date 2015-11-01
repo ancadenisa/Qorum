@@ -1,0 +1,80 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myIssueLabel" translate="qorumApp.issue.home.createOrEditLabel">Create or edit a Issue</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="issue.id" readonly />
+        </div>
+        <div class="form-group">
+            <label translate="qorumApp.issue.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                    ng-model="issue.name"
+                     />
+        </div>
+        <div class="form-group">
+            <label translate="qorumApp.issue.content" for="field_content">Content</label>
+            <input type="text" class="form-control" name="content" id="field_content"
+                    ng-model="issue.content"
+                     />
+        </div>
+        <div class="form-group">
+            <label translate="qorumApp.issue.last_updated" for="field_last_updated">Last_updated</label>
+            <input type="datetime-local" class="form-control" name="last_updated" id="field_last_updated"
+                    ng-model="issue.last_updated"
+                     />
+        </div>
+        <div class="form-group">
+            <label translate="qorumApp.issue.created_date" for="field_created_date">Created_date</label>
+            <input type="datetime-local" class="form-control" name="created_date" id="field_created_date"
+                    ng-model="issue.created_date"
+                     />
+        </div>
+        <div class="form-group">
+            <label translate="qorumApp.issue.rating" for="field_rating">Rating</label>
+            <input type="number" class="form-control" name="rating" id="field_rating"
+                    ng-model="issue.rating"
+                     />
+        </div>
+        <div class="form-group">
+            <label translate="qorumApp.issue.is_public" for="field_is_public">Is_public</label>
+            <input type="checkbox" class="form-control" name="is_public" id="field_is_public"
+                    ng-model="issue.is_public"
+                     />
+        </div>
+
+        <div class="form-group">
+            <label translate="qorumApp.issue.user" for="field_user">user</label>
+            <select class="form-control" id="field_user" name="user" ng-model="issue.user" ng-options="user as user.id for user in users track by user.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label translate="qorumApp.issue.project" for="field_project">project</label>
+            <select class="form-control" id="field_project" name="project" ng-model="issue.project" ng-options="project as project.id for project in projects track by project.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label translate="qorumApp.issue.department" for="field_department">department</label>
+            <select class="form-control" id="field_department" name="department" ng-model="issue.department" ng-options="department as department.id for department in departments track by department.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || editForm.$submitted" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

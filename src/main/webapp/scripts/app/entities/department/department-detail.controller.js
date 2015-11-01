@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('qorumApp')
-    .controller('DepartmentDetailController', function ($scope, $rootScope, $stateParams, entity, Department, User, Project) {
+    .controller('DepartmentDetailController', function ($scope, $rootScope, $stateParams, entity, Department, User, Project, Issue) {
         $scope.department = entity;
         $scope.load = function (id) {
             Department.get({id: id}, function(result) {
