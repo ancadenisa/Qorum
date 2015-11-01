@@ -54,10 +54,10 @@
                     <td>{{comment.content}}</td>
                     <td>{{comment.is_solution}}</td>
                     <td>
-                        {{comment.user.id}}
+                        {{comment.user.login}}
                     </td>
                     <td>
-                        <a ui-sref="issue.detail({id:comment.issue.id})">{{comment.issue.id}}</a>
+                        <a ui-sref="issue.detail({id:comment.issue.id})">{{comment.issue.name}}</a>
                     </td>
                     <td>
                         <button type="submit"

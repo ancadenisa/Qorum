@@ -63,7 +63,7 @@
                     <span translate="qorumApp.issue.user">user</span>
                 </td>
                 <td>
-                    {{issue.user.id}}
+                    {{issue.user.login}}
                 </td>
             </tr>
             <tr>
@@ -71,7 +71,7 @@
                     <span translate="qorumApp.issue.project">project</span>
                 </td>
                 <td>
-                    <a class="form-control-static" ui-sref="project.detail({id:issue.project.id})">{{issue.project.id}}</a>
+                    <a class="form-control-static" ui-sref="project.detail({id:issue.project.id})">{{issue.project.name}}</a>
                 </td>
             </tr>
             <tr>
@@ -79,7 +79,7 @@
                     <span translate="qorumApp.issue.department">department</span>
                 </td>
                 <td>
-                    <a class="form-control-static" ui-sref="department.detail({id:issue.department.id})">{{issue.department.id}}</a>
+                    <a class="form-control-static" ui-sref="department.detail({id:issue.department.id})">{{issue.department.name}}</a>
                 </td>
             </tr>
             <tr>
@@ -88,7 +88,7 @@
                 </td>
                 <td>
                     <span ng-repeat="tag in issue.tags">
-                        <a class="form-control-static" ui-sref="tag.detail({id: {{tag.id}}})">{{tag.id}}</a>{{$last ? '' : ', '}}
+                        <a class="form-control-static" ui-sref="tag.detail({id: {{tag.id}}})">{{tag.name}}</a>{{$last ? '' : ', '}}
                     <span>
                 </td>
             </tr>

@@ -28,13 +28,13 @@
 
         <div class="form-group">
             <label translate="qorumApp.comment.user" for="field_user">user</label>
-            <select class="form-control" id="field_user" name="user" ng-model="comment.user" ng-options="user as user.id for user in users track by user.id">
+            <select class="form-control" id="field_user" name="user" ng-model="comment.user" ng-options="user as user.login for user in users track by user.id">
                 <option value=""></option>
             </select>
         </div>
         <div class="form-group">
             <label translate="qorumApp.comment.issue" for="field_issue">issue</label>
-            <select class="form-control" id="field_issue" name="issue" ng-model="comment.issue" ng-options="issue as issue.id for issue in issues track by issue.id">
+            <select class="form-control" id="field_issue" name="issue" ng-model="comment.issue" ng-options="issue as issue.name for issue in issues track by issue.id">
                 <option value=""></option>
             </select>
         </div>

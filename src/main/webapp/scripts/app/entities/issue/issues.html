@@ -63,13 +63,13 @@
                     <td>{{issue.rating}}</td>
                     <td>{{issue.is_public}}</td>
                     <td>
-                        {{issue.user.id}}
+                        {{issue.user.login}}
                     </td>
                     <td>
-                        <a ui-sref="project.detail({id:issue.project.id})">{{issue.project.id}}</a>
+                        <a ui-sref="project.detail({id:issue.project.id})">{{issue.project.name}}</a>
                     </td>
                     <td>
-                        <a ui-sref="department.detail({id:issue.department.id})">{{issue.department.id}}</a>
+                        <a ui-sref="department.detail({id:issue.department.id})">{{issue.department.name}}</a>
                     </td>
                     <td>
                         <button type="submit"

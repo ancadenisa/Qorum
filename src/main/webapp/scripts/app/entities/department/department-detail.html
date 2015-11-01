@@ -24,7 +24,7 @@
                 </td>
                 <td>
                     <span ng-repeat="user in department.users">
-                        {{user.id}}{{$last ? '' : ', '}}
+                        {{user.login}}{{$last ? '' : ', '}}
                     <span>
                 </td>
             </tr>
@@ -33,7 +33,7 @@
                     <span translate="qorumApp.department.organization">organization</span>
                 </td>
                 <td>
-                    <a class="form-control-static" ui-sref="organization.detail({id:department.organization.id})">{{department.organization.id}}</a>
+                    <a class="form-control-static" ui-sref="organization.detail({id:department.organization.id})">{{department.organization.name}}</a>
                 </td>
             </tr>
             </tbody>

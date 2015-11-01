@@ -23,7 +23,7 @@
                     <span translate="qorumApp.organization.orgAdmin">orgAdmin</span>
                 </td>
                 <td>
-                    {{organization.orgAdmin.id}}
+                    {{organization.orgAdmin.login}}
                 </td>
             </tr>
             <tr>
@@ -32,7 +32,7 @@
                 </td>
                 <td>
                     <span ng-repeat="user in organization.users">
-                        {{user.id}}{{$last ? '' : ', '}}
+                        {{user.login}}{{$last ? '' : ', '}}
                     <span>
                 </td>
             </tr>

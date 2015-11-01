@@ -5,7 +5,7 @@
             "relationshipName": "department",
             "otherEntityName": "department",
             "relationshipType": "many-to-many",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true
         },
         {
@@ -13,7 +13,7 @@
             "relationshipName": "user",
             "otherEntityName": "user",
             "relationshipType": "many-to-many",
-            "otherEntityField": "id",
+            "otherEntityField": "login",
             "ownerSide": true
         },
         {

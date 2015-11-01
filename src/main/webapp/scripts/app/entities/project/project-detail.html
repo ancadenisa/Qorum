@@ -32,7 +32,7 @@
                 </td>
                 <td>
                     <span ng-repeat="department in project.departments">
-                        <a class="form-control-static" ui-sref="department.detail({id: {{department.id}}})">{{department.id}}</a>{{$last ? '' : ', '}}
+                        <a class="form-control-static" ui-sref="department.detail({id: {{department.id}}})">{{department.name}}</a>{{$last ? '' : ', '}}
                     <span>
                 </td>
             </tr>
@@ -42,7 +42,7 @@
                 </td>
                 <td>
                     <span ng-repeat="user in project.users">
-                        {{user.id}}{{$last ? '' : ', '}}
+                        {{user.login}}{{$last ? '' : ', '}}
                     <span>
                 </td>
             </tr>

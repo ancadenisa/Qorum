@@ -31,7 +31,7 @@
                     <span translate="qorumApp.comment.user">user</span>
                 </td>
                 <td>
-                    {{comment.user.id}}
+                    {{comment.user.login}}
                 </td>
             </tr>
             <tr>
@@ -39,7 +39,7 @@
                     <span translate="qorumApp.comment.issue">issue</span>
                 </td>
                 <td>
-                    <a class="form-control-static" ui-sref="issue.detail({id:comment.issue.id})">{{comment.issue.id}}</a>
+                    <a class="form-control-static" ui-sref="issue.detail({id:comment.issue.id})">{{comment.issue.name}}</a>
                 </td>
             </tr>
             </tbody>
