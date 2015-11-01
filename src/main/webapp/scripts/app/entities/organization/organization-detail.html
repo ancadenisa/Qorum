@@ -1,0 +1,48 @@
+
+<div>
+    <h2><span translate="qorumApp.organization.detail.title">Organization</span> {{organization.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th translate="entity.detail.field">Field</th>
+                <th translate="entity.detail.value">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span translate="qorumApp.organization.name">Name</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{organization.name}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="qorumApp.organization.orgAdmin">orgAdmin</span>
+                </td>
+                <td>
+                    {{organization.orgAdmin.id}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="qorumApp.organization.user">user</span>
+                </td>
+                <td>
+                    <span ng-repeat="user in organization.users">
+                        {{user.id}}{{$last ? '' : ', '}}
+                    <span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>
