@@ -10,6 +10,8 @@
                 "department": "Department",
                 "project": "Project",
                 "issue": "Issue",
+                "comment": "Comment",
+                "tag": "Tag",
                 "additionalEntity": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
