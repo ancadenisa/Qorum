@@ -92,7 +92,7 @@ public class IssueResource {
     @Timed
     public ResponseEntity<Issue> getIssue(@PathVariable Long id) {
         log.debug("REST request to get Issue : {}", id);
-        return Optional.ofNullable(issueRepository.findOne(id))
+        return Optional.ofNullable(issueRepository.findOneWithEagerRelationships(id))
             .map(issue -> new ResponseEntity<>(
                 issue,
                 HttpStatus.OK))

@@ -82,6 +82,16 @@
                     <a class="form-control-static" ui-sref="department.detail({id:issue.department.id})">{{issue.department.id}}</a>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <span translate="qorumApp.issue.tag">tag</span>
+                </td>
+                <td>
+                    <span ng-repeat="tag in issue.tags">
+                        <a class="form-control-static" ui-sref="tag.detail({id: {{tag.id}}})">{{tag.id}}</a>{{$last ? '' : ', '}}
+                    <span>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>

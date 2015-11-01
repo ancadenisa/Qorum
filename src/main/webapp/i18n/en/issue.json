@@ -23,7 +23,8 @@
             "is_public": "Is_public",
             "user": "User",
             "project": "Project",
-            "department": "Department"
+            "department": "Department",
+            "tag": "Tag"
         }
     }
 }

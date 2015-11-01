@@ -41,6 +41,9 @@ public class Department implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Issue> issues = new HashSet<>();
 
+    @ManyToOne
+    private Organization organization;
+
     public Long getId() {
         return id;
     }
@@ -79,6 +82,14 @@ public class Department implements Serializable {
 
     public void setIssues(Set<Issue> issues) {
         this.issues = issues;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 
     @Override

@@ -18,7 +18,8 @@
             "name": "Name",
             "user": "User",
             "project": "Project",
-            "issue": "Issue"
+            "issue": "Issue",
+            "organization": "Organization"
         }
     }
 }

@@ -20,6 +20,14 @@
             "otherEntityName": "department",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
+        },
+		{
+            "relationshipId": 4,
+            "relationshipName": "tag",
+            "otherEntityName": "tag",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "id",
+            "ownerSide": true
         }
     ],
     "fields": [

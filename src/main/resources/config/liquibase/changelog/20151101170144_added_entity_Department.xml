@@ -22,6 +22,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)"/>
+            <column name="organization_id" type="bigint"/>
         </createTable>
         
         <createTable tableName="department_user">
@@ -47,5 +48,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
         
+        <addForeignKeyConstraint baseColumnNames="organization_id"
+                                 baseTableName="department"
+                                 constraintName="fk_department_organization_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="organization"/>
+
     </changeSet>
 </databaseChangeLog>

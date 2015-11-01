@@ -49,6 +49,12 @@ public class Issue implements Serializable {
     @ManyToOne
     private Department department;
 
+    @ManyToMany    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "issue_tag",
+               joinColumns = @JoinColumn(name="issues_id", referencedColumnName="ID"),
+               inverseJoinColumns = @JoinColumn(name="tags_id", referencedColumnName="ID"))
+    private Set<Tag> tags = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -127,6 +133,14 @@ public class Issue implements Serializable {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
     @Override

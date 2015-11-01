@@ -16,13 +16,13 @@
     <!--
         Added the entity Tag.
     -->
-    <changeSet id="20151101172943" author="jhipster">
+    <changeSet id="20151101172100" author="jhipster">
         <createTable tableName="tag">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)"/>
         </createTable>
-        
+
     </changeSet>
 </databaseChangeLog>

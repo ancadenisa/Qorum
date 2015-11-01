@@ -54,5 +54,28 @@
                                  referencedColumnNames="id"
                                  referencedTableName="department"/>
 
+        <createTable tableName="issue_tag">
+            <column name="tags_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="issues_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="issues_id, tags_id" tableName="issue_tag"/>
+
+        <addForeignKeyConstraint baseColumnNames="issues_id"
+                                 baseTableName="issue_tag"
+                                 constraintName="fk_issue_tag_tag_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="issue"/>
+
+        <addForeignKeyConstraint baseColumnNames="tags_id"
+                                 baseTableName="issue_tag"
+                                 constraintName="fk_tag_tag_issue_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tag"/>
+        
     </changeSet>
 </databaseChangeLog>
