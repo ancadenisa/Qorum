@@ -1,6 +1,7 @@
 # Qorum
 
-**Setup proiect :**
+### Setup proiect      
+
 1. Urmati pasii de pe pagina : [JHipster][1] din Local Installation  
 2. Install baza de date : [PostgreSQL][2]  
 3. Install [pgAdmin][3] -- este un tool de adminstrare al bazei de date  
