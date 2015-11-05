@@ -3,6 +3,7 @@ package com.qorum.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.qorum.domain.Department;
 import com.qorum.repository.DepartmentRepository;
+import com.qorum.service.DepartmentService;
 import com.qorum.web.rest.util.HeaderUtil;
 import com.qorum.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -32,6 +33,9 @@ public class DepartmentResource {
 
     @Inject
     private DepartmentRepository departmentRepository;
+
+    @Inject
+    private DepartmentService departmentService;
 
     /**
      * POST  /departments -> Create a new department.
@@ -110,5 +114,15 @@ public class DepartmentResource {
         log.debug("REST request to delete Department : {}", id);
         departmentRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("department", id.toString())).build();
+    }
+
+    @RequestMapping(value = "/organizations-section/getDepartments/{orgId}/{userId}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Department>> getDepartmentsByUserIdAnByOrgId(@PathVariable Long orgId, @PathVariable Long userId) {
+        log.debug("REST request to get Departments of User with the id ", userId, "and wich belong to Organization with the id ", orgId);
+        List<Department> departmentList = departmentService.getDepartmentsByOrgAndByUserLogged(orgId, userId);
+        return new ResponseEntity<>(departmentList, HttpStatus.OK);
     }
 }

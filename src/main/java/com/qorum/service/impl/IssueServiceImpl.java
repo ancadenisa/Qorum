@@ -3,6 +3,8 @@ package com.qorum.service.impl;
 import com.qorum.domain.Issue;
 import com.qorum.repository.IssueRepository;
 import com.qorum.service.IssueService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.List;
 /**
  * Created by Anca on 05-Nov-15.
  */
+@Service
+@Transactional
 public class IssueServiceImpl implements IssueService {
     @Inject
     IssueRepository issueRepository;

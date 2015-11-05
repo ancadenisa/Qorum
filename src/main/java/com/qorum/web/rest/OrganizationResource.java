@@ -3,6 +3,7 @@ package com.qorum.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.qorum.domain.Organization;
 import com.qorum.repository.OrganizationRepository;
+import com.qorum.service.OrganizationService;
 import com.qorum.web.rest.util.HeaderUtil;
 import com.qorum.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -33,6 +34,8 @@ public class OrganizationResource {
     @Inject
     private OrganizationRepository organizationRepository;
 
+    @Inject
+    OrganizationService organizationService;
     /**
      * POST  /organizations -> Create a new organization.
      */
@@ -110,5 +113,15 @@ public class OrganizationResource {
         log.debug("REST request to delete Organization : {}", id);
         organizationRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("organization", id.toString())).build();
+    }
+
+    @RequestMapping(value = "/organizations-section/getOrganizations/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Organization>> getOrganizationsByUserId(@PathVariable Long id) {
+        log.debug("REST request to get Organizations of User with the id : {}", id);
+        List<Organization> organizationList = organizationService.getOrganizationsByUserLoggedId(id);
+        return new ResponseEntity<>(organizationList, HttpStatus.OK);
     }
 }

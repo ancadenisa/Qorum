@@ -84,7 +84,7 @@ public class ProjectResource {
     }
 
     /**
-     * GET  /projects/:id -> get the "id" project.
+     * GET  /projects/:id -> get the "id" project.pro
      */
     @RequestMapping(value = "/projects/{id}",
         method = RequestMethod.GET,
