@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('qorumApp')
-    .factory('OrganizationSection', function ($resource, DateUtils) {
-        return $resource('api/comments/:id', {}, {
+    .factory('Organization', function ($resource, DateUtils) {
+        return $resource('api/organizations/:id', {}, {
             'query': { method: 'GET', isArray: true},
             'get': {
                 method: 'GET',
