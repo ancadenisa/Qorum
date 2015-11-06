@@ -1,9 +1,13 @@
 <h2>Yaaay</h2>
 <div class="panel">
     <div class="row" ng-repeat="organization in userOrganizations track by organization.id">
-        <div class="col-md-12"><a ng-click="loadDepartments(organization.id)">{{organization.name}}</a></div>
-            <div id="deps{{organization.id}}" class = "col-md-12">
-                {{organization.id}}
-            </div>
+        <div class="col-md-12 active dropdown"><a ng-click="showDeps(organization.id)">{{organization.name}}</a></div>
+        <div id="deps{{organization.id}}" class = "col-md-12" aria-expanded="false">
+            <div ng-repeat="dep in userDepartments[organization.id] track by dep.id" >{{dep.name}}</div>
+        </div>
     </div>
 </div>
+
+
+
+
