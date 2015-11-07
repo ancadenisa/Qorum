@@ -5,7 +5,7 @@ angular.module('qorumApp')
         $stateProvider
             .state('home', {
                 parent: 'site',
-                url: '/',
+                url: '/oldhomepage',
                 data: {
                     authorities: []
                 },
