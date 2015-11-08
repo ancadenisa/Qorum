@@ -44,12 +44,18 @@ angular.module('qorumApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalpr
                 $window.document.title = title;
             });
 
+            //Solutia asta este pentru activaarea redirectTo a unei stari in cazul in care este setata pe
+            //configurarea state-ului
+            if (toState.redirectTo) {
+                event.preventDefault();
+                $state.go(toState.redirectTo, toParams)
+            }
         });
 
         $rootScope.back = function() {
             // If previous state is 'activate' or do not exist go to 'home'
             if ($rootScope.previousStateName === 'activate' || $state.get($rootScope.previousStateName) === null) {
-                $state.go('home');
+                $state.go('firstpage');
             } else {
                 $state.go($rootScope.previousStateName, $rootScope.previousStateParams);
             }
@@ -67,10 +73,6 @@ angular.module('qorumApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalpr
                 'navbar@': {
                     templateUrl: 'scripts/components/navbar/navbar.html',
                     controller: 'NavbarController'
-                },
-                'issue@': {
-                    templateUrl: 'scripts/app/entities/issue/issue-modal.html',
-                    controller: 'IssueController'
                 }
             },
             resolve: {

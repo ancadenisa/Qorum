@@ -16,7 +16,7 @@ angular.module('qorumApp')
             }).then(function () {
                 $scope.authenticationError = false;
                 if ($rootScope.previousStateName === 'register') {
-                    $state.go('home');
+                    $state.go('firstpage');
                 } else {
                     $rootScope.back();
                 }

@@ -33,9 +33,8 @@
     <div ng-show="{{ENV === 'dev'}}" class="development" ng-cloak=""></div>
 -->
     <div ui-view="navbar" ng-cloak=""></div>
-    <div ui-view="issue" ng-cloak=""></div>
     <div class="container-fluid">
-        <div ui-view="content"></div>
+        <div ui-view="content" ng-cloak=""></div>
 
         <div class="footer">
             <p translate="footer">This is your footer</p>
@@ -180,7 +179,9 @@
     <script src="scripts/app/entities/issue/issue.js"></script>
     <script src="scripts/app/entities/issue/issue.controller.js"></script>
     <script src="scripts/app/entities/issue/issue-dialog.controller.js"></script>
+    <script src="scripts/app/entities/issue/issue-modal.controller.js"></script>
     <script src="scripts/app/entities/issue/issue-detail.controller.js"></script>
+    <script src="scripts/app/entities/issue/issues-page.controller.js"></script>
     <script src="scripts/components/entities/issue/issue.service.js"></script>
     <script src="scripts/app/entities/comment/comment.js"></script>
     <script src="scripts/app/entities/comment/comment.controller.js"></script>

@@ -8,6 +8,6 @@ angular.module('qorumApp')
 
         $scope.logout = function () {
             Auth.logout();
-            $state.go('home');
+            $state.go('firstpage');
         };
     });
