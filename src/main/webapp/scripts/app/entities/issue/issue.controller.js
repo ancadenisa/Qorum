@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('qorumApp')
-    .controller('IssueController', function ($scope, Issue, ParseLinks) {
+    .controller('IssueController', function ($scope, Issue, ParseLinks,Principal) {
+        $scope.isAuthenticated = Principal.isAuthenticated;
         $scope.issues = [];
         $scope.page = 0;
         $scope.loadAll = function() {

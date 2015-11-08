@@ -67,6 +67,10 @@ angular.module('qorumApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalpr
                 'navbar@': {
                     templateUrl: 'scripts/components/navbar/navbar.html',
                     controller: 'NavbarController'
+                },
+                'issue@': {
+                    templateUrl: 'scripts/app/entities/issue/issue-modal.html',
+                    controller: 'IssueController'
                 }
             },
             resolve: {
