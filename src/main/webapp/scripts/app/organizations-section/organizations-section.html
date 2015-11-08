@@ -1,13 +1,22 @@
-<h2>Yaaay</h2>
-<div class="panel">
-    <div class="row" ng-repeat="organization in userOrganizations track by organization.id">
-        <div class="col-md-12 active dropdown"><a ng-click="showDeps(organization.id)">{{organization.name}}</a></div>
-        <div id="deps{{organization.id}}" class = "col-md-12" aria-expanded="false">
-            <div ng-repeat="dep in userDepartments[organization.id] track by dep.id" >{{dep.name}}</div>
+<div id="wrapper">
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li ng-repeat="organization in userOrganizations" ng-init="$last ? fireEvent() : angular.noop()">
+                        <a href="#"><i class="fa fa-sitemap fa-fw"></i>{{organization.name}}<span
+                            class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li ng-repeat="dep in userDepartments[organization.id] track by dep.id" >
+                                <a href="#">{{dep.name}}</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                </ul>
+            </div>
         </div>
+        <!-- /.sidebar-collapse -->
     </div>
+    <!-- /.navbar-static-side -->
+    </nav>
 </div>
-
-
-
-

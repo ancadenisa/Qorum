@@ -1,8 +1,10 @@
 package com.qorum.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.qorum.domain.Organization;
 import com.qorum.domain.Project;
 import com.qorum.repository.ProjectRepository;
+import com.qorum.service.ProjectService;
 import com.qorum.web.rest.util.HeaderUtil;
 import com.qorum.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -32,6 +34,9 @@ public class ProjectResource {
 
     @Inject
     private ProjectRepository projectRepository;
+
+    @Inject
+    private ProjectService projectService;
 
     /**
      * POST  /projects -> Create a new project.
@@ -110,5 +115,15 @@ public class ProjectResource {
         log.debug("REST request to delete Project : {}", id);
         projectRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("project", id.toString())).build();
+    }
+
+    @RequestMapping(value = "/projects-section/getProjects/{deptId}/{userId}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Project>> getProjectsByDeptIdAndUserId(@PathVariable Long deptId, @PathVariable Long userId ) {
+        log.debug("REST request to get Projects of User with the id : {}", userId, "belonging the organisation with the id ", deptId);
+        List<Project> projectList = projectService.getProjectsByDepartmentAndByUserLogged(deptId, userId);
+        return new ResponseEntity<>(projectList, HttpStatus.OK);
     }
 }
