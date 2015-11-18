@@ -111,4 +111,18 @@ public class CommentResource {
         commentRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("comment", id.toString())).build();
     }
+
+
+    /**
+     * GET  /comments/:id -> get the "id" comment.
+     */
+    @RequestMapping(value = "/comments/byIssue/{issueId}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Comment>> getCommentsByIssueId(@PathVariable Long issueId) {
+        log.debug("REST request to get Comments of Issue with id : {}", issueId);
+        List<Comment> commentList = commentRepository.findAllByIssueId(issueId);
+        return new ResponseEntity<>(commentList, HttpStatus.OK);
+    }
 }

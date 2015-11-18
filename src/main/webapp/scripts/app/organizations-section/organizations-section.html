@@ -2,12 +2,18 @@
     <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
-                    <li ng-repeat="organization in userOrganizations" ng-init="$last ? fireEvent() : angular.noop()">
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i>{{organization.name}}<span
+                    <li ng-repeat="organization in userOrganizations">
+                        <a on-click="loadPostsFromOrganisation(organization.id)"><i class="fa fa-sitemap fa-fw"></i>{{organization.name}}<span
                             class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li ng-repeat="dep in userDepartments[organization.id] track by dep.id" >
+                            <li ng-repeat="dep in userDepartments[organization.id] track by dep.id" ng-init="$last ? fireEvent() : angular.noop()">
                                 <a href="#">{{dep.name}}</a>
+                                <ul class="nav nav-third-level">
+                                    <li ng-repeat="proj  in projects[dep.id] track by proj.id">
+                                        <a href="#">{{proj.name}}<p><small style="color:grey">{{proj.description}}</small></p></a>
+
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->

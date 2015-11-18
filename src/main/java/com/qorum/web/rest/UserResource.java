@@ -6,6 +6,7 @@ import com.qorum.domain.User;
 import com.qorum.repository.AuthorityRepository;
 import com.qorum.repository.UserRepository;
 import com.qorum.security.AuthoritiesConstants;
+import com.qorum.security.SecurityUtils;
 import com.qorum.service.UserService;
 import com.qorum.web.rest.dto.ManagedUserDTO;
 import com.qorum.web.rest.dto.UserDTO;
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
 
 /**
  * REST controller for managing users.
- *
+ * <p>
  * <p>This class accesses the User entity, and needs to fetch its collection of authorities.</p>
  * <p>
  * For a normal use-case, it would be better to have an eager relationship between User and Authority,
@@ -83,8 +84,8 @@ public class UserResource {
         }
         User result = userRepository.save(user);
         return ResponseEntity.created(new URI("/api/users/" + result.getId()))
-                .headers(HeaderUtil.createEntityCreationAlert("user", result.getId().toString()))
-                .body(result);
+            .headers(HeaderUtil.createEntityCreationAlert("user", result.getId().toString()))
+            .body(result);
     }
 
     /**
@@ -147,9 +148,17 @@ public class UserResource {
     @Timed
     public ResponseEntity<ManagedUserDTO> getUser(@PathVariable String login) {
         log.debug("REST request to get User : {}", login);
-        return userService.getUserWithAuthoritiesByLogin(login)
+        if (login.equals("get_current_user")) {
+            return userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin())
                 .map(user -> new ManagedUserDTO(user))
                 .map(managedUserDTO -> new ResponseEntity<>(managedUserDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        }
+        return userService.getUserWithAuthoritiesByLogin(login)
+            .map(user -> new ManagedUserDTO(user))
+            .map(managedUserDTO -> new ResponseEntity<>(managedUserDTO, HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+
 }

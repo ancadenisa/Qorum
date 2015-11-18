@@ -17,6 +17,8 @@ angular.module('qorumApp')
                 }
             });
          };
+         $scope.loadPostsFromOrganisation = function(id){
+         }
 
         $scope.loadAll();
         $scope.fireEvent = function(){

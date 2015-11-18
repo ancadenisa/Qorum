@@ -1,0 +1,109 @@
+<div id="wrapper">
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-2">
+            </div>
+            <!-- Page Content Column -->
+            <div class="col-lg-8">
+
+                <!-- issue Title -->
+                <h1>{{issue.name}}</h1>
+
+                <!-- Author -->
+                <p class="small">
+                    by <a href="#">{{issue.user.login}}</a>
+                </p>
+                <!-- Date/Time -->
+                <p><span class="glyphicon glyphicon-time"></span> Posted on {{issue.created_date | date:'yyyy-MM-dd
+                    HH:mm:ss'}}</p>
+
+                <!--Issue  Content -->
+                <div class="pull-left" style="font-size:15pt;text-align:center;">
+                    <div id="increaseButton"><i  class="glyphicon glyphicon-chevron-up"
+                                                title="+1 Vote Up (This is useful)"></i></div>
+                    <div style="color:#737373;" id="rating" title="Number of user votes (rating)">{{issue.rating}}</div>
+                    <div id="decreaseButton"><i class="glyphicon glyphicon-chevron-down" title="-1 Vote Down"></i></div>
+                </div>
+                <div class="col-lg-11">
+                    <p class="lead">{{issue.content}}</p>
+                </div>
+
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+        <!-- /.row -->
+        <h3>2 Answers</h3>
+        <hr>
+        <!-- Posted Comments -->
+        <!-- Comment -->
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-8">
+
+                <!-- Comment -->
+                <div class="media" ng-repeat="comment in comments">
+                    <div class="panel pull-left">
+                        by {{comment.user.login}}
+                        <br/>
+                        <small>August 25, 2014 <br/>
+                            at 9:30 PM
+                        </small>
+                    </div>
+
+                    <div class="media-body">
+                        <!--TO DO ANCA comment title & date-->
+                        <h4 class="media-heading">Comment title
+                        </h4>
+                        {{comment.content}}
+                        <!-- Nested Comment -->
+                        <!--TO DO ANCA reply to comment-->
+                        <div class="media">
+                            <div class="panel pull-left" href="#">
+                                by User reply
+                                <br/>
+                                <small>Oct 27, 2014 <br/>
+                                    at 9:33 PM
+                                </small>
+                            </div>
+
+                            <div class="media-body">
+                                <h4 class="media-heading">Reply to comment
+                                    <small>August 25, 2014 at 9:30 PM</small>
+                                </h4>
+                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                sollicitudin
+                                commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
+                                condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                            </div>
+                        </div>
+                        <!-- End Nested Comment -->
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- Comments Form -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="well">
+                    <h4>Leave answer:</h4>
+
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea ng-model="newComment.content" class="form-control" rows="3"></textarea>
+                        </div>
+                        <button ng-click="save()" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
