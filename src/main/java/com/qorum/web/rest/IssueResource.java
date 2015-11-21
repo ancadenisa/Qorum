@@ -3,6 +3,7 @@ package com.qorum.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.qorum.domain.Issue;
 import com.qorum.repository.IssueRepository;
+import com.qorum.service.IssueService;
 import com.qorum.web.rest.util.HeaderUtil;
 import com.qorum.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -32,6 +33,8 @@ public class IssueResource {
 
     @Inject
     private IssueRepository issueRepository;
+    @Inject
+    private IssueService issueService;
 
     /**
      * POST  /issues -> Create a new issue.
@@ -110,5 +113,37 @@ public class IssueResource {
         log.debug("REST request to delete Issue : {}", id);
         issueRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("issue", id.toString())).build();
+    }
+
+
+    @RequestMapping(value = "/issuesByOrg/{orgId}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Issue>> getIssuesByOrganization(@PathVariable Long orgId,Pageable pageable)
+        throws URISyntaxException {
+        List<Issue> issues = issueService.getIssuesByOrganization(orgId);
+        return new ResponseEntity<>(issues, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/issuesByDep/{depId}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Issue>> getIssuesByDepartment(@PathVariable Long depId,Pageable pageable)
+        throws URISyntaxException {
+        List<Issue> issues = issueService.getIssuesByDept(depId);
+        return new ResponseEntity<>(issues, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/issuesByProj/{projId}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Issue>> getIssuesByProj(@PathVariable Long projId,Pageable pageable)
+        throws URISyntaxException {
+        List<Issue> issues = issueService.getIssuesByProj(projId);
+        return new ResponseEntity<>(issues, HttpStatus.OK);
     }
 }

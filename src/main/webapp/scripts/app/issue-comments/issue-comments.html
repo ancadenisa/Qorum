@@ -1,16 +1,19 @@
+<br>
 <div id="wrapper">
 
     <!-- Page Content -->
+
     <div class="container">
 
         <div class="row">
             <div class="col-lg-2">
             </div>
             <!-- Page Content Column -->
-            <div class="col-lg-8">
+            <div class="panel col-lg-8" style="background-color: #FFFFCC">
 
                 <!-- issue Title -->
-                <h1>{{issue.name}}</h1>
+                <h2>{{issue.name}}</h2>
+                <hr>
 
                 <!-- Author -->
                 <p class="small">
@@ -22,73 +25,90 @@
 
                 <!--Issue  Content -->
                 <div class="pull-left" style="font-size:15pt;text-align:center;">
-                    <div id="increaseButton"><i  class="glyphicon glyphicon-chevron-up"
+                    <div id="increaseButton"><i class="glyphicon glyphicon-chevron-up"
                                                 title="+1 Vote Up (This is useful)"></i></div>
                     <div style="color:#737373;" id="rating" title="Number of user votes (rating)">{{issue.rating}}</div>
                     <div id="decreaseButton"><i class="glyphicon glyphicon-chevron-down" title="-1 Vote Down"></i></div>
                 </div>
                 <div class="col-lg-11">
-                    <p class="lead">{{issue.content}}</p>
+                    <p style="font-size: 15px">{{issue.content}}</p>
                 </div>
 
             </div>
             <div class="col-lg-2"></div>
         </div>
+        <br>
+        <br>
         <!-- /.row -->
-        <h3>2 Answers</h3>
-        <hr>
-        <!-- Posted Comments -->
-        <!-- Comment -->
         <div class="row">
             <div class="col-lg-1"></div>
-            <div class="col-lg-8">
+            <div class="col-lg-8"><h3>2 Answers</h3>
+                <hr>
+            </div>
+        </div>
+
+
+        <!-- Posted Comments -->
+        <!-- Comment -->
+        <div class="row" ng-repeat="comment in comments">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8 media">
 
                 <!-- Comment -->
-                <div class="media" ng-repeat="comment in comments">
-                    <div class="panel pull-left">
-                        by {{comment.user.login}}
-                        <br/>
-                        <small>August 25, 2014 <br/>
-                            at 9:30 PM
-                        </small>
-                    </div>
 
-                    <div class="media-body">
-                        <!--TO DO ANCA comment title & date-->
-                        <h4 class="media-heading">Comment title
-                        </h4>
-                        {{comment.content}}
-                        <!-- Nested Comment -->
-                        <!--TO DO ANCA reply to comment-->
-                        <div class="media">
-                            <div class="panel pull-left" href="#">
-                                by User reply
-                                <br/>
-                                <small>Oct 27, 2014 <br/>
-                                    at 9:33 PM
-                                </small>
-                            </div>
+                <div class="panel pull-left">
+                    by {{comment.user.login}}
+                    <br/>
+                    <small>August 25, 2014 <br/>
+                        at 9:30 PM
+                    </small>
+                </div>
 
-                            <div class="media-body">
-                                <h4 class="media-heading">Reply to comment
-                                    <small>August 25, 2014 at 9:30 PM</small>
-                                </h4>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin
-                                commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
-                                condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
+                <div class="media-body">
+                    <!--TO DO ANCA comment title & date-->
+
+                    <h4 class="media-heading">Comment title
+                    </h4>
+
+                    <p style="word-wrap: break-word">{{comment.content}}</p>
+
+                    <!-- Nested Comment -->
+                    <!--TO DO ANCA reply to comment-->
+                    <div class="media">
+                        <div class="panel pull-left" href="#">
+                            by User reply
+                            <br/>
+                            <small>Oct 27, 2014 <br/>
+                                at 9:33 PM
+                            </small>
                         </div>
-                        <!-- End Nested Comment -->
+
+                        <div class="media-body">
+                            <h4 class="media-heading">Reply to comment
+                                <small>August 25, 2014 at 9:30 PM</small>
+                            </h4>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                            sollicitudin
+                            commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
+                            condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
                     </div>
+                    <!-- End Nested Comment -->
                 </div>
 
                 <hr>
 
                 <!-- Comments Form -->
             </div>
+            <div ng-show="(loggedUser.id == issue.user.id && checkSolution() == -100)  || (checkSolution() == {{comment.id}})" class="col-lg-2">
+                <br/>
+                    <a ng-click="markOrUnmarkSolution(comment)">
+                        <span id="solution{{comment.id}}" style="font-size:2.5em; color: grey" class="glyphicon glyphicon-ok-circle"></span>
+                    </a>
+            </div>
         </div>
         <div class="row">
+            <div class="col-lg-2"></div>
             <div class="col-lg-8">
                 <div class="well">
                     <h4>Leave answer:</h4>
