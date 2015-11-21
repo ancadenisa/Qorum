@@ -9,10 +9,10 @@
             <div class="col-lg-2">
             </div>
             <!-- Page Content Column -->
-            <div class="panel col-lg-8" style="background-color: #FFFFCC">
+            <div class="panel col-lg-8" style="background-color: #ffefe5; border-radius: 25px; border-style: groove;">
 
                 <!-- issue Title -->
-                <h2>{{issue.name}}</h2>
+                <h2><u>{{issue.name}}</u></h2>
                 <hr>
 
                 <!-- Author -->
@@ -50,43 +50,49 @@
 
         <!-- Posted Comments -->
         <!-- Comment -->
+
         <div class="row" ng-repeat="comment in comments">
             <div class="col-lg-2"></div>
-            <div class="col-lg-8 media">
+            <div class="panel  col-lg-8 media" style="background-color: #FFFFCC">
 
                 <!-- Comment -->
-
-                <div class="panel pull-left">
+<!--
+                <div class="panel pull-left" style="background-color: #f5f5f5; border: 1px solid; margin-right: 20px">
                     by {{comment.user.login}}
                     <br/>
                     <small>August 25, 2014 <br/>
                         at 9:30 PM
                     </small>
+                </div>-->
+                <div ng-show="(loggedUser.id == issue.user.id && checkSolution() == -100)  || (checkSolution() == {{comment.id}})" class="pull-left">
+                    <br/>
+                    <a ng-click="markOrUnmarkSolution(comment)">
+                        <span id="solution{{comment.id}}" style="font-size:2.5em; color: grey" class="glyphicon glyphicon-ok-circle"></span>
+                    </a>
                 </div>
 
                 <div class="media-body">
                     <!--TO DO ANCA comment title & date-->
 
-                    <h4 class="media-heading">Comment title
+                    <h4 class="media-heading"><u>Comment title</u>
+                        <small>by {{comment.user.login}},August 25, 2014,at 9:30 PM
+                        </small>
+                        <br/>
                     </h4>
+                    <br>
 
                     <p style="word-wrap: break-word">{{comment.content}}</p>
 
                     <!-- Nested Comment -->
                     <!--TO DO ANCA reply to comment-->
-                    <div class="media">
-                        <div class="panel pull-left" href="#">
-                            by User reply
-                            <br/>
-                            <small>Oct 27, 2014 <br/>
-                                at 9:33 PM
-                            </small>
-                        </div>
+                    <hr>
+                    <div class="media" style="margin-left:20px" >
 
                         <div class="media-body">
-                            <h4 class="media-heading">Reply to comment
-                                <small>August 25, 2014 at 9:30 PM</small>
+                            <h4 class="media-heading"><u>Reply to comment</u>
+                                <small>August 25, 2014 at 9:30 PM, by User reply</small>
                             </h4>
+                            <br>
                             Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
                             sollicitudin
                             commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
@@ -100,12 +106,12 @@
 
                 <!-- Comments Form -->
             </div>
-            <div ng-show="(loggedUser.id == issue.user.id && checkSolution() == -100)  || (checkSolution() == {{comment.id}})" class="col-lg-2">
+<!--            <div ng-show="(loggedUser.id == issue.user.id && checkSolution() == -100)  || (checkSolution() == {{comment.id}})" class="col-lg-2">
                 <br/>
                     <a ng-click="markOrUnmarkSolution(comment)">
                         <span id="solution{{comment.id}}" style="font-size:2.5em; color: grey" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
-            </div>
+            </div>-->
         </div>
         <div class="row">
             <div class="col-lg-2"></div>
@@ -122,6 +128,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
 </div>
