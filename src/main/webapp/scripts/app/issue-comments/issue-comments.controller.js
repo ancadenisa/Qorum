@@ -2,12 +2,15 @@
 
 angular.module('qorumApp')
     .controller('IssueCommentsController', function ($scope, $rootScope, $window, $stateParams, entity, Issue, IssueComments, User, Comment) {
-        $scope.issue = entity;
+        entity.$promise.then(function(result){
+            $scope.comments = IssueComments.getCommentsByIssue({issueId : entity.id});
+            $scope.issue = result;
+            }
+        )
         $scope.existsSolution = false;
         $scope.newComment = {};
         $scope.loggedUser = {};
         User.get({login: "get_current_user"}, function(result){$scope.loggedUser = result});
-        $scope.comments = IssueComments.getCommentsByIssue({issueId : entity.id});
         $scope.checkSolution = function(){
             for(var index=0; index < $scope.comments.length ; index++){
                 if($scope.comments[index].is_solution == 1){
