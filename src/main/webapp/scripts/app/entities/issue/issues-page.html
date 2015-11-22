@@ -92,27 +92,26 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-9">
-                        <h4 class="timeline-title">{{issue.name}}</h4>
-                        <p>
+                        <span class="issue-title"><i class="glyphicon glyphicon-ok-sign"></i>  {{issue.name}}</span>
+                        <p style="margin-left:15px; margin-bottom: 0;">
                             <small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Twitter</small>
                         </p>
                     </div>
-                    <div class="col-md-1">
+                    <div class="issue-info col-md-1">
                         Answers
                     </div>
-                    <div class="col-md-1">
+                    <div class="issue-info col-md-1">
                         Rating
                     </div>
-                    <div class="col-md-1">
+                    <div class="issue-info col-md-1">
                         Views
                     </div>
 
                 </div>
-                <hr>
+                <hr class="separator-qorum">
                 <div class="row">
                     <div class="col-md-9">
                         {{issue.content}}
-
                     </div>
                     <div class="col-md-3">
                         <button type="submit"

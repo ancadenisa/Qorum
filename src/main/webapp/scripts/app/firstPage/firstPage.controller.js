@@ -4,12 +4,13 @@
 'use strict';
 
 angular.module('qorumApp')
-    .controller('FirstPageController', ['$scope', '$modal', 'Principal', '$state', function ($scope, $modal, Principal, $state) {
+    .controller('FirstPageController', ['$scope', '$modal', 'Principal', '$state', 'Issue',
+        function ($scope, $modal, Principal, $state, Issue) {
         $('#side-menu').metisMenu();
         $scope.isAuthenticated = Principal.isAuthenticated;
-/*
+
         $state.transitionTo('firstpage.issues');
-*/
+
         $scope.createNewIssue = function () {
             if ($scope.isAuthenticated() == true) {
                 $modal.open({
@@ -35,5 +36,6 @@ angular.module('qorumApp')
                         //When clicking cancel
                     })
             }
+
         }
     }]);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>qorum</title>
+    <title>Qorum</title>
     <meta name="description" content="">
     <meta name="google" value="notranslate">
     <meta name="viewport" content="width=device-width">
@@ -33,10 +33,10 @@
     <div ng-show="{{ENV === 'dev'}}" class="development" ng-cloak=""></div>
 -->
     <div ui-view="navbar" ng-cloak=""></div>
-    <div class="container-fluid">
+    <div class="container-qorum container-fluid">
         <div ui-view="content" ng-cloak=""></div>
 
-        <div class="footer">
+        <div class="footer" style="background: #2f2f2f;height:150px;">
             <p translate="footer">This is your footer</p>
         </div>
     </div>

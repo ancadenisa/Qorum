@@ -1,14 +1,49 @@
-/* =============================================
-Navbar overriden
-============================================= */
-.navbar {
+.issue-info {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    font-size: 12px;
+    text-align:center;
+    color:#337ab7;
+}
+
+/* Good blue color #337ab7; */
+.issue-title {
+    color: #73AD21;
     margin-bottom: 0px;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    font-size: 18px;
+}
+
+.separator-qorum {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 /* =============================================
-container-fluid overriden
-============================================= */
-.container-fluid {
+   Qorum navbar
+   ========================================== */
+.navbar-xs .navbar { min-height:28px; height: 28px; }
+.navbar-xs .navbar .navbar-brand{ padding: 0px 12px;font-size: 16px;line-height: 28px; }
+.navbar-xs .navbar .navbar-nav > li > a {  padding-top: 0px; padding-bottom: 0px; line-height: 28px; }
+.navbar-sm .navbar { min-height:40px; height: 40px; }
+.navbar-sm .navbar .navbar-brand{ padding: 0px 12px;font-size: 16px;line-height: 40px; }
+.navbar-sm .navbar .navbar-nav > li > a {  padding-top: 0px; padding-bottom: 0px; line-height: 40px; }
+
+/* =============================================
+   Qorum sidebar
+   ========================================== */
+.sidebar-qorum {
+    position: fixed !important;
+}
+
+/* =============================================
+   Qorum container
+   ========================================== */
+.container-qorum {
+    margin-top: 50px;
     padding-right: 0px;
     padding-left: 0px;
 }

@@ -1,162 +1,164 @@
-Following formats are accepted : excel, csv.
-</br></br></br>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <span>File source : </span>
+<div class="container panel">
+    Following formats are accepted : excel, csv.
+    </br></br></br>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <span>File source : </span>
 
-            <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Select location
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#">URL</a></li>
-                    <li><a href="#">PC</a></li>
-                    <li><a href="#">Local server</a></li>
-                </ul>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Select location
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">URL</a></li>
+                        <li><a href="#">PC</a></li>
+                        <li><a href="#">Local server</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <span>Name:</span>
+        <div class="col-md-4">
+            <div class="form-group">
+                <span>Name:</span>
 
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder=""/>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder=""/>
                   <span class="input-group-btn">
                     <button class="btn btn-default" type="button">Select file</button>
                   </span>
+                </div>
             </div>
+            <!-- /input-group -->
         </div>
-        <!-- /input-group -->
     </div>
-</div>
-<hr>
-<div class="row">
-    <div class="col-md-12">
-        <div class="form-group">
-            <span>Choose import options :</span>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <span>Choose import options :</span>
 
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox"> Database table
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox"> RDF mapping
-                </label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Database table
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> RDF mapping
+                    </label>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="bs-example">
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <ul class="list-inline">
-                            <li>Field1</li>
-                            <li>Pos1</li>
-                            <li>Simple</li>
-                            <li class="pull-right"><input type="button" class="btn btn-danger btn-xs"
-                                                          value="Edit"
-                                                          data-toggle="collapse"
-                                                          data-parent="#accordion" data-target="#collapseOneo"/>
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="collapseOneo" class="panel collapse in">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="bs-example">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
                         <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <span>Name:</span>
-                                        <input type="text" class="form-control"/>
+                            <ul class="list-inline">
+                                <li>Field1</li>
+                                <li>Pos1</li>
+                                <li>Simple</li>
+                                <li class="pull-right"><input type="button" class="btn btn-danger btn-xs"
+                                                              value="Edit"
+                                                              data-toggle="collapse"
+                                                              data-parent="#accordion" data-target="#collapseOneo"/>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="collapseOneo" class="panel collapse in">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <span>Name:</span>
+                                            <input type="text" class="form-control"/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <span>Position:</span>
-                                        <input type="text" class="form-control"/>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <span>Position:</span>
+                                            <input type="text" class="form-control"/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <span>Type:</span>
-                                        <input type="text" class="form-control"/>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <span>Type:</span>
+                                            <input type="text" class="form-control"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <ul class="list-inline">
-                            <li>Name</li>
-                            <li>Position</li>
-                            <li>Type</li>
-                            <li class="pull-right"><input type="button" class="btn btn-danger btn-xs"
-                                                          value="Edit"
-                                                          data-toggle="collapse"
-                                                          data-parent="#accordion" data-target="#collapseTwoo"/>
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="collapseTwoo" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <p>Bootstrap is a powerful front-end framework for faster and easier web
-                                development. It
-                                is
-                                a
-                                collection of CSS and HTML conventions. <a
-                                    href="http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/"
-                                    target="_blank">Learn
-                                    more.</a></p>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <ul class="list-inline">
+                                <li>Name</li>
+                                <li>Position</li>
+                                <li>Type</li>
+                                <li class="pull-right"><input type="button" class="btn btn-danger btn-xs"
+                                                              value="Edit"
+                                                              data-toggle="collapse"
+                                                              data-parent="#accordion" data-target="#collapseTwoo"/>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="collapseTwoo" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>Bootstrap is a powerful front-end framework for faster and easier web
+                                    development. It
+                                    is
+                                    a
+                                    collection of CSS and HTML conventions. <a
+                                        href="http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/"
+                                        target="_blank">Learn
+                                        more.</a></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <ul class="list-inline">
-                            <li>Name</li>
-                            <li>Position</li>
-                            <li>Type</li>
-                            <li class="pull-right"><input type="button" class="btn btn-danger btn-xs"
-                                                          value="Edit"
-                                                          data-toggle="collapse"
-                                                          data-parent="#accordion"
-                                                          data-target="#collapseThree"/>
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <p>CSS stands for Cascading Style Sheet. CSS allows you to specify various style
-                                properties
-                                for
-                                a
-                                given HTML element such as colors, backgrounds, fonts etc. <a
-                                    href="http://www.tutorialrepublic.com/css-tutorial/" target="_blank">Learn
-                                    more.</a>
-                            </p>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <ul class="list-inline">
+                                <li>Name</li>
+                                <li>Position</li>
+                                <li>Type</li>
+                                <li class="pull-right"><input type="button" class="btn btn-danger btn-xs"
+                                                              value="Edit"
+                                                              data-toggle="collapse"
+                                                              data-parent="#accordion"
+                                                              data-target="#collapseThree"/>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>CSS stands for Cascading Style Sheet. CSS allows you to specify various style
+                                    properties
+                                    for
+                                    a
+                                    given HTML element such as colors, backgrounds, fonts etc. <a
+                                        href="http://www.tutorialrepublic.com/css-tutorial/" target="_blank">Learn
+                                        more.</a>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="checkbox">
-            <label>
-                <input type="checkbox"> Add geolocation to entries
-            </label>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"> Add geolocation to entries
+                </label>
+            </div>
         </div>
     </div>
 </div>
