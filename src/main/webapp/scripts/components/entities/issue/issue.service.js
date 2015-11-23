@@ -13,6 +13,27 @@ angular.module('qorumApp')
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': { method:'PUT' },
+            'getCount' : {
+                url : 'api/issues/getCount',
+                method : 'GET',
+                transformResponse: function (data) {
+                    return {issuesCount : data};
+                }
+            },
+            'getByNameAndTags': {
+                url : 'api/issues/filtered',
+                method: 'POST',
+                isArray: true,
+                params: {
+                  issueName: '@issueName'
+                },
+                transformResponse: function (data) {
+                    data = angular.fromJson(data);
+                    data.last_updated = DateUtils.convertDateTimeFromServer(data.last_updated);
+                    data.created_date = DateUtils.convertDateTimeFromServer(data.created_date);
+                    return data;
+                }
+            }
         });
     });

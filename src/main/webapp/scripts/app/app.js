@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('qorumApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalprecht.translate',
+angular.module('qorumApp', ['ui.select','ngSanitize','LocalStorageModule', 'tmh.dynamicLocale', 'pascalprecht.translate',
                'ui.bootstrap', // for modal dialogs
     'ngResource', 'ui.router', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload', 'infinite-scroll'])
 

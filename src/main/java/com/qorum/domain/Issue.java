@@ -2,9 +2,13 @@ package com.qorum.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.annotation.*;
+
 import java.time.ZonedDateTime;
 
 import javax.persistence.*;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -54,6 +58,17 @@ public class Issue implements Serializable {
                joinColumns = @JoinColumn(name="issues_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="tags_id", referencedColumnName="ID"))
     private Set<Tag> tags = new HashSet<>();
+
+    @Transient
+    private Long commentsNo;
+
+    public Long getCommentsNo() {
+        return commentsNo;
+    }
+
+    public void setCommentsNo(Long commentsNo) {
+        this.commentsNo = commentsNo;
+    }
 
     public Long getId() {
         return id;

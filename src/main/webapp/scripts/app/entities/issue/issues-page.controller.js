@@ -14,6 +14,24 @@ angular.module('qorumApp')
                 $scope.issues = result;
             });
         };
+
+        $scope.$on('filterIssuesEvent', function(event, data) {
+            Issue.getByNameAndTags({page: $scope.page, size: 1,issueName: data['issueToSearch']},data['selectedTags'],
+                function (result,headers) {
+                    $scope.links = ParseLinks.parse(headers('link'));
+                    $scope.issues = result;
+                });
+        });
+
+        $scope.timeago = function(date) {
+            if (date != null) {
+                return jQuery.timeago(date);
+            }
+            else {
+                return "Created date not available!";
+            }
+        }
+
         $scope.loadPage = function(page) {
             $scope.page = page;
             $scope.loadAll();

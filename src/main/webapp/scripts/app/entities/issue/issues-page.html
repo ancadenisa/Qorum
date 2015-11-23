@@ -94,19 +94,33 @@
                     <div class="col-md-9">
                         <span class="issue-title"><i class="glyphicon glyphicon-ok-sign"></i>  {{issue.name}}</span>
                         <p style="margin-left:15px; margin-bottom: 0;">
-                            <small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Twitter</small>
+                            <small class="text-muted"><i class="fa fa-clock-o"></i> {{timeago(issue.created_date)}}</small>
                         </p>
                     </div>
                     <div class="issue-info col-md-1">
-                        Answers
+                        <div class="row">
+                            <p> Answers </p>
+                        </div>
+                        <div class="row">
+                            <p> {{issue.commentsNo}} </p>
+                        </div>
                     </div>
                     <div class="issue-info col-md-1">
-                        Rating
+                        <div class="row">
+                            <p> Rating </p>
+                        </div>
+                        <div class="row">
+                            <p> {{issue.rating}} </p>
+                        </div>
                     </div>
                     <div class="issue-info col-md-1">
-                        Views
+                        <div class="row">
+                            <p> Views </p>
+                        </div>
+                        <div class="row">
+                            <p> 8945 </p>
+                        </div>
                     </div>
-
                 </div>
                 <hr class="separator-qorum">
                 <div class="row">

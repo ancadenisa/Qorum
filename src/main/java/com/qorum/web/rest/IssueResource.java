@@ -2,8 +2,10 @@ package com.qorum.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.qorum.domain.Issue;
+import com.qorum.domain.Tag;
 import com.qorum.repository.IssueRepository;
 import com.qorum.service.IssueService;
+import com.qorum.web.rest.dto.IssueDTO;
 import com.qorum.web.rest.util.HeaderUtil;
 import com.qorum.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -21,6 +23,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Issue.
@@ -33,6 +36,7 @@ public class IssueResource {
 
     @Inject
     private IssueRepository issueRepository;
+
     @Inject
     private IssueService issueService;
 
@@ -79,10 +83,52 @@ public class IssueResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Issue>> getAllIssues(Pageable pageable)
+    public ResponseEntity<List<IssueDTO>> getAllIssues(Pageable pageable)
         throws URISyntaxException {
-        Page<Issue> page = issueRepository.findAll(pageable);
+        Page<Issue> page = issueService.findAll(pageable);
+        List<IssueDTO> issues = page.getContent().stream()
+            .map(issue -> new IssueDTO(issue))
+            .collect(Collectors.toList());
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/issues");
+        return new ResponseEntity<>(issues, headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET  /issues -> get all the issues.
+     */
+    /*@RequestMapping(value = "/issues/filtered",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Issue>> getAllIssuesFiltered(@RequestParam(value = "issueName") String issueName, @RequestBody List<Tag> tags)
+        throws URISyntaxException {
+        //Page<Issue> page = issueService.findAll(pageable);
+        *//*List<IssueDTO> issues = page.getContent().stream()
+            .map(issue -> new IssueDTO(issue))
+            .collect(Collectors.toList());
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/issues");*//*
+        issueName = "%" + issueName.toLowerCase() + "%";
+        List<Issue> issues = issueService.getFilteredByNameAndTags(tags, issueName);
+        return new ResponseEntity<>(issues, HttpStatus.OK);
+    }*/
+
+    /**
+     * GET  /issues -> get all the issues.
+     */
+    @RequestMapping(value = "/issues/filtered",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Issue>> getAllIssuesFiltered(Pageable pageable, @RequestParam(value = "issueName") String issueName, @RequestBody List<Tag> tags)
+        throws URISyntaxException {
+        issueName = "%" + issueName.toLowerCase() + "%";
+        Page<Issue> page = issueService.getFilteredByNameAndTagsPage(pageable,tags,issueName);
+        /*List<IssueDTO> issues = page.getContent().stream()
+            .map(issue -> new IssueDTO(issue))
+            .collect(Collectors.toList());*/
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/issues");
+        //issueName = "%" + issueName.toLowerCase() + "%";
+        //List<Issue> issues = issueService.getFilteredByNameAndTags(tags,issueName);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -145,5 +191,16 @@ public class IssueResource {
         throws URISyntaxException {
         List<Issue> issues = issueService.getIssuesByProj(projId);
         return new ResponseEntity<>(issues, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/issues/getCount",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Long> getIssuesCount()
+        throws URISyntaxException {
+        Long issuesCount = issueService.getCount();
+        return new ResponseEntity<>(issuesCount, HttpStatus.OK);
     }
 }

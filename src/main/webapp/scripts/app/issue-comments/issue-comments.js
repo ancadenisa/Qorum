@@ -7,7 +7,7 @@ angular.module('qorumApp')
                 parent: 'entity',
                 url: '/issue-comments/{issueId}',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: [],
                     pageTitle: 'qorumApp.issue.detail.title'
                 },
                 views: {

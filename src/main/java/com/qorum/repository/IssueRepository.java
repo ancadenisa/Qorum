@@ -2,6 +2,9 @@ package com.qorum.repository;
 
 import com.qorum.domain.Issue;
 
+import com.qorum.domain.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
@@ -30,5 +33,15 @@ public interface IssueRepository extends JpaRepository<Issue,Long> {
     @Query("select distinct issue from Issue issue where issue.project.id = :projId")
     List<Issue> getIssuesByProj(@Param("projId") Long projId);
 
+    @Query("select count(issue) from Issue issue")
+    Long getCount();
 
+    @Query("select distinct a from Issue a join a.tags t where t in (:tags)")
+    List<Issue> getFilteredByTags(@Param("tags") List<Tag> tags);
+
+    @Query("select distinct issue from Issue issue join issue.tags t where t in (:tags) and lower(issue.name) like :issueName")
+    List<Issue> getFilteredByNameAndTags(@Param("tags") List<Tag> tags, @Param("issueName") String issueName);
+
+    @Query("select distinct issue from Issue issue join issue.tags t where t in (:tags) and lower(issue.name) like :issueName")
+    Page<Issue> getFilteredByNameAndTagsPage(Pageable pageable, @Param("tags") List<Tag> tags, @Param("issueName") String issueName);
 }

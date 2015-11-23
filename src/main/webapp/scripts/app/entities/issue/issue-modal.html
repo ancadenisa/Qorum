@@ -26,36 +26,10 @@
                 />
         </div>
         <div class="form-group">
-            <label translate="qorumApp.issue.last_updated" for="field_last_updated">Last_updated</label>
-            <input type="datetime-local" class="form-control" name="last_updated" id="field_last_updated"
-                   ng-model="issue.last_updated"
-                />
-        </div>
-        <div class="form-group">
-            <label translate="qorumApp.issue.created_date" for="field_created_date">Created_date</label>
-            <input type="datetime-local" class="form-control" name="created_date" id="field_created_date"
-                   ng-model="issue.created_date"
-                />
-        </div>
-        <div class="form-group">
-            <label translate="qorumApp.issue.rating" for="field_rating">Rating</label>
-            <input type="number" class="form-control" name="rating" id="field_rating"
-                   ng-model="issue.rating"
-                />
-        </div>
-        <div class="form-group">
             <label translate="qorumApp.issue.is_public" for="field_is_public">Is_public</label>
             <input type="checkbox" class="form-control" name="is_public" id="field_is_public"
                    ng-model="issue.is_public"
                 />
-        </div>
-
-        <div class="form-group">
-            <label translate="qorumApp.issue.user" for="field_user">user</label>
-            <select class="form-control" id="field_user" name="user" ng-model="issue.user"
-                    ng-options="user as user.login for user in users track by user.id">
-                <option value=""></option>
-            </select>
         </div>
         <div class="form-group">
             <label translate="qorumApp.issue.project" for="field_project">project</label>

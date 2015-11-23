@@ -33,6 +33,8 @@ module.exports = function (config) {
             'main/webapp/bower_components/json3/lib/json3.js',
             'main/webapp/bower_components/ng-file-upload/ng-file-upload.js',
             'main/webapp/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
+            'main/webapp/bower_components/angular-ui-select/dist/select.js',
+            'main/webapp/bower_components/select2/dist/js/select2.js',
             'main/webapp/bower_components/datatables/media/js/jquery.dataTables.js',
             'main/webapp/bower_components/flot/jquery.flot.js',
             'main/webapp/bower_components/holderjs/holder.js',
