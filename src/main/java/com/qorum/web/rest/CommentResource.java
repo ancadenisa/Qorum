@@ -63,6 +63,11 @@ public class CommentResource {
         if (comment.getId() == null) {
             return createComment(comment);
         }
+        //update fields which are null  when coming from client side
+        Comment oldComment = commentRepository.findOne(comment.getId());
+        comment.setCreatedBy(oldComment.getCreatedBy());
+        comment.setCreatedDate(oldComment.getCreatedDate());
+
         Comment result = commentRepository.save(comment);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("comment", comment.getId().toString()))

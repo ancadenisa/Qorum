@@ -15,7 +15,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "comment")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Comment implements Serializable {
+public class Comment extends AbstractAuditingEntity implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

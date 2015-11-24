@@ -23,7 +23,7 @@ spring:
         url: jdbc:postgresql://localhost:5432/qorum
         name:
         username: postgres
-        password: poc
+        password: 1234asdf
     jpa:
         database-platform: com.qorum.domain.util.FixedPostgreSQL82Dialect
         database: POSTGRESQL
@@ -44,7 +44,7 @@ liquibase:
     contexts: dev
 
 server:
-    port: 9091
+    port: 8080
 
 # ===================================================================
 # JHipster specific properties
