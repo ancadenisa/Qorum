@@ -4,13 +4,26 @@
     <!-- Page Content -->
 
     <div class="container">
+        <alert ng-repeat="alert in alerts track by $index" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 
         <div class="row">
             <div class="col-lg-2">
             </div>
             <!-- Page Content Column -->
             <div class="panel col-lg-8" style="background-color: #ffefe5; border-radius: 25px; border-style: groove;">
-
+                <br/>
+                <div class="pull-right">
+                    <!--show if current user is org admin or author od issue-->
+                    <a ng-show="loggedUser.id == issue.department.organization.orgAdmin.id || loggedUser.id == issue.user.id  " ng-click="editIssueIntention()">
+                            <span style="font-size:1em; color: #0099FF"
+                                  class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <!--only admin can delete-->
+                    <a ng-show="loggedUser.id == issue.department.organization.orgAdmin.id"  ng-click="deleteIssueIntention()">
+                            <span style="font-size:1em; color: red"
+                                  class="glyphicon glyphicon-remove-circle"></span>
+                    </a>
+                </div>
                 <!-- issue Title -->
                 <h2><u>{{issue.name}}</u></h2>
                 <hr>
@@ -25,13 +38,25 @@
 
                 <!--Issue  Content -->
                 <div class="pull-left" style="font-size:15pt;text-align:center;">
-                    <div id="increaseButton"><i class="glyphicon glyphicon-chevron-up"
+                    <div  id="increaseButton"><i class="glyphicon glyphicon-chevron-up"
                                                 title="+1 Vote Up (This is useful)"></i></div>
                     <div style="color:#737373;" id="rating" title="Number of user votes (rating)">{{issue.rating}}</div>
                     <div id="decreaseButton"><i class="glyphicon glyphicon-chevron-down" title="-1 Vote Down"></i></div>
                 </div>
-                <div class="col-lg-11">
-                    <p style="font-size: 15px">{{issue.content}}</p>
+                <!--if in editing state, div will show an input box which will update current issue-->
+                <div ng-show="onEditIssue==false"  class="col-lg-11">
+                    <p style="word-wrap: break-word" style="font-size: 15px">{{issue.content}}</p>
+                </div>
+                <div ng-show="onEditIssue==true" class="col-lg-11">
+                    <form>
+                        <input type="text" popover-placement="top" popover-trigger="mouseenter" popover="Apasati Enter sau Esc!" ng-keyup="$event.keyCode == 13 ? editIssue() : $event.keyCode == 27 ? cancelEdit() :  null " ng-model="issue.content" class="form-control" style="height:80px; word-wrap: break-word; word-break: break-word;"/>
+                    </form>
+                </div>
+                <div class="pull-right" >
+                    <!-- Date/Time -->
+                    <small><span class="glyphicon glyphicon-time"></span> Modified  on {{issue.last_updated | date:'yyyy-MM-dd
+                        HH:mm:ss'}}</small>
+
                 </div>
 
             </div>
@@ -54,42 +79,46 @@
         <div class="row" ng-repeat="comment in comments">
             <div class="col-lg-2"></div>
             <div class="panel  col-lg-8 media" style="background-color: #FFFFCC">
-
-                <!-- Comment -->
-<!--
-                <div class="panel pull-left" style="background-color: #f5f5f5; border: 1px solid; margin-right: 20px">
-                    by {{comment.user.login}}
-                    <br/>
-                    <small>August 25, 2014 <br/>
-                        at 9:30 PM
-                    </small>
-                </div>-->
-                <div ng-show="(loggedUser.id == issue.user.id && checkSolution() == -100)  || (checkSolution() == {{comment.id}})" class="pull-left">
+                <div ng-show="(loggedUser.id == issue.user.id && checkSolution() == -100)  || (checkSolution() == {{comment.id}})"
+                    class="pull-left">
                     <br/>
                     <a ng-click="markOrUnmarkSolution(comment)">
-                        <span id="solution{{comment.id}}" style="font-size:2.5em; color: grey" class="glyphicon glyphicon-ok-circle"></span>
+                        <span id="solution{{comment.id}}" style=    "font-size:2.5em; color: grey"
+                              class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                 </div>
 
                 <div class="media-body">
-                    <!--TO DO ANCA comment title & date-->
-
-                    <h4 class="media-heading"><u>Comment title</u>
-                        <small>by {{comment.user.login}},August 25, 2014,at 9:30 PM
+                    <div ng-show="loggedUser.id == comment.user.id" class="pull-right">
+                        <a ng-click="onEditIntention(comment)">
+                            <span id="edit{{comment.id}}" style="font-size:1em; color: #0099FF"
+                                  class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a ng-click="deleteCommentIntention(comment)">
+                            <span id="delete{{comment.id}}" style="font-size:1em; color: red"
+                                  class="glyphicon glyphicon-remove-circle"></span>
+                        </a>
+                    </div>
+                    <h4 class="media-heading">
+                        <small>by {{comment.user.login}}, {{comment.createdDate | date:'medium'}}
                         </small>
                         <br/>
                     </h4>
                     <br>
-
-                    <p style="word-wrap: break-word">{{comment.content}}</p>
-
+                    <!--if in editing state, div will show an input box which will update current comment-->
+                    <p ng-show="onEditComm==false" style="word-wrap: break-word">{{comment.content}}</p>
+                    <div ng-show="onEditComm==true && commentToBeEdited.id == comment.id" class="form-group">
+                        <form>
+                            <input type="text" popover-placement="top" popover-trigger="mouseenter" popover="Apasati Enter sau Esc!" ng-keyup="$event.keyCode == 13 ? editComment(comment) : $event.keyCode == 27 ? cancelEdit() :  null " ng-model="comment.content" class="form-control" style="height:80px; word-wrap: break-word; word-break: break-word;"/>
+                        </form>
+                    </div>
                     <!-- Nested Comment -->
                     <!--TO DO ANCA reply to comment-->
-                    <hr>
-                    <div class="media" style="margin-left:20px" >
+                    <!--<hr>-->
+                    <!--<div class="media" style="margin-left:20px">
 
                         <div class="media-body">
-                            <h4 class="media-heading"><u>Reply to comment</u>
+                            <h4 class="media-heading">
                                 <small>August 25, 2014 at 9:30 PM, by User reply</small>
                             </h4>
                             <br>
@@ -99,19 +128,13 @@
                             condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
                         </div>
                     </div>
-                    <!-- End Nested Comment -->
+                    --><!-- End Nested Comment -->
                 </div>
 
                 <hr>
 
                 <!-- Comments Form -->
             </div>
-<!--            <div ng-show="(loggedUser.id == issue.user.id && checkSolution() == -100)  || (checkSolution() == {{comment.id}})" class="col-lg-2">
-                <br/>
-                    <a ng-click="markOrUnmarkSolution(comment)">
-                        <span id="solution{{comment.id}}" style="font-size:2.5em; color: grey" class="glyphicon glyphicon-ok-circle"></span>
-                    </a>
-            </div>-->
         </div>
         <div class="row">
             <div class="col-lg-2"></div>
@@ -130,6 +153,50 @@
         </div>
 
     </div>
+
+    <div id="deleteComment" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Stergere comentariu</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Sigur doriti stergerea comentariului?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Renunta</button>
+                    <button type="button" ng-click="deleteComment()" class="btn btn-primary">
+                        Sterge
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="deleteIssue" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Stergere postare</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Sigur doriti stergerea postarii?</p>
+                    <small>Stergerea postarii va declansa si stergerea tututor comentariilor aferente!</small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Renunta</button>
+                    <button type="button" ng-click="deleteIssue()" class="btn btn-primary">
+                        Sterge
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </div>
 

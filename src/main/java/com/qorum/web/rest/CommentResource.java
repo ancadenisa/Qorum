@@ -3,6 +3,7 @@ package com.qorum.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.qorum.domain.Comment;
 import com.qorum.repository.CommentRepository;
+import com.qorum.web.rest.dto.CommentDTO;
 import com.qorum.web.rest.util.HeaderUtil;
 import com.qorum.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,7 +70,7 @@ public class CommentResource {
         comment.setCreatedBy(oldComment.getCreatedBy());
         comment.setCreatedDate(oldComment.getCreatedDate());
 
-        Comment result = commentRepository.save(comment);
+             Comment result = commentRepository.save(comment);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("comment", comment.getId().toString()))
             .body(result);
@@ -125,9 +127,18 @@ public class CommentResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Comment>> getCommentsByIssueId(@PathVariable Long issueId) {
+    public ResponseEntity<List<CommentDTO>> getCommentsByIssueId(@PathVariable Long issueId) {
         log.debug("REST request to get Comments of Issue with id : {}", issueId);
         List<Comment> commentList = commentRepository.findAllByIssueId(issueId);
-        return new ResponseEntity<>(commentList, HttpStatus.OK);
+        return new ResponseEntity<List<CommentDTO>>(entityListToDto(commentList), HttpStatus.OK);
+    }
+
+
+    private List<CommentDTO> entityListToDto(List<Comment> commentList){
+        List<CommentDTO> commentDTOList =  new ArrayList<>();
+        for(Comment comment : commentList){
+            commentDTOList.add(new CommentDTO(comment));
+        }
+        return commentDTOList;
     }
 }

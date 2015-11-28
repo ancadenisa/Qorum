@@ -5,8 +5,7 @@ angular.module('qorumApp')
         $scope.projects = [];
         //TODO ANCA - elimna hardcodare
         $scope.loaded =  false;
-        $scope.issues = [];
-        $scope.loadAll = function() {
+        $scope.issues = []; $scope.loadAll = function() {
             OrgSectionService.queryOrgs({userId : 3}, function(result) {
                 $scope.userOrganizations = result;
                 for(var i = 0; i <  $scope.userOrganizations.length; i++){
@@ -74,7 +73,6 @@ angular.module('qorumApp')
                 id: null
             };
         };
-
 
     }
 

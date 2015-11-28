@@ -59,6 +59,9 @@ public class Issue implements Serializable {
                inverseJoinColumns = @JoinColumn(name="tags_id", referencedColumnName="ID"))
     private Set<Tag> tags = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "issue", cascade =  CascadeType.REMOVE, orphanRemoval = true)
+    private Set<Comment> commentSet;
+
     @Transient
     private Long commentsNo;
 
