@@ -1,0 +1,39 @@
+<form name="editForm" role="form" ng-submit="save()" novalidate>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myDepartmentLabel">Creare sau editare departamentt</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="name">Nume</label>
+            <input type="text" class="form-control" name="name" id="name"
+                   ng-model="department.name"
+                />
+        </div>
+
+        <div class="form-group">
+            <label for="users">Utilizatori
+                <small>*cei ce apartin departamentelui</small>
+            </label>
+            <select class="form-control" id="users" multiple name="user" ng-model="department.users"
+                    ng-options="user as user.login for user in users track by user.id"></select>
+        </div>
+        <div class="form-group">
+            <label for="field_organization">Organizatie</label>
+            <input readonly type="text" class="form-control" id="field_organization" name="organization"
+                   ng-model="department.organization.name"
+                   ng-model="department.name"
+                />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Salveaza!</span>
+        </button>
+    </div>
+</form>

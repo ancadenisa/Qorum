@@ -125,4 +125,14 @@ public class DepartmentResource {
         List<Department> departmentList = departmentService.getDepartmentsByOrgAndByUserLogged(orgId, userId);
         return new ResponseEntity<>(departmentList, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/getDepartmentsByOrgId/{orgId}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Department>> getDepartmentsByOrgId(@PathVariable Long orgId) {
+        log.debug("REST request to get Departments wich belong to Organization with the id ", orgId);
+        List<Department> departmentList = departmentRepository.getDepartmentsByOrgId(orgId);
+        return new ResponseEntity<>(departmentList, HttpStatus.OK);
+    }
 }

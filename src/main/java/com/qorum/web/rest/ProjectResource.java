@@ -1,8 +1,10 @@
 package com.qorum.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.qorum.domain.Department;
 import com.qorum.domain.Organization;
 import com.qorum.domain.Project;
+import com.qorum.repository.DepartmentRepository;
 import com.qorum.repository.ProjectRepository;
 import com.qorum.service.ProjectService;
 import com.qorum.web.rest.util.HeaderUtil;
@@ -20,8 +22,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.TreeSet;
+
+import static java.util.Comparator.comparingInt;
+import static java.util.Comparator.comparingLong;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toCollection;
 
 /**
  * REST controller for managing Project.
@@ -34,6 +43,9 @@ public class ProjectResource {
 
     @Inject
     private ProjectRepository projectRepository;
+
+    @Inject
+    private DepartmentRepository departmentRepository;
 
     @Inject
     private ProjectService projectService;
@@ -125,5 +137,25 @@ public class ProjectResource {
         log.debug("REST request to get Projects of User with the id : {}", userId, "belonging the organisation with the id ", deptId);
         List<Project> projectList = projectService.getProjectsByDepartmentAndByUserLogged(deptId, userId);
         return new ResponseEntity<>(projectList, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/getProjectsByOrgId/{orgId}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Project>> getProjectsByOrganization(@PathVariable Long orgId) {
+        log.debug("REST request to get Projects belonging the organisation with the id ", orgId);
+        List<Department> departmentList = departmentRepository.getDepartmentsByOrgId(orgId);
+        List<Project> projects = new ArrayList<>();
+        for(Department department : departmentList){
+            List<Project> projectsOnDep = projectRepository.getProjectsByDepartment(department.getId());
+            projects.addAll(projectsOnDep);
+        }
+
+        List<Project> uniqueProjects = projects.stream()
+            .collect(collectingAndThen(toCollection(() -> new TreeSet<>(comparingLong(Project::getId))),
+                ArrayList::new));
+        return new ResponseEntity<>(uniqueProjects, HttpStatus.OK);
     }
 }
