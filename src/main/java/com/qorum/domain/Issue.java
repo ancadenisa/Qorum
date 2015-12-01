@@ -1,5 +1,6 @@
 package com.qorum.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -59,8 +60,10 @@ public class Issue implements Serializable {
                inverseJoinColumns = @JoinColumn(name="tags_id", referencedColumnName="ID"))
     private Set<Tag> tags = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "issue", cascade =  CascadeType.REMOVE, orphanRemoval = true)
-    private Set<Comment> commentSet;
+    @OneToMany(mappedBy = "issue", cascade =  CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Comment> commentSet = new HashSet<>();
 
     @Transient
     private Long commentsNo;
@@ -163,35 +166,55 @@ public class Issue implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Issue issue = (Issue) o;
 
-        if ( ! Objects.equals(id, issue.id)) return false;
+        if (!getId().equals(issue.getId())) return false;
+        if (getName() != null ? !getName().equals(issue.getName()) : issue.getName() != null) return false;
+        if (getContent() != null ? !getContent().equals(issue.getContent()) : issue.getContent() != null) return false;
+        if (getLast_updated() != null ? !getLast_updated().equals(issue.getLast_updated()) : issue.getLast_updated() != null)
+            return false;
+        if (getCreated_date() != null ? !getCreated_date().equals(issue.getCreated_date()) : issue.getCreated_date() != null)
+            return false;
+        if (getRating() != null ? !getRating().equals(issue.getRating()) : issue.getRating() != null) return false;
+        if (getIs_public() != null ? !getIs_public().equals(issue.getIs_public()) : issue.getIs_public() != null)
+            return false;
+        if (getUser() != null ? !getUser().equals(issue.getUser()) : issue.getUser() != null) return false;
+        if (getProject() != null ? !getProject().equals(issue.getProject()) : issue.getProject() != null) return false;
+        if (getDepartments() != null ? !getDepartments().equals(issue.getDepartments()) : issue.getDepartments() != null)
+            return false;
+        if (getTags() != null ? !getTags().equals(issue.getTags()) : issue.getTags() != null) return false;
+        if (getCommentSet() != null ? !getCommentSet().equals(issue.getCommentSet()) : issue.getCommentSet() != null)
+            return false;
+        return !(getCommentsNo() != null ? !getCommentsNo().equals(issue.getCommentsNo()) : issue.getCommentsNo() != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        int result = 1;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getContent() != null ? getContent().hashCode() : 0);
+        result = 31 * result + (getLast_updated() != null ? getLast_updated().hashCode() : 0);
+        result = 31 * result + (getCreated_date() != null ? getCreated_date().hashCode() : 0);
+        result = 31 * result + (getRating() != null ? getRating().hashCode() : 0);
+        result = 31 * result + (getIs_public() != null ? getIs_public().hashCode() : 0);
+        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
+        result = 31 * result + (getProject() != null ? getProject().hashCode() : 0);
+        result = 31 * result + (getDepartments() != null ? getDepartments().hashCode() : 0);
+        result = 31 * result + (getTags() != null ? getTags().hashCode() : 0);
+        result = 31 * result + (getCommentSet() != null ? getCommentSet().hashCode() : 0);
+        result = 31 * result + (getCommentsNo() != null ? getCommentsNo().hashCode() : 0);
+        return result;
     }
 
-    @Override
-    public String toString() {
-        return "Issue{" +
-            "id=" + id +
-            ", name='" + name + "'" +
-            ", content='" + content + "'" +
-            ", last_updated='" + last_updated + "'" +
-            ", created_date='" + created_date + "'" +
-            ", rating='" + rating + "'" +
-            ", is_public='" + is_public + "'" +
-            '}';
+    public Set<Comment> getCommentSet() {
+        return commentSet;
+    }
+
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
     }
 }
