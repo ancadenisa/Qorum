@@ -14,12 +14,12 @@
                 <br/>
                 <div class="pull-right">
                     <!--show if current user is org admin or author od issue-->
-                    <a ng-show="loggedUser.id == issue.department.organization.orgAdmin.id || loggedUser.id == issue.user.id  " ng-click="editIssueIntention()">
+                    <a ng-show="isUserOrgAdmin(issue) | loggedUser.id == issue.user.id  " ng-click="editIssueIntention()">
                             <span style="font-size:1em; color: #0099FF"
                                   class="glyphicon glyphicon-pencil"></span>
                     </a>
                     <!--only admin can delete-->
-                    <a ng-show="loggedUser.id == issue.department.organization.orgAdmin.id"  ng-click="deleteIssueIntention()">
+                    <a ng-show="isUserOrgAdmin(issue) == issue.departments.organization.orgAdmin.id"  ng-click="deleteIssueIntention()">
                             <span style="font-size:1em; color: red"
                                   class="glyphicon glyphicon-remove-circle"></span>
                     </a>

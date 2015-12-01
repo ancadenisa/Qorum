@@ -24,10 +24,10 @@ public interface IssueRepository extends JpaRepository<Issue,Long> {
     @Query("select issue from Issue issue left join fetch issue.tags where issue.id =:id")
     Issue findOneWithEagerRelationships(@Param("id") Long id);
 
-    @Query("select distinct issue from Issue issue, Department department where issue.department.id = department.id and  department.organization.id = :organizationId")
+    @Query("select distinct issue from Issue issue, Department department  join fetch issue.departments department where department.organization.id = :organizationId")
     List<Issue> getIssuesByOrganization(@Param("organizationId") Long orgId);
 
-    @Query("select distinct issue from Issue issue where issue.department.id = :deptId")
+    @Query("select distinct issue from Issue issue, Department department  join fetch issue.departments department where department.id = :deptId")
     List<Issue> getIssuesByDept(@Param("deptId") Long deptId);
 
     @Query("select distinct issue from Issue issue where issue.project.id = :projId")

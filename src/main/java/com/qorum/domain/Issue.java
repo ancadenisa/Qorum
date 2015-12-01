@@ -2,7 +2,6 @@ package com.qorum.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.annotation.*;
 
 import java.time.ZonedDateTime;
 
@@ -10,9 +9,7 @@ import javax.persistence.*;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * A Issue.
@@ -50,8 +47,11 @@ public class Issue implements Serializable {
     @ManyToOne
     private Project project;
 
-    @ManyToOne
-    private Department department;
+    @ManyToMany    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "issue_department",
+        joinColumns = @JoinColumn(name="issue_id", referencedColumnName="ID"),
+        inverseJoinColumns = @JoinColumn(name="department_id", referencedColumnName="ID"))
+    private List<Department> departments =  new ArrayList<>();
 
     @ManyToMany    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "issue_tag",
@@ -145,12 +145,12 @@ public class Issue implements Serializable {
         this.project = project;
     }
 
-    public Department getDepartment() {
-        return department;
+    public List<Department> getDepartments() {
+        return departments;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDepartments(List<Department> departments) {
+        this.departments = departments;
     }
 
     public Set<Tag> getTags() {

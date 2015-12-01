@@ -129,5 +129,15 @@ angular.module('qorumApp')
             );
         }
 
+        $scope.isUserOrgAdmin = function(issue){
+            loggedUser.id == issue.departments.organization.orgAdmin.id
+            angular.forEach($scope.issue.departments, function(department, value){
+                if($scope.loggedUser.id.id == department.organization.orgAdmin.id ){
+                    existsUser = true;
+                }
+             });
+
+        }
+
     }
 );

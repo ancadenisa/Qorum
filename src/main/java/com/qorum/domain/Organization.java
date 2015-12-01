@@ -34,7 +34,7 @@ public class Organization implements Serializable {
                inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="ID"))
     private Set<User> users = new HashSet<>();
 
-    @OneToMany(mappedBy = "organization")
+    @OneToMany(mappedBy = "organization", cascade =  CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Department> departments = new HashSet<>();

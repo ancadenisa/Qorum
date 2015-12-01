@@ -4,6 +4,7 @@ import com.qorum.domain.*;
 
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,7 +30,7 @@ public class IssueDTO {
 
     private Project project;
 
-    private Department department;
+    private List<Department> department;
 
     private Set<Tag> tags = new HashSet<>();
 
@@ -41,12 +42,12 @@ public class IssueDTO {
 
     public IssueDTO(Issue issue) {
         this(issue.getId(), issue.getName(), issue.getContent(), issue.getLast_updated(), issue.getCreated_date(),
-            issue.getRating(), issue.getIs_public(), issue.getUser(), issue.getProject(), issue.getDepartment(),
+            issue.getRating(), issue.getIs_public(), issue.getUser(), issue.getProject(), issue.getDepartments(),
             issue.getTags(), issue.getCommentsNo());
     }
 
     public IssueDTO(Long id, String name, String content, ZonedDateTime last_updated, ZonedDateTime created_date,
-                    Long rating, Boolean is_public, User user, Project project, Department department, Set<Tag> tags,
+                    Long rating, Boolean is_public, User user, Project project, List<Department> department, Set<Tag> tags,
                     Long commentsNo) {
         this.id = id;
         this.name = name;
@@ -134,11 +135,11 @@ public class IssueDTO {
         this.project = project;
     }
 
-    public Department getDepartment() {
+    public List<Department> getDepartment() {
         return department;
     }
 
-    public void setDepartment(Department department) {
+    public void setDepartment(List<Department> department) {
         this.department = department;
     }
 

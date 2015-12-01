@@ -1,14 +1,14 @@
 <div class="modal fade" id="deleteDepartmentIntention">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form name="deleteForm" ng-submit="confirmDelete(department.id)">
+            <form name="deleteForm" ng-submit="confirmDelete(departments.id)">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                             ng-click="clear()">&times;</button>
                     <h4 class="modal-title">Stergere departament</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Sigur doriti stergerea departamentului {{department.name}}?</p>
+                    <p>Sigur doriti stergerea departamentului {{departments.name}}?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
@@ -112,21 +112,21 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="department in departments track by department.id">
-                                        <td><a ui-sref="department.detail({id:department.id})">{{department.id}}</a>
+                                    <tr ng-repeat="departments in departments track by departments.id">
+                                        <td><a ui-sref="departments.detail({id:departments.id})">{{departments.id}}</a>
                                         </td>
-                                        <td>{{department.name}}</td>
+                                        <td>{{departments.name}}</td>
                                         <td>
-                                            <a ui-sref="organization.detail({id:department.organization.id})">{{department.organization.name}}</a>
+                                            <a ui-sref="organization.detail({id:departments.organization.id})">{{departments.organization.name}}</a>
                                         </td>
                                         <td>
                                             <button type="submit"
-                                                    ui-sref="editDep({depId:department.id, orgId: department.organization.id})"
+                                                    ui-sref="editDep({depId:departments.id, orgId: departments.organization.id})"
                                                     class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-pencil"></span> Edit
                                             </button>
                                             <button type="submit"
-                                                    ng-click="delete(department.id)"
+                                                    ng-click="delete(departments.id)"
                                                     class="btn btn-danger btn-sm">
                                                 <span class="glyphicon glyphicon-remove-circle"></span>Sterge
                                             </button>
