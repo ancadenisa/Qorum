@@ -5,20 +5,23 @@ angular.module('qorumApp')
         $stateProvider
             .state('org-create', {
                 parent: 'admin',
-                url: '/organizations-create',
-                data: {
-                    pageTitle: 'Adauga organizatie'
-                },
+                url: '/organizations-create/{orgId}',
                 views: {
                     'content@': {
                         templateUrl: 'scripts/app/organizations-crud/organizations-create.html',
                         controller: 'OrganizationsCrudController'
-                    }
+                    },
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('logs');
                         return $translate.refresh();
+                    }],
+                    orgToBeEdited: ['Organization', '$stateParams', function(Organization, $stateParams) {
+                        if($stateParams.orgId == null){
+                            return {id: null}
+                        }
+                        return Organization.get({id : $stateParams.orgId});
                     }]
                 }
             })
@@ -64,7 +67,7 @@ angular.module('qorumApp')
                                 }]
                           }
                     }).result.then(function(result) {
-                        $state.go('org-create', null, { reload: false });
+                        $state.go('org-create   ', null, { reload: false });
                     }, function() {
                         $state.go('^');
                     })
@@ -113,7 +116,21 @@ angular.module('qorumApp')
                         $state.go('^');
                     })
                 }]
+            })
+            .state('orgs-admin', {
+                parent: 'admin',
+                url: '/orgs-admin',
+                views: {
+                    'content@': {
+                        templateUrl: 'scripts/app/organizations-crud/organizations-list.html',
+                        controller: 'OrganizationsListController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('logs');
+                        return $translate.refresh();
+                    }]
+                }
             });
-
-
     });

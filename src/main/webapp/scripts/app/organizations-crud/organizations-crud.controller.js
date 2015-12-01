@@ -1,6 +1,6 @@
 'use strict';
 angular.module('qorumApp')
-    .controller('OrganizationsCrudController',function ($scope, $rootScope, $window, $stateParams,  User, Organization, OrganizationsCrud, Department, Project) {
+    .controller('OrganizationsCrudController',function ($scope, $rootScope, $window, $stateParams, User, Organization, OrganizationsCrud, Department, Project, orgToBeEdited) {
           $scope.tabs = [
             { title:'Organizatie'},
             { title:'Departamente', disabled: true },
@@ -17,6 +17,25 @@ angular.module('qorumApp')
           $scope.orgSaved = false;
           $scope.project = {};
           $scope.projects = [];
+
+          if(orgToBeEdited.$promise != null){
+                orgToBeEdited.$promise.then(function(result){
+                    $scope.organization = result;
+                    OrganizationsCrud.getDepartmentsByOrgId($scope.organization.id).then(
+                        function(response){
+                            $scope.departments = response.data
+                            }
+                        );
+                    OrganizationsCrud.getProjectsByOrganization($scope.organization.id).then(
+                        function(response){
+                            $scope.projects = response.data
+                        }
+                    );
+                }
+          )
+          }else{
+              $scope.organization = orgToBeEdited;
+          }
 
           $scope.isNameCompleted = function(){
             return $scope.organization.name != null && $scope.organization.name != " ";

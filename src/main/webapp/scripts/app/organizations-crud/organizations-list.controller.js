@@ -19,7 +19,7 @@ angular.module('qorumApp')
         $scope.delete = function (id) {
             Organization.get({id: id}, function(result) {
                 $scope.organization = result;
-                $('#deleteOrganizationConfirmation').modal('show');
+                $('#deleteOrganizationIntention').modal('show');
             });
         };
 
@@ -27,7 +27,7 @@ angular.module('qorumApp')
             Organization.delete({id: id},
                 function () {
                     $scope.loadAll();
-                    $('#deleteOrganizationConfirmation').modal('hide');
+                    $('#deleteOrganizationIntention').modal('hide');
                     $scope.clear();
                 });
         };

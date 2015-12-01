@@ -105,6 +105,7 @@ public class OrganizationResource {
     /**
      * DELETE  /organizations/:id -> delete the "id" organization.
      */
+    //TO DO ANCa - stergerea nu functioneaza ...
     @RequestMapping(value = "/organizations/{id}",
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)

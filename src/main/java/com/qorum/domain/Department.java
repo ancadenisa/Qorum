@@ -31,12 +31,12 @@ public class Department implements Serializable {
                inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="ID"))
     private Set<User> users = new HashSet<>();
 
-    @ManyToMany(mappedBy = "departments", cascade =  CascadeType.DETACH)
+    @ManyToMany(mappedBy = "departments")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Project> projects = new HashSet<>();
 
-    @ManyToMany(mappedBy = "departments", cascade =  CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "departments")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Issue> issues = new HashSet<>();
