@@ -6,6 +6,10 @@ angular.module('qorumApp')
             .state('org-create', {
                 parent: 'admin',
                 url: '/organizations-create/{orgId}',
+                data: {
+                    authorities: [],
+                    pageTitle: 'qorumApp.issue.detail.title'
+                },
                 views: {
                     'content@': {
                         templateUrl: 'scripts/app/organizations-crud/organizations-create.html',
@@ -13,12 +17,8 @@ angular.module('qorumApp')
                     },
                 },
                 resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('logs');
-                        return $translate.refresh();
-                    }],
                     orgToBeEdited: ['Organization', '$stateParams', function(Organization, $stateParams) {
-                        if($stateParams.orgId == null){
+                        if($stateParams.orgId == null || $stateParams.orgId == ""){
                             return {id: null}
                         }
                         return Organization.get({id : $stateParams.orgId});
@@ -28,6 +28,10 @@ angular.module('qorumApp')
             .state('createDep', {
                 parent: 'org-create',
                 url: '{orgId}/new',
+                data: {
+                    authorities: [],
+                    pageTitle: 'qorumApp.issue.detail.title'
+                },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({
                         templateUrl: 'scripts/app/organizations-crud/department-add-on-org.html',
@@ -53,6 +57,10 @@ angular.module('qorumApp')
             .state('editDep', {
                 parent: 'org-create',
                 url: '{orgId}/{depId}/new',
+                data: {
+                    authorities: [],
+                    pageTitle: 'qorumApp.issue.detail.title'
+                },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({
                         templateUrl: 'scripts/app/organizations-crud/department-add-on-org.html',
@@ -67,7 +75,7 @@ angular.module('qorumApp')
                                 }]
                           }
                     }).result.then(function(result) {
-                        $state.go('org-create   ', null, { reload: false });
+                        $state.go('org-create', null, { reload: false });
                     }, function() {
                         $state.go('^');
                     })
@@ -76,6 +84,10 @@ angular.module('qorumApp')
             .state('createProj', {
                 parent: 'org-create',
                 url: '/newProj',
+                data: {
+                    authorities: [],
+                    pageTitle: 'qorumApp.issue.detail.title'
+                },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({
                         templateUrl: 'scripts/app/organizations-crud/projects-add-edit-on-deps.html',
@@ -100,6 +112,10 @@ angular.module('qorumApp')
             .state('editProj', {
                 parent: 'org-create',
                 url: '/{id}/edit',
+                data: {
+                    authorities: [],
+                    pageTitle: 'qorumApp.issue.detail.title'
+                },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({
                         templateUrl: 'scripts/app/organizations-crud/projects-add-edit-on-deps.html',
@@ -120,6 +136,10 @@ angular.module('qorumApp')
             .state('orgs-admin', {
                 parent: 'admin',
                 url: '/orgs-admin',
+                data: {
+                    authorities: [],
+                    pageTitle: 'qorumApp.issue.detail.title'
+                },
                 views: {
                     'content@': {
                         templateUrl: 'scripts/app/organizations-crud/organizations-list.html',
