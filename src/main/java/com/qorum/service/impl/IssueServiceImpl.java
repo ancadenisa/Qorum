@@ -65,12 +65,26 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public Page<Issue> getFilteredByNameAndTagsPage(Pageable pageable, List<Tag> tags, String issueName) {
-        return issueRepository.getFilteredByNameAndTagsPage(pageable, tags, issueName);
+
+        Page<Issue> issuesPage = issueRepository.getFilteredByNameAndTagsPage(pageable, tags, issueName);
+        List<Issue> issues = issuesPage.getContent();
+        for (Issue issue : issues) {
+            issue.setCommentsNo(commentRepository.countByIssueId(issue.getId()));
+        }
+
+        return issuesPage;
     }
 
     @Override
     public Page<Issue> getFilteredByNamePage(Pageable pageable, String issueName) {
-        return issueRepository.getFilteredByNamePage(pageable, issueName);
+
+        Page<Issue> issuesPage = issueRepository.getFilteredByNamePage(pageable, issueName);
+        List<Issue> issues = issuesPage.getContent();
+        for (Issue issue : issues) {
+            issue.setCommentsNo(commentRepository.countByIssueId(issue.getId()));
+        }
+
+        return issuesPage;
     }
 
     @Override

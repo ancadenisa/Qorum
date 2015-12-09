@@ -96,30 +96,11 @@ public class IssueResource {
     /**
      * GET  /issues -> get all the issues.
      */
-    /*@RequestMapping(value = "/issues/filtered",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<List<Issue>> getAllIssuesFiltered(@RequestParam(value = "issueName") String issueName, @RequestBody List<Tag> tags)
-        throws URISyntaxException {
-        //Page<Issue> page = issueService.findAll(pageable);
-        *//*List<IssueDTO> issues = page.getContent().stream()
-            .map(issue -> new IssueDTO(issue))
-            .collect(Collectors.toList());
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/issues");*//*
-        issueName = "%" + issueName.toLowerCase() + "%";
-        List<Issue> issues = issueService.getFilteredByNameAndTags(tags, issueName);
-        return new ResponseEntity<>(issues, HttpStatus.OK);
-    }*/
-
-    /**
-     * GET  /issues -> get all the issues.
-     */
     @RequestMapping(value = "/issues/filtered",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Issue>> getAllIssuesFiltered(Pageable pageable, @RequestParam(value = "issueName") String issueName, @RequestBody List<Tag> tags)
+    public ResponseEntity<List<IssueDTO>> getAllIssuesFiltered(Pageable pageable, @RequestParam(value = "issueName") String issueName, @RequestBody List<Tag> tags)
         throws URISyntaxException {
 
         issueName = "%" + issueName.toLowerCase() + "%";
@@ -132,13 +113,11 @@ public class IssueResource {
             page = issueService.getFilteredByNamePage(pageable,issueName);
         }
 
-        /*List<IssueDTO> issues = page.getContent().stream()
+        List<IssueDTO> issues = page.getContent().stream()
             .map(issue -> new IssueDTO(issue))
-            .collect(Collectors.toList());*/
+            .collect(Collectors.toList());
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/issues");
-        //issueName = "%" + issueName.toLowerCase() + "%";
-        //List<Issue> issues = issueService.getFilteredByNameAndTags(tags,issueName);
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        return new ResponseEntity<>(issues, headers, HttpStatus.OK);
     }
 
     /**
