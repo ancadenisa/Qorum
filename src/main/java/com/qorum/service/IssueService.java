@@ -1,6 +1,8 @@
 package com.qorum.service;
 
+import com.qorum.domain.Department;
 import com.qorum.domain.Issue;
+import com.qorum.domain.Organization;
 import com.qorum.domain.Tag;
 import com.qorum.web.rest.dto.IssueDTO;
 import org.springframework.data.domain.Page;
@@ -26,9 +28,18 @@ public interface IssueService {
 
     Page<Issue> getFilteredByNamePage(Pageable pageable, String issueName);
 
+    Page<Issue> getFilteredByNameAndOrganizationsPage(Pageable pageable, List<Organization> orgs, String issueName);
+
+    Page<Issue> getFilteredByNameAndTagsAndOrganizationsPage(Pageable pageable, List<Tag> tags, List<Organization> orgs, String issueName);
+
+
     Page<Issue> getPublicFilteredByNameAndTagsPage(Pageable pageable, List<Tag> tags, String issueName);
 
     Page<Issue> getPublicFilteredByNamePage(Pageable pageable, String issueName);
+
+    Page<Issue> getPublicFilteredByNameAndOrganizationsPage(Pageable pageable, List<Organization> orgs, String issueName);
+
+    Page<Issue> getPublicFilteredByNameAndTagsAndOrganizationsPage(Pageable pageable, List<Tag> tags, List<Organization> orgs, String issueName);
 
     void increaseViews(Long issueId);
 }

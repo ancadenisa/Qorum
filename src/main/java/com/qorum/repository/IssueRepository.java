@@ -1,5 +1,6 @@
 package com.qorum.repository;
 
+import com.qorum.domain.Department;
 import com.qorum.domain.Issue;
 
 import com.qorum.domain.Tag;
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Spring Data JPA repository for the Issue entity.
  */
-public interface IssueRepository extends JpaRepository<Issue,Long> {
+public interface IssueRepository extends JpaRepository<Issue, Long> {
 
     @Query("select issue from Issue issue where issue.user.login = ?#{principal.username}")
     List<Issue> findByUserIsCurrentUser();
@@ -53,11 +54,23 @@ public interface IssueRepository extends JpaRepository<Issue,Long> {
     @Query("select distinct issue from Issue issue join issue.tags t where t in (:tags) and lower(issue.name) like :issueName")
     Page<Issue> getFilteredByNameAndTagsPage(Pageable pageable, @Param("tags") List<Tag> tags, @Param("issueName") String issueName);
 
+    @Query("select distinct issue from Issue issue join issue.departments depts where depts in (:depts) and lower(issue.name) like :issueName")
+    Page<Issue> getFilteredByNameAndOrganizationsPage(Pageable pageable, @Param("depts") List<Department> depts, @Param("issueName") String issueName);
+
+    @Query("select distinct issue from Issue issue join issue.departments depts join issue.tags t where t in (:tags) and depts in (:depts) and lower(issue.name) like :issueName")
+    Page<Issue> getFilteredByNameAndTagsAndOrganizationsPage(Pageable pageable, @Param("tags") List<Tag> tags, @Param("depts") List<Department> depts, @Param("issueName") String issueName);
+
     /* Public queries */
     @Query("select distinct issue from Issue issue where lower(issue.name) like :issueName and issue.is_public=true")
     Page<Issue> getPublicFilteredByNamePage(Pageable pageable, @Param("issueName") String issueName);
 
     @Query("select distinct issue from Issue issue join issue.tags t where t in (:tags) and lower(issue.name) like :issueName and issue.is_public=true")
     Page<Issue> getPublicFilteredByNameAndTagsPage(Pageable pageable, @Param("tags") List<Tag> tags, @Param("issueName") String issueName);
+
+    @Query("select distinct issue from Issue issue join issue.departments depts where depts in (:depts) and lower(issue.name) like :issueName and issue.is_public=true")
+    Page<Issue> getPublicFilteredByNameAndOrganizationsPage(Pageable pageable, @Param("depts") List<Department> depts, @Param("issueName") String issueName);
+
+    @Query("select distinct issue from Issue issue join issue.departments depts join issue.tags t where t in (:tags) and depts in (:depts) and lower(issue.name) like :issueName and issue.is_public=true")
+    Page<Issue> getPublicFilteredByNameAndTagsAndOrganizationsPage(Pageable pageable, @Param("tags") List<Tag> tags, @Param("depts") List<Department> depts, @Param("issueName") String issueName);
 
 }

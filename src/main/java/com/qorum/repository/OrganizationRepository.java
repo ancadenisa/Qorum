@@ -15,7 +15,7 @@ public interface OrganizationRepository extends JpaRepository<Organization,Long>
     @Query("select organization from Organization organization where organization.orgAdmin.login = ?#{principal.username}")
     List<Organization> findByOrgAdminIsCurrentUser();
 
-    @Query("select distinct organization from Organization organization left join fetch organization.users")
+    @Query("select distinct organization from Organization organization left join fetch organization.users left join fetch organization.departments")
     List<Organization> findAllWithEagerRelationships();
 
     @Query("select organization from Organization organization left join fetch organization.users where organization.id =:id")

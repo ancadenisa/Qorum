@@ -125,13 +125,25 @@ public class IssueResource {
         Page<Issue> page = null;
 
         if (currentUserId == null) {
-            if (tags != null && tags.size() > 0) {
+            if (organizations != null && organizations.size()>0 && tags != null && tags.size()>0) {
+                page = issueService.getPublicFilteredByNameAndTagsAndOrganizationsPage(pageable, tags, organizations, issueName);
+            }
+            else if (organizations != null && organizations.size()>0) {
+                page = issueService.getPublicFilteredByNameAndOrganizationsPage(pageable, organizations, issueName);
+            }
+            else if (tags != null && tags.size() > 0) {
                 page = issueService.getPublicFilteredByNameAndTagsPage(pageable, tags, issueName);
             } else {
                 page = issueService.getPublicFilteredByNamePage(pageable, issueName);
             }
         } else {
-            if (tags != null && tags.size() > 0) {
+            if (organizations != null && organizations.size()>0 && tags != null && tags.size()>0) {
+                page = issueService.getFilteredByNameAndTagsAndOrganizationsPage(pageable, tags, organizations, issueName);
+            }
+            else if (organizations != null && organizations.size()>0) {
+                page = issueService.getFilteredByNameAndOrganizationsPage(pageable, organizations, issueName);
+            }
+            else if (tags != null && tags.size() > 0) {
                 page = issueService.getFilteredByNameAndTagsPage(pageable, tags, issueName);
             } else {
                 page = issueService.getFilteredByNamePage(pageable, issueName);
