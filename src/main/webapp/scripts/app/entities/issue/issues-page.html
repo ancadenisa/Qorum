@@ -92,9 +92,17 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-9">
-                        <span class="issue-title"><i class="glyphicon glyphicon-ok-sign"></i>  {{issue.name}}</span>
+
+                        <span ng-class="{ 'issue-title': issue.hasSolution, 'issue-title-no': !issue.hasSolution }">
+                            <i ng-class="{'glyphicon glyphicon-remove-sign' : !issue.hasSolution, 'glyphicon glyphicon-ok-sign' : issue.hasSolution}"></i>
+                            <a ui-sref="issue-comments({issueId:issue.id})"
+                               ng-class="{ 'issue-title': issue.hasSolution, 'issue-title-no': !issue.hasSolution }">
+                                {{issue.name}}</a>
+                        </span>
+
                         <p style="margin-left:15px; margin-bottom: 0;">
-                            <small class="text-muted"><i class="fa fa-clock-o"></i> {{timeago(issue.created_date)}}</small>
+                            <small class="text-muted"><i class="fa fa-clock-o"></i> {{timeago(issue.created_date)}}
+                            </small>
                         </p>
                     </div>
                     <div class="issue-info col-md-1">
@@ -118,23 +126,23 @@
                             <p> Views </p>
                         </div>
                         <div class="row">
-                            <p> 8945 </p>
+                            <p> {{issue.views}} </p>
                         </div>
                     </div>
                 </div>
                 <hr class="separator-qorum">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         {{issue.content}}
                     </div>
-                    <div class="col-md-3">
+                    <!--<div class="col-md-3">
                         <button type="submit"
                                 ui-sref="issue-comments({issueId:issue.id})"
                                 class="btn btn-info btn-sm">
                             <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span
                             translate="entity.action.view"> View</span>
                         </button>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             <!-- /.panel-body -->

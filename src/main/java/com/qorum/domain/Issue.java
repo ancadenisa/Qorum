@@ -42,25 +42,33 @@ public class Issue implements Serializable {
     @Column(name = "is_public")
     private Boolean is_public;
 
+    @Column(name = "views")
+    private Long views;
+
+    @Column(name = "has_solution")
+    private Boolean hasSolution;
+
     @ManyToOne
     private User user;
 
     @ManyToOne
     private Project project;
 
-    @ManyToMany    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "issue_department",
-        joinColumns = @JoinColumn(name="issue_id", referencedColumnName="ID"),
-        inverseJoinColumns = @JoinColumn(name="department_id", referencedColumnName="ID"))
-    private List<Department> departments =  new ArrayList<>();
+        joinColumns = @JoinColumn(name = "issue_id", referencedColumnName = "ID"),
+        inverseJoinColumns = @JoinColumn(name = "department_id", referencedColumnName = "ID"))
+    private List<Department> departments = new ArrayList<>();
 
-    @ManyToMany    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "issue_tag",
-               joinColumns = @JoinColumn(name="issues_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="tags_id", referencedColumnName="ID"))
+        joinColumns = @JoinColumn(name = "issues_id", referencedColumnName = "ID"),
+        inverseJoinColumns = @JoinColumn(name = "tags_id", referencedColumnName = "ID"))
     private Set<Tag> tags = new HashSet<>();
 
-    @OneToMany(mappedBy = "issue", cascade =  CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "issue", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Comment> commentSet = new HashSet<>();
@@ -164,6 +172,22 @@ public class Issue implements Serializable {
         this.tags = tags;
     }
 
+    public Long getViews() {
+        return views;
+    }
+
+    public void setViews(Long views) {
+        this.views = views;
+    }
+
+    public Boolean getHasSolution() {
+        return hasSolution;
+    }
+
+    public void setHasSolution(Boolean hasSolution) {
+        this.hasSolution = hasSolution;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -188,9 +212,14 @@ public class Issue implements Serializable {
         if (getTags() != null ? !getTags().equals(issue.getTags()) : issue.getTags() != null) return false;
         if (getCommentSet() != null ? !getCommentSet().equals(issue.getCommentSet()) : issue.getCommentSet() != null)
             return false;
+        if (getViews() != null ? !getViews().equals(issue.getViews()) : issue.getViews() != null) return false;
+        if (getHasSolution() != null ? !getHasSolution().equals(issue.getHasSolution()) : issue.getHasSolution() != null)
+            return false;
+
         return !(getCommentsNo() != null ? !getCommentsNo().equals(issue.getCommentsNo()) : issue.getCommentsNo() != null);
 
     }
+
 
     @Override
     public int hashCode() {
@@ -204,9 +233,10 @@ public class Issue implements Serializable {
         result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
         result = 31 * result + (getProject() != null ? getProject().hashCode() : 0);
         result = 31 * result + (getDepartments() != null ? getDepartments().hashCode() : 0);
-        result = 31 * result + (getTags() != null ? getTags().hashCode() : 0);
-        result = 31 * result + (getCommentSet() != null ? getCommentSet().hashCode() : 0);
         result = 31 * result + (getCommentsNo() != null ? getCommentsNo().hashCode() : 0);
+        result = 31 * result + (getViews() != null ? getViews().hashCode() : 0);
+        result = 31 * result + (getHasSolution() != null ? getHasSolution().hashCode():0);
+
         return result;
     }
 

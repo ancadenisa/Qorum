@@ -121,8 +121,17 @@ public class IssueResource {
     @Timed
     public ResponseEntity<List<Issue>> getAllIssuesFiltered(Pageable pageable, @RequestParam(value = "issueName") String issueName, @RequestBody List<Tag> tags)
         throws URISyntaxException {
+
         issueName = "%" + issueName.toLowerCase() + "%";
-        Page<Issue> page = issueService.getFilteredByNameAndTagsPage(pageable,tags,issueName);
+        Page<Issue> page = null;
+
+        if (tags != null && tags.size() > 0) {
+            page = issueService.getFilteredByNameAndTagsPage(pageable,tags,issueName);
+        }
+        else {
+            page = issueService.getFilteredByNamePage(pageable,issueName);
+        }
+
         /*List<IssueDTO> issues = page.getContent().stream()
             .map(issue -> new IssueDTO(issue))
             .collect(Collectors.toList());*/
@@ -202,5 +211,14 @@ public class IssueResource {
         throws URISyntaxException {
         Long issuesCount = issueService.getCount();
         return new ResponseEntity<>(issuesCount, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/issues/increaseViews/{issueId}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public void increaseViews(@PathVariable Long issueId)
+        throws URISyntaxException {
+        issueService.increaseViews(issueId);
     }
 }
