@@ -4,13 +4,17 @@
 'use strict';
 
 angular.module('qorumApp')
-    .controller('FirstPageController', ['$scope', '$modal', 'Principal', '$state', 'Issue', 'Tag',
-        function ($scope, $modal, Principal, $state, Issue, Tag) {
+    .controller('FirstPageController', ['$scope', '$modal', 'Principal', '$state', 'Issue', 'Tag', 'Organization',
+        function ($scope, $modal, Principal, $state, Issue, Tag, Organization) {
             $('#side-menu').metisMenu();
 
+            $scope.organizations = [];
             $scope.issuesCount = 0;
+
+            $scope.allObj = {name : "All"};
             $scope.selected = {
-                tags: []
+                tags: [],
+                organizations: []
             };
             $scope.issueToSearch = '';
 
@@ -18,18 +22,33 @@ angular.module('qorumApp')
 
             $state.transitionTo('firstpage.issues');
 
+            Organization.query(function(result) {
+                $scope.organizations = result;
+                $scope.organizations.unshift($scope.allObj);
+            });
+
             Issue.getCount(
                 function (result) {
                     $scope.issuesCount = result.issuesCount;
                 });
 
             $scope.tags = [];
+
             Tag.query({page: $scope.page, size: 20}, function(result, headers) {
                 $scope.tags = result;
+                $scope.tags.unshift($scope.allObj);
             });
 
             $scope.getByNameAndTags = function() {
-                $scope.$broadcast('filterIssuesEvent', {selectedTags : $scope.selected.tags,  issueToSearch : $scope.issueToSearch});
+                if ($.inArray($scope.allObj,$scope.selected.tags) != -1) {
+                    $scope.selected.tags = [];
+                }
+                if ($.inArray($scope.allObj,$scope.selected.organizations) != -1) {
+                    $scope.selected.organizations = [];
+                }
+
+                $scope.$broadcast('filterIssuesEvent', {selectedOrganizations: $scope.selected.organizations,
+                    selectedTags : $scope.selected.tags,  issueToSearch : $scope.issueToSearch});
             }
 
             $scope.createNewIssue = function () {

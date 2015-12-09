@@ -15,17 +15,17 @@
 
                     <div style="margin-right: 10%; margin-left:10%;">
                         <div class="form-group">
-                            <label>Select scope:</label>
+                            <label>Select organizations</label>
 
-                            <div class="radio">
-                                <label><input type="radio" name="optradio">Public</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name="optradio">Company</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name="optradio">All</label>
-                            </div>
+                            <ui-select multiple ng-model="selected.organizations" theme="bootstrap">
+                                <ui-select-match placeholder="Organizations...">{{$item.name}}</ui-select-match>
+                                <ui-select-choices repeat="org in organizations | filter: {name: $select.search}">
+                                    <div ng-bind-html="org.name | highlight: $select.search"></div>
+                                    <small>
+                                        Name: {{org.name}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
                         </div>
 
                         <div class="form-group">

@@ -11,13 +11,16 @@ angular.module('qorumApp')
 
         $scope.issueToSearch = "";
         $scope.selectedTags = [];
+        $scope.selectedOrganizations = [];
+        $scope.payloadArray = {};
+
         $scope.loadAll = function() {
             /*Issue.query({page: $scope.page, size: 20}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
                 $scope.issues = result;
             });*/
 
-            Issue.getByNameAndTags({page: $scope.page, size: 20,issueName: $scope.issueToSearch },$scope.selectedTags,
+            Issue.getByNameAndTags({page: $scope.page, size: 20,issueName: $scope.issueToSearch },$scope.payloadArray,
                 function (result,headers) {
                     $scope.links = ParseLinks.parse(headers('link'));
                     $scope.issues = result;
@@ -27,7 +30,10 @@ angular.module('qorumApp')
         $scope.$on('filterIssuesEvent', function(event, data) {
             $scope.issueToSearch = data['issueToSearch'];
             $scope.selectedTags = data['selectedTags'];
-            Issue.getByNameAndTags({page: $scope.page, size: 20,issueName: data['issueToSearch']},data['selectedTags'],
+            $scope.selectedOrganizations = data['selectedOrganizations'];
+
+            $scope.payloadArray = {"tags" : $scope.selectedTags, "organizations" : $scope.selectedOrganizations};
+            Issue.getByNameAndTags({page: $scope.page, size: 20,issueName: data['issueToSearch']},$scope.payloadArray,
                 function (result,headers) {
                     $scope.links = ParseLinks.parse(headers('link'));
                     $scope.issues = result;

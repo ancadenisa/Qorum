@@ -59,11 +59,6 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public List<Issue> getFilteredByNameAndTags(List<Tag> tags, String issueName) {
-        return issueRepository.getFilteredByNameAndTags(tags, issueName);
-    }
-
-    @Override
     public Page<Issue> getFilteredByNameAndTagsPage(Pageable pageable, List<Tag> tags, String issueName) {
 
         Page<Issue> issuesPage = issueRepository.getFilteredByNameAndTagsPage(pageable, tags, issueName);
@@ -86,6 +81,29 @@ public class IssueServiceImpl implements IssueService {
 
         return issuesPage;
     }
+
+    @Override
+    public Page<Issue> getPublicFilteredByNameAndTagsPage(Pageable pageable, List<Tag> tags, String issueName) {
+        Page<Issue> issuesPage = issueRepository.getPublicFilteredByNameAndTagsPage(pageable, tags, issueName);
+        List<Issue> issues = issuesPage.getContent();
+        for (Issue issue : issues) {
+            issue.setCommentsNo(commentRepository.countByIssueId(issue.getId()));
+        }
+
+        return issuesPage;
+    }
+
+    @Override
+    public Page<Issue> getPublicFilteredByNamePage(Pageable pageable, String issueName) {
+        Page<Issue> issuesPage = issueRepository.getPublicFilteredByNamePage(pageable, issueName);
+        List<Issue> issues = issuesPage.getContent();
+        for (Issue issue : issues) {
+            issue.setCommentsNo(commentRepository.countByIssueId(issue.getId()));
+        }
+
+        return issuesPage;
+    }
+
 
     @Override
     public void increaseViews(Long issueId) {

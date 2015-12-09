@@ -22,11 +22,13 @@ public interface IssueService {
 
     Long getCount();
 
-    List<Issue> getFilteredByNameAndTags(List<Tag> tags, String issueName);
-
     Page<Issue> getFilteredByNameAndTagsPage(Pageable pageable, List<Tag> tags, String issueName);
 
     Page<Issue> getFilteredByNamePage(Pageable pageable, String issueName);
+
+    Page<Issue> getPublicFilteredByNameAndTagsPage(Pageable pageable, List<Tag> tags, String issueName);
+
+    Page<Issue> getPublicFilteredByNamePage(Pageable pageable, String issueName);
 
     void increaseViews(Long issueId);
 }

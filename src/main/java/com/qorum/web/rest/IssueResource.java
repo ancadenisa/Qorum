@@ -1,9 +1,14 @@
 package com.qorum.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qorum.domain.Issue;
+import com.qorum.domain.Organization;
 import com.qorum.domain.Tag;
 import com.qorum.repository.IssueRepository;
+import com.qorum.security.SecurityUtils;
 import com.qorum.service.IssueService;
 import com.qorum.web.rest.dto.IssueDTO;
 import com.qorum.web.rest.util.HeaderUtil;
@@ -19,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -100,17 +106,36 @@ public class IssueResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<IssueDTO>> getAllIssuesFiltered(Pageable pageable, @RequestParam(value = "issueName") String issueName, @RequestBody List<Tag> tags)
-        throws URISyntaxException {
+    public ResponseEntity<List<IssueDTO>> getAllIssuesFiltered(Pageable pageable, @RequestParam(value = "issueName") String issueName, @RequestBody String requestBody)
+        throws URISyntaxException, IOException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(requestBody);
+        List<Tag> tags = mapper.convertValue(node.get("tags"), new TypeReference<List<Tag>>() {});
+        List<Organization> organizations = mapper.convertValue(node.get("organizations"), new TypeReference<List<Organization>>() {});
+
+        Long currentUserId = null;
+        try {
+            currentUserId = SecurityUtils.getCurrentUserId();
+        } catch (IllegalStateException e) {
+            log.debug("There is no user logged in !");
+        }
 
         issueName = "%" + issueName.toLowerCase() + "%";
         Page<Issue> page = null;
 
-        if (tags != null && tags.size() > 0) {
-            page = issueService.getFilteredByNameAndTagsPage(pageable,tags,issueName);
-        }
-        else {
-            page = issueService.getFilteredByNamePage(pageable,issueName);
+        if (currentUserId == null) {
+            if (tags != null && tags.size() > 0) {
+                page = issueService.getPublicFilteredByNameAndTagsPage(pageable, tags, issueName);
+            } else {
+                page = issueService.getPublicFilteredByNamePage(pageable, issueName);
+            }
+        } else {
+            if (tags != null && tags.size() > 0) {
+                page = issueService.getFilteredByNameAndTagsPage(pageable, tags, issueName);
+            } else {
+                page = issueService.getFilteredByNamePage(pageable, issueName);
+            }
         }
 
         List<IssueDTO> issues = page.getContent().stream()
@@ -154,7 +179,7 @@ public class IssueResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Issue>> getIssuesByOrganization(@PathVariable Long orgId,Pageable pageable)
+    public ResponseEntity<List<Issue>> getIssuesByOrganization(@PathVariable Long orgId, Pageable pageable)
         throws URISyntaxException {
         List<Issue> issues = issueService.getIssuesByOrganization(orgId);
         return new ResponseEntity<>(issues, HttpStatus.OK);
@@ -165,7 +190,7 @@ public class IssueResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Issue>> getIssuesByDepartment(@PathVariable Long depId,Pageable pageable)
+    public ResponseEntity<List<Issue>> getIssuesByDepartment(@PathVariable Long depId, Pageable pageable)
         throws URISyntaxException {
         List<Issue> issues = issueService.getIssuesByDept(depId);
         return new ResponseEntity<>(issues, HttpStatus.OK);
@@ -175,7 +200,7 @@ public class IssueResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Issue>> getIssuesByProj(@PathVariable Long projId,Pageable pageable)
+    public ResponseEntity<List<Issue>> getIssuesByProj(@PathVariable Long projId, Pageable pageable)
         throws URISyntaxException {
         List<Issue> issues = issueService.getIssuesByProj(projId);
         return new ResponseEntity<>(issues, HttpStatus.OK);

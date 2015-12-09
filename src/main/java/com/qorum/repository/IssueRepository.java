@@ -40,17 +40,24 @@ public interface IssueRepository extends JpaRepository<Issue,Long> {
     @Query("select distinct a from Issue a join a.tags t where t in (:tags)")
     List<Issue> getFilteredByTags(@Param("tags") List<Tag> tags);
 
-    @Query("select distinct issue from Issue issue join issue.tags t where t in (:tags) and lower(issue.name) like :issueName")
-    List<Issue> getFilteredByNameAndTags(@Param("tags") List<Tag> tags, @Param("issueName") String issueName);
-
-    @Query("select distinct issue from Issue issue join issue.tags t where t in (:tags) and lower(issue.name) like :issueName")
-    Page<Issue> getFilteredByNameAndTagsPage(Pageable pageable, @Param("tags") List<Tag> tags, @Param("issueName") String issueName);
 
     @Modifying
     @Transactional
     @Query("update Issue issue set issue.views = issue.views+1 where issue.id = :issueId")
     void increaseViews(@Param("issueId") Long issueId);
 
+    /*Logged user queries*/
     @Query("select distinct issue from Issue issue where lower(issue.name) like :issueName")
     Page<Issue> getFilteredByNamePage(Pageable pageable, @Param("issueName") String issueName);
+
+    @Query("select distinct issue from Issue issue join issue.tags t where t in (:tags) and lower(issue.name) like :issueName")
+    Page<Issue> getFilteredByNameAndTagsPage(Pageable pageable, @Param("tags") List<Tag> tags, @Param("issueName") String issueName);
+
+    /* Public queries */
+    @Query("select distinct issue from Issue issue where lower(issue.name) like :issueName and issue.is_public=true")
+    Page<Issue> getPublicFilteredByNamePage(Pageable pageable, @Param("issueName") String issueName);
+
+    @Query("select distinct issue from Issue issue join issue.tags t where t in (:tags) and lower(issue.name) like :issueName and issue.is_public=true")
+    Page<Issue> getPublicFilteredByNameAndTagsPage(Pageable pageable, @Param("tags") List<Tag> tags, @Param("issueName") String issueName);
+
 }
