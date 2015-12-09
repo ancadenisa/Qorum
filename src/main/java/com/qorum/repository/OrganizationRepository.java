@@ -23,4 +23,7 @@ public interface OrganizationRepository extends JpaRepository<Organization,Long>
 
     @Query("select distinct organization from Organization organization, User user join organization.users user where user.id = :userId or organization.orgAdmin.id = :userId")
     List<Organization> getOrganizationsByUserLoggedId(@Param("userId") Long userId);
+
+    @Query("select distinct organization from Organization organization where organization.orgAdmin.id = :userId")
+    List<Organization> getOrganizationsByOrgAdmin(@Param("userId") Long userId);
 }

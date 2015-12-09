@@ -8,7 +8,10 @@ angular.module('qorumApp')
         )
 
         function loadComments(issueId){
-            $scope.comments = IssueComments.getCommentsByIssue({issueId : issueId});
+            IssueComments.getCommentsByIssue({issueId : issueId}).$promise.then(function(result){
+                $scope.comments = result;
+                $scope.nrAnswers = $scope.comments.length;
+            })
         }
         $scope.existsSolution = false;
         $scope.onEditComm = false;
@@ -16,6 +19,7 @@ angular.module('qorumApp')
         $scope.newComment = {};
         $scope.loggedUser = {};
         $scope.alerts = [];
+        $scope.nrAnswers = 0;
 
         User.get({login: "get_current_user"}, function(result){$scope.loggedUser = result});
 
@@ -41,6 +45,7 @@ angular.module('qorumApp')
                     loadComments($scope.issue.id);
                 });
             }
+            $scope.nrAnswers++;
         }
 
         var updateRatingForIssue =  function(newValue){
@@ -133,13 +138,13 @@ angular.module('qorumApp')
         }
 
         $scope.isUserOrgAdmin = function(issue){
+            var existsAdmin = false;
             angular.forEach($scope.issue.departments, function(department, value){
                 if($scope.loggedUser.id == department.organization.orgAdmin.id ){
-                    existsUser = true;
-                    return true;
+                    existsAdmin =  true;
                 }
              });
-            return false;
+            return existsAdmin;
         }
 
     }

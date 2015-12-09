@@ -94,6 +94,10 @@
                                                                                   data-target=".navbar-collapse.in"><span
                                 class="glyphicon glyphicon-plus-sign"></span>
                                 &#xA0;<span translate="global.menu.account.register">Register</span></a></li>
+                            <li ui-sref-active="active"><a ui-sref="org-create-tabs" data-toggle="collapse"
+                                                           data-target=".navbar-collapse.in"><span
+                                class="glyphicon glyphicon-tasks"></span>
+                                &#xA0;Creaza o organizatie noua</a></li>
                         </ul>
                     </li>
                     <li ng-class="{active: $state.includes('admin')}" ng-switch-when="true" has-authority="ROLE_ADMIN"
@@ -131,11 +135,11 @@
                                                            data-target=".navbar-collapse.in"><span
                                 class="glyphicon glyphicon-tasks"></span>
                                 &#xA0;<span translate="global.menu.admin.logs">Logs</span></a></li>
-                            <li ui-sref-active="active"><a ui-sref="orgs-admin" data-toggle="collapse"
+                            <li ui-sref-active="active"><a ui-sref="orgs-admin-list" data-toggle="collapse"
                                                            data-target=".navbar-collapse.in"><span
                                 class="glyphicon glyphicon-tasks"></span>
                                 &#xA0;Administreaza organizatiile</a></li>
-                            <li ui-sref-active="active"><a ui-sref="org-create" data-toggle="collapse"
+                            <li ui-sref-active="active"><a ui-sref="org-create-tabs" data-toggle="collapse"
                                                            data-target=".navbar-collapse.in"><span
                                 class="glyphicon glyphicon-tasks"></span>
                                 &#xA0;Creaza o organizatie noua</a></li>

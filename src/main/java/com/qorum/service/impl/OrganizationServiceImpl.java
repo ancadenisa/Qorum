@@ -19,6 +19,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     OrganizationRepository organizationRepository;
     @Override
     public List<Organization> getOrganizationsByUserLoggedId(Long userId) {
-        return organizationRepository.getOrganizationsByUserLoggedId(userId);
+        List<Organization>  organizationList =  organizationRepository.getOrganizationsByUserLoggedId(userId);
+        return organizationList.size() != 0 ?  organizationList :  organizationRepository.getOrganizationsByOrgAdmin(userId);
     }
 }

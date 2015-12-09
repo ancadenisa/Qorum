@@ -135,7 +135,7 @@ public class ProjectResource {
     @Timed
     public ResponseEntity<List<Project>> getProjectsByDeptIdAndUserId(@PathVariable Long deptId, @PathVariable Long userId ) {
         log.debug("REST request to get Projects of User with the id : {}", userId, "belonging the organisation with the id ", deptId);
-        List<Project> projectList = projectService.getProjectsByDepartmentAndByUserLogged(deptId, userId);
+            List<Project> projectList = projectService.getProjectsByDepartmentAndByUserLogged(deptId, userId);
         return new ResponseEntity<>(projectList, HttpStatus.OK);
     }
 

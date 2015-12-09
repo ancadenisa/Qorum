@@ -14,12 +14,12 @@
                 <br/>
                 <div class="pull-right">
                     <!--show if current user is org admin or author od issue-->
-                    <a ng-show="(issue != null &&  loggedUser != null)  && isUserOrgAdmin(issue) || loggedUser.id == issue.user.id" ng-click="editIssueIntention()">
+                    <a ng-show="(issue != null &&  loggedUser != null)  && (isUserOrgAdmin(issue) || loggedUser.id == issue.user.id)" ng-click="editIssueIntention()">
                             <span style="font-size:1em; color: #0099FF"
                                   class="glyphicon glyphicon-pencil"></span>
                     </a>
                     <!--only admin can delete-->
-                    <a ng-show="(issue != null &&  loggedUser != null) && isUserOrgAdmin(issue) == issue.departments.organization.orgAdmin.id"  ng-click="deleteIssueIntention()">
+                    <a ng-show="(issue != null &&  loggedUser != null) && isUserOrgAdmin(issue) == true"  ng-click="deleteIssueIntention()">
                             <span style="font-size:1em; color: red"
                                   class="glyphicon glyphicon-remove-circle"></span>
                     </a>
@@ -67,7 +67,7 @@
         <!-- /.row -->
         <div class="row">
             <div class="col-lg-1"></div>
-            <div class="col-lg-8"><h3>2 Answers</h3>
+            <div class="col-lg-8"><h3>{{nrAnswers}} Answers</h3>
                 <hr>
             </div>
         </div>
