@@ -26,4 +26,5 @@ public interface IssueService {
 
     Page<Issue> getFilteredByNameAndTagsPage(Pageable pageable, List<Tag> tags, String issueName);
 
+    void increaseViews(Long issueId);
 }

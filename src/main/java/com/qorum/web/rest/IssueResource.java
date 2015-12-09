@@ -203,4 +203,13 @@ public class IssueResource {
         Long issuesCount = issueService.getCount();
         return new ResponseEntity<>(issuesCount, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/issues/increaseViews/{issueId}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public void increaseViews(@PathVariable Long issueId)
+        throws URISyntaxException {
+        issueService.increaseViews(issueId);
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -44,4 +45,9 @@ public interface IssueRepository extends JpaRepository<Issue,Long> {
 
     @Query("select distinct issue from Issue issue join issue.tags t where t in (:tags) and lower(issue.name) like :issueName")
     Page<Issue> getFilteredByNameAndTagsPage(Pageable pageable, @Param("tags") List<Tag> tags, @Param("issueName") String issueName);
+
+    @Modifying
+    @Transactional
+    @Query("update Issue issue set issue.views = issue.views+1 where issue.id = :issueId")
+    void increaseViews(@Param("issueId") Long issueId);
 }

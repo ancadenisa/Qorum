@@ -14,7 +14,7 @@
                 <br/>
                 <div class="pull-right">
                     <!--show if current user is org admin or author od issue-->
-                    <a ng-show="isUserOrgAdmin(issue) | loggedUser.id == issue.user.id  " ng-click="editIssueIntention()">
+                    <a ng-show="isUserOrgAdmin(issue) || loggedUser.id == issue.user.id" ng-click="editIssueIntention()">
                             <span style="font-size:1em; color: #0099FF"
                                   class="glyphicon glyphicon-pencil"></span>
                     </a>
@@ -142,12 +142,10 @@
                 <div class="well">
                     <h4>Leave answer:</h4>
 
-                    <form role="form">
                         <div class="form-group">
                             <textarea ng-model="newComment.content" class="form-control" rows="3"></textarea>
                         </div>
                         <button ng-click="save()" class="btn btn-primary">Submit</button>
-                    </form>
                 </div>
             </div>
         </div>

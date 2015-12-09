@@ -70,7 +70,8 @@ angular.module('qorumApp')
                 created_date: null,
                 rating: null,
                 is_public: null,
-                id: null
+                id: null,
+                views: null
             };
         };
 

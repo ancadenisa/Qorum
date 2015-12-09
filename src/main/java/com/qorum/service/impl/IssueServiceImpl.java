@@ -68,6 +68,8 @@ public class IssueServiceImpl implements IssueService {
         return issueRepository.getFilteredByNameAndTagsPage(pageable, tags, issueName);
     }
 
-
-
+    @Override
+    public void increaseViews(Long issueId) {
+        issueRepository.increaseViews(issueId);
+    }
 }

@@ -30,14 +30,17 @@ angular.module('qorumApp')
         }
         $scope.save = function () {
             if ($scope.newComment != null && $scope.newComment.id != null) {
-                Comment.update($scope.newComment, onSaveFinished);
+                Comment.update($scope.newComment, function () {
+                    loadComments($scope.issue.id);
+                });
             } else {
                 $scope.newComment.is_solution = 0;
                 $scope.newComment.user =  $scope.loggedUser;
                 $scope.newComment.issue = entity;
-                Comment.save($scope.newComment);
+                Comment.save($scope.newComment, function () {
+                    loadComments($scope.issue.id);
+                });
             }
-            $window.location.reload();
         }
 
         var updateRatingForIssue =  function(newValue){
@@ -130,9 +133,9 @@ angular.module('qorumApp')
         }
 
         $scope.isUserOrgAdmin = function(issue){
-            loggedUser.id == issue.departments.organization.orgAdmin.id
+            $scope.loggedUser.id == issue.departments.organization.orgAdmin.id
             angular.forEach($scope.issue.departments, function(department, value){
-                if($scope.loggedUser.id.id == department.organization.orgAdmin.id ){
+                if($scope.loggedUser.id == department.organization.orgAdmin.id ){
                     existsUser = true;
                 }
              });

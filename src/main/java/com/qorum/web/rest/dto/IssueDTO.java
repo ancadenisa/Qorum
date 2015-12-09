@@ -36,6 +36,8 @@ public class IssueDTO {
 
     private Long commentsNo;
 
+    private Long views;
+
     public IssueDTO() {
 
     }
@@ -43,12 +45,12 @@ public class IssueDTO {
     public IssueDTO(Issue issue) {
         this(issue.getId(), issue.getName(), issue.getContent(), issue.getLast_updated(), issue.getCreated_date(),
             issue.getRating(), issue.getIs_public(), issue.getUser(), issue.getProject(), issue.getDepartments(),
-            issue.getTags(), issue.getCommentsNo());
+            issue.getTags(), issue.getCommentsNo(), issue.getViews());
     }
 
     public IssueDTO(Long id, String name, String content, ZonedDateTime last_updated, ZonedDateTime created_date,
                     Long rating, Boolean is_public, User user, Project project, List<Department> department, Set<Tag> tags,
-                    Long commentsNo) {
+                    Long commentsNo, Long views) {
         this.id = id;
         this.name = name;
         this.content = content;
@@ -61,6 +63,7 @@ public class IssueDTO {
         this.department = department;
         this.tags = tags;
         this.commentsNo = commentsNo;
+        this.views = views;
     }
 
     public Long getId() {
@@ -157,5 +160,13 @@ public class IssueDTO {
 
     public void setCommentsNo(Long commentsNo) {
         this.commentsNo = commentsNo;
+    }
+
+    public Long getViews() {
+        return views;
+    }
+
+    public void setViews(Long views) {
+        this.views = views;
     }
 }

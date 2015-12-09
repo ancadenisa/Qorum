@@ -42,6 +42,9 @@ public class Issue implements Serializable {
     @Column(name = "is_public")
     private Boolean is_public;
 
+    @Column(name = "views")
+    private Long views;
+
     @ManyToOne
     private User user;
 
@@ -164,6 +167,14 @@ public class Issue implements Serializable {
         this.tags = tags;
     }
 
+    public Long getViews() {
+        return views;
+    }
+
+    public void setViews(Long views) {
+        this.views = views;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -188,9 +199,11 @@ public class Issue implements Serializable {
         if (getTags() != null ? !getTags().equals(issue.getTags()) : issue.getTags() != null) return false;
         if (getCommentSet() != null ? !getCommentSet().equals(issue.getCommentSet()) : issue.getCommentSet() != null)
             return false;
+        if (getViews() != null ? !getViews().equals(issue.getViews()) : issue.getViews() != null) return false;
         return !(getCommentsNo() != null ? !getCommentsNo().equals(issue.getCommentsNo()) : issue.getCommentsNo() != null);
 
     }
+
 
     @Override
     public int hashCode() {
@@ -207,6 +220,7 @@ public class Issue implements Serializable {
         result = 31 * result + (getTags() != null ? getTags().hashCode() : 0);
         result = 31 * result + (getCommentSet() != null ? getCommentSet().hashCode() : 0);
         result = 31 * result + (getCommentsNo() != null ? getCommentsNo().hashCode() : 0);
+        result = 31 * result + (getViews() != null ? getViews().hashCode() : 0);
         return result;
     }
 
