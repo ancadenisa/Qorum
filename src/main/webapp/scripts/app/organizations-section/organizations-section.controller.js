@@ -1,24 +1,26 @@
 angular.module('qorumApp')
-    .controller('OrgsSectionController', function ($scope, OrgSectionService, Issue, IssuesSection, DepsSectionService,ProjectSectionService, ParseLinks ) {
+    .controller('OrgsSectionController', function ($scope, OrgSectionService, Issue, IssuesSection, DepsSectionService,ProjectSectionService, ParseLinks, User ) {
         $scope.userOrganizations = [];
         $scope.userDepartments = [];
         $scope.projects = [];
-        //TODO ANCA - elimna hardcodare
         $scope.loaded =  false;
-        $scope.issues = []; $scope.loadAll = function() {
-            OrgSectionService.queryOrgs({userId : 3}, function(result) {
-                $scope.userOrganizations = result;
-                for(var i = 0; i <  $scope.userOrganizations.length; i++){
-                    $scope.userDepartments[($scope.userOrganizations[i]).id] = DepsSectionService.queryDepts({orgId: $scope.userOrganizations[i].id, userId : 3}, function(result){
-                        for(dep in result){
-                            $scope.projects[(result[dep]).id] = ProjectSectionService.queryProjects({depId: (result[dep]).id, userId : 3});
-                        };
-                    });
-                }
-            });
-         };
+        User.get({login: "get_current_user"},
+            function(result){
+                $scope.loggedUser = result;
+                OrgSectionService.queryOrgs({userId : $scope.loggedUser.id}, function(result) {
+                    $scope.userOrganizations = result;
+                    for(var i = 0; i <  $scope.userOrganizations.length; i++){
+                        $scope.userDepartments[($scope.userOrganizations[i]).id] = DepsSectionService.queryDepts({orgId: $scope.userOrganizations[i].id, userId : $scope.loggedUser.id}, function(result){
+                            for(dep in result){
+                                $scope.projects[(result[dep]).id] = ProjectSectionService.queryProjects({depId: (result[dep]).id, userId : $scope.loggedUser.id});
+                            };
+                        });
+                    }
+                });
+            }
+        );
+        $scope.issues = [];
 
-        $scope.loadAll();
         $scope.fireEvent = function(){
         // This will only run after the ng-repeat has rendered its things to the DOM
             $('#side-menu').metisMenu();

@@ -21,6 +21,6 @@ public interface OrganizationRepository extends JpaRepository<Organization,Long>
     @Query("select organization from Organization organization left join fetch organization.users where organization.id =:id")
     Organization findOneWithEagerRelationships(@Param("id") Long id);
 
-    @Query("select distinct organization from Organization organization, User user  join organization.users user where user.id = :userId")
+    @Query("select distinct organization from Organization organization, User user join organization.users user where user.id = :userId or organization.orgAdmin.id = :userId")
     List<Organization> getOrganizationsByUserLoggedId(@Param("userId") Long userId);
 }
