@@ -50,4 +50,7 @@ public interface IssueRepository extends JpaRepository<Issue,Long> {
     @Transactional
     @Query("update Issue issue set issue.views = issue.views+1 where issue.id = :issueId")
     void increaseViews(@Param("issueId") Long issueId);
+
+    @Query("select distinct issue from Issue issue where lower(issue.name) like :issueName")
+    Page<Issue> getFilteredByNamePage(Pageable pageable, @Param("issueName") String issueName);
 }

@@ -11,42 +11,48 @@
                     <a href="/#/organizations-section"><i class="fa fa-sitemap fa-fw"></i> Organizations</a>
                 </li>
                 <li>
-                    <a><i class="fa fa-search fa-fw"></i> Advanced search...<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <input-group>
-                                <div class="radio">
-                                    <label><input type="radio" name="optradio">Public</label>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="optradio">Company</label>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="optradio">All</label>
-                                </div>
-                            </input-group>
-                        </li>
-                        <li>
-                                <ui-select multiple ng-model="selected.tags" theme="bootstrap">
-                                    <ui-select-match>{{$item.name}}</ui-select-match>
-                                    <ui-select-choices repeat="tag in tags | filter: {name: $select.search}">
-                                        <div ng-bind-html="tag.name | highlight: $select.search"></div>
-                                        <small>
-                                            Name: {{tag.name}}
-                                        </small>
-                                    </ui-select-choices>
-                                </ui-select>
-                        </li>
-                    </ul>
-                    <div class="input-group custom-search-form">
-                        <input type="text" class="form-control" ng-model="issueToSearch" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" ng-click="getByNameAndTags()">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
+                    <a><i class="fa fa-search fa-fw"></i> Advanced search...</a>
+
+                    <div style="margin-right: 10%; margin-left:10%;">
+                        <div class="form-group">
+                            <label>Select scope:</label>
+
+                            <div class="radio">
+                                <label><input type="radio" name="optradio">Public</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio">Company</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio">All</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select tags:</label>
+
+                            <ui-select multiple ng-model="selected.tags" theme="bootstrap">
+                                <ui-select-match placeholder="Tags...">{{$item.name}}</ui-select-match>
+                                <ui-select-choices repeat="tag in tags | filter: {name: $select.search}">
+                                    <div ng-bind-html="tag.name | highlight: $select.search"></div>
+                                    <small>
+                                        Name: {{tag.name}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="issueToSearch"
+                                   placeholder="Search text...">
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-default" type="button" ng-click="getByNameAndTags()">
+                                <i class="fa fa-search"></i> Search
+                            </button>
+                        </div>
                     </div>
-                    <!-- /.nav-second-level -->
                 </li>
             </ul>
         </div>

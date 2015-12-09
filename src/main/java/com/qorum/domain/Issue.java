@@ -233,8 +233,6 @@ public class Issue implements Serializable {
         result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
         result = 31 * result + (getProject() != null ? getProject().hashCode() : 0);
         result = 31 * result + (getDepartments() != null ? getDepartments().hashCode() : 0);
-        result = 31 * result + (getTags() != null ? getTags().hashCode() : 0);
-        result = 31 * result + (getCommentSet() != null ? getCommentSet().hashCode() : 0);
         result = 31 * result + (getCommentsNo() != null ? getCommentsNo().hashCode() : 0);
         result = 31 * result + (getViews() != null ? getViews().hashCode() : 0);
         result = 31 * result + (getHasSolution() != null ? getHasSolution().hashCode():0);

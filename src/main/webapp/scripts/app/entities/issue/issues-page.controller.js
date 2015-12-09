@@ -8,15 +8,26 @@ angular.module('qorumApp')
         $scope.isAuthenticated = Principal.isAuthenticated;
         $scope.issues = [];
         $scope.page = 0;
+
+        $scope.issueToSearch = "";
+        $scope.selectedTags = [];
         $scope.loadAll = function() {
-            Issue.query({page: $scope.page, size: 20}, function(result, headers) {
+            /*Issue.query({page: $scope.page, size: 20}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
                 $scope.issues = result;
-            });
+            });*/
+
+            Issue.getByNameAndTags({page: $scope.page, size: 20,issueName: $scope.issueToSearch },$scope.selectedTags,
+                function (result,headers) {
+                    $scope.links = ParseLinks.parse(headers('link'));
+                    $scope.issues = result;
+                });
         };
 
         $scope.$on('filterIssuesEvent', function(event, data) {
-            Issue.getByNameAndTags({page: $scope.page, size: 1,issueName: data['issueToSearch']},data['selectedTags'],
+            $scope.issueToSearch = data['issueToSearch'];
+            $scope.selectedTags = data['selectedTags'];
+            Issue.getByNameAndTags({page: $scope.page, size: 20,issueName: data['issueToSearch']},data['selectedTags'],
                 function (result,headers) {
                     $scope.links = ParseLinks.parse(headers('link'));
                     $scope.issues = result;

@@ -121,8 +121,17 @@ public class IssueResource {
     @Timed
     public ResponseEntity<List<Issue>> getAllIssuesFiltered(Pageable pageable, @RequestParam(value = "issueName") String issueName, @RequestBody List<Tag> tags)
         throws URISyntaxException {
+
         issueName = "%" + issueName.toLowerCase() + "%";
-        Page<Issue> page = issueService.getFilteredByNameAndTagsPage(pageable,tags,issueName);
+        Page<Issue> page = null;
+
+        if (tags != null && tags.size() > 0) {
+            page = issueService.getFilteredByNameAndTagsPage(pageable,tags,issueName);
+        }
+        else {
+            page = issueService.getFilteredByNamePage(pageable,issueName);
+        }
+
         /*List<IssueDTO> issues = page.getContent().stream()
             .map(issue -> new IssueDTO(issue))
             .collect(Collectors.toList());*/
