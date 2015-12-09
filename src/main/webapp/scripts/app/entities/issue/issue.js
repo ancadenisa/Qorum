@@ -65,10 +65,11 @@ angular.module('qorumApp')
                                     content: null,
                                     last_updated: null,
                                     created_date: null,
-                                    rating: null,
+                                    rating: 0,
                                     is_public: null,
                                     id: null,
-                                    views: null
+                                    views: 0,
+                                    hasSolution: false
                                 };
                             }
                         }

@@ -29,6 +29,15 @@
     font-size: 18px;
 }
 
+.issue-title-no {
+    color: red;
+    margin-bottom: 0px;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    font-size: 18px;
+}
+
 .separator-qorum {
     margin-top: 10px;
     margin-bottom: 10px;

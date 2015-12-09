@@ -38,6 +38,8 @@ public class IssueDTO {
 
     private Long views;
 
+    private Boolean hasSolution;
+
     public IssueDTO() {
 
     }
@@ -45,12 +47,12 @@ public class IssueDTO {
     public IssueDTO(Issue issue) {
         this(issue.getId(), issue.getName(), issue.getContent(), issue.getLast_updated(), issue.getCreated_date(),
             issue.getRating(), issue.getIs_public(), issue.getUser(), issue.getProject(), issue.getDepartments(),
-            issue.getTags(), issue.getCommentsNo(), issue.getViews());
+            issue.getTags(), issue.getCommentsNo(), issue.getViews(), issue.getHasSolution());
     }
 
     public IssueDTO(Long id, String name, String content, ZonedDateTime last_updated, ZonedDateTime created_date,
                     Long rating, Boolean is_public, User user, Project project, List<Department> department, Set<Tag> tags,
-                    Long commentsNo, Long views) {
+                    Long commentsNo, Long views, Boolean hasSolution) {
         this.id = id;
         this.name = name;
         this.content = content;
@@ -64,6 +66,7 @@ public class IssueDTO {
         this.tags = tags;
         this.commentsNo = commentsNo;
         this.views = views;
+        this.hasSolution = hasSolution;
     }
 
     public Long getId() {
@@ -168,5 +171,13 @@ public class IssueDTO {
 
     public void setViews(Long views) {
         this.views = views;
+    }
+
+    public Boolean getHasSolution() {
+        return hasSolution;
+    }
+
+    public void setHasSolution(Boolean hasSolution) {
+        this.hasSolution = hasSolution;
     }
 }

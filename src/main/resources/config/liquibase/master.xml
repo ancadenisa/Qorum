@@ -15,6 +15,7 @@
     <include file="classpath:config/liquibase/changelog/20151201_many_to_many_issue_department.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20151209122923_add_View_Field_Issue.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20151209124523_add_default_value_for_View_Issue.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20151209144923_add_isSolution_Field_Issue.xml" relativeToChangelogFile="false"/>
 
 
     <!-- JHipster will add liquibase changelogs here -->
