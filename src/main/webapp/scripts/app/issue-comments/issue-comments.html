@@ -14,12 +14,12 @@
                 <br/>
                 <div class="pull-right">
                     <!--show if current user is org admin or author od issue-->
-                    <a ng-show="isUserOrgAdmin(issue) || loggedUser.id == issue.user.id" ng-click="editIssueIntention()">
+                    <a ng-show="(issue != null &&  loggedUser != null)  && isUserOrgAdmin(issue) || loggedUser.id == issue.user.id" ng-click="editIssueIntention()">
                             <span style="font-size:1em; color: #0099FF"
                                   class="glyphicon glyphicon-pencil"></span>
                     </a>
                     <!--only admin can delete-->
-                    <a ng-show="isUserOrgAdmin(issue) == issue.departments.organization.orgAdmin.id"  ng-click="deleteIssueIntention()">
+                    <a ng-show="(issue != null &&  loggedUser != null) && isUserOrgAdmin(issue) == issue.departments.organization.orgAdmin.id"  ng-click="deleteIssueIntention()">
                             <span style="font-size:1em; color: red"
                                   class="glyphicon glyphicon-remove-circle"></span>
                     </a>
@@ -79,7 +79,7 @@
         <div class="row" ng-repeat="comment in comments">
             <div class="col-lg-2"></div>
             <div class="panel  col-lg-8 media" style="background-color: #FFFFCC">
-                <div ng-show="(loggedUser.id == issue.user.id && checkSolution() == -100)  || (checkSolution() == {{comment.id}})"
+                <div ng-show="((issue != null &&  loggedUser != null) && ((loggedUser.id == issue.user.id && checkSolution() == -100)  || checkSolution() == comment.id))"
                     class="pull-left">
                     <br/>
                     <a ng-click="markOrUnmarkSolution(comment)">
@@ -89,8 +89,8 @@
                 </div>
 
                 <div class="media-body">
-                    <div ng-show="loggedUser.id == comment.user.id" class="pull-right">
-                        <a ng-click="onEditIntention(comment)">
+                    <div ng-show="(issue != null &&  loggedUser != null) &&  (loggedUser.id == comment.user.id)" class="pull-right">
+                        <a ng-click="editCommentIntention(comment)">
                             <span id="edit{{comment.id}}" style="font-size:1em; color: #0099FF"
                                   class="glyphicon glyphicon-pencil"></span>
                         </a>

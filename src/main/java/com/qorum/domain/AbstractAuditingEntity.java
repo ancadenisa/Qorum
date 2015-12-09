@@ -24,13 +24,13 @@ import javax.validation.constraints.NotNull;
 public abstract class AbstractAuditingEntity {
 
     @CreatedBy
-    @NotNull
+    //@NotNull
     @Column(name = "created_by", nullable = false, length = 50, updatable = false)
     @JsonIgnore
     private String createdBy;
 
     @CreatedDate
-    @NotNull
+    //@NotNull
     @Column(name = "created_date", nullable = false)
     @JsonIgnore
     private ZonedDateTime createdDate = ZonedDateTime.now();

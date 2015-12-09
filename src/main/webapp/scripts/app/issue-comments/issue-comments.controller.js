@@ -57,7 +57,7 @@ angular.module('qorumApp')
                     comment.is_solution  = 1;
                     $("#solution"+comment.id).css('color', 'green');
                 }
-                Comment.update(comment);
+                comment = Comment.update(comment);
             }
         }
 
@@ -101,7 +101,7 @@ angular.module('qorumApp')
         }
         $scope.editComment = function(comment){
             Comment.update(comment);
-            $scope.pnEditComm = false;
+            $scope.onEditComm = false;
         }
 
         $scope.cancelEdit =  function(){
@@ -133,10 +133,9 @@ angular.module('qorumApp')
         }
 
         $scope.isUserOrgAdmin = function(issue){
-            $scope.loggedUser.id == issue.departments.organization.orgAdmin.id
             angular.forEach($scope.issue.departments, function(department, value){
                 if($scope.loggedUser.id == department.organization.orgAdmin.id ){
-                    //existsUser = true;
+                    existsUser = true;
                     return true;
                 }
              });

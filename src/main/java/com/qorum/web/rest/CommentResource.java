@@ -2,7 +2,9 @@ package com.qorum.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.qorum.domain.Comment;
+import com.qorum.domain.Issue;
 import com.qorum.repository.CommentRepository;
+import com.qorum.repository.IssueRepository;
 import com.qorum.web.rest.dto.CommentDTO;
 import com.qorum.web.rest.util.HeaderUtil;
 import com.qorum.web.rest.util.PaginationUtil;
@@ -35,6 +37,9 @@ public class CommentResource {
     @Inject
     private CommentRepository commentRepository;
 
+    @Inject
+    private IssueRepository issueRepository;
+
     /**
      * POST  /comments -> Create a new comment.
      */
@@ -44,10 +49,12 @@ public class CommentResource {
     @Timed
     public ResponseEntity<Comment> createComment(@RequestBody Comment comment) throws URISyntaxException {
         log.debug("REST request to save Comment : {}", comment);
+
         if (comment.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new comment cannot already have an ID").body(null);
         }
         Comment result = commentRepository.save(comment);
+
         return ResponseEntity.created(new URI("/api/comments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("comment", result.getId().toString()))
             .body(result);
@@ -65,12 +72,18 @@ public class CommentResource {
         if (comment.getId() == null) {
             return createComment(comment);
         }
+
+        if(comment.getIs_solution() != 0L) {
+            Issue issueBelongingToComment = comment.getIssue();
+            issueBelongingToComment.setHasSolution(true);
+            issueRepository.save(issueBelongingToComment);
+        }
         //update fields which are null  when coming from client side
         Comment oldComment = commentRepository.findOne(comment.getId());
         comment.setCreatedBy(oldComment.getCreatedBy());
         comment.setCreatedDate(oldComment.getCreatedDate());
 
-             Comment result = commentRepository.save(comment);
+        Comment result = commentRepository.save(comment);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("comment", comment.getId().toString()))
             .body(result);
