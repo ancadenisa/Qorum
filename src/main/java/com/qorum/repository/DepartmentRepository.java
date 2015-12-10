@@ -23,4 +23,7 @@ public interface DepartmentRepository extends JpaRepository<Department,Long> {
 
     @Query("select distinct department from Department department left join fetch department.users   where department.organization.id = :orgId")
     List<Department> getDepartmentsByOrgId(@Param("orgId") Long orgId);
+
+    @Query("select distinct project.departments from Project project where project.id=:projectId")
+    List<Department> getByProjectId(@Param("projectId") Long projectId);
 }

@@ -19,7 +19,7 @@
     <changeSet id="20151209123444" author="ancab">
         <modifyDataType
                         columnName="content"
-                        newDataType="blob"
+                        newDataType="text"
                         tableName="issue"/>
         <modifyDataType
             columnName="content"

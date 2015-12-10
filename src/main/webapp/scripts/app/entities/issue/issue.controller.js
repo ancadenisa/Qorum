@@ -45,7 +45,7 @@ angular.module('qorumApp')
                 last_updated: null,
                 created_date: null,
                 rating: 0,
-                is_public: null,
+                is_public: false,
                 id: null,
                 views: 0,
                 hasSolution: false

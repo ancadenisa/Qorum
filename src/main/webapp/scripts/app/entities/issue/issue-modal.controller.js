@@ -11,8 +11,16 @@ angular.module('qorumApp').controller('IssueModalController',
             $scope.issue = entity;
             $scope.users = User.query();
             $scope.projects = Project.query();
-            $scope.departments = Department.query();
+            $scope.departments = [];
             $scope.tags = Tag.query();
+
+            $scope.getProjectDepartments = function() {
+                Department.getForProject({projectId: $scope.issue.project.id},
+                    function (result) {
+                        $scope.departments = result
+                    });
+            }
+
             $scope.load = function(id) {
                 Issue.get({id : id}, function(result) {
                     $scope.issue = result;
@@ -25,11 +33,19 @@ angular.module('qorumApp').controller('IssueModalController',
             };
 
             $scope.save = function () {
-                if ($scope.issue.id != null) {
-                    Issue.update($scope.issue, onSaveFinished);
-                } else {
-                    Issue.save($scope.issue, onSaveFinished);
-                }
+                $scope.issue.created_date = new Date();
+                $scope.issue.last_updated = new Date();
+                User.get({login: "get_current_user"},
+                    function(result){
+                        $scope.issue.user =  result;
+                        if ($scope.issue.id != null) {
+                            Issue.update($scope.issue, onSaveFinished);
+                        } else {
+                            Issue.save($scope.issue, onSaveFinished);
+                        }
+                    });
+
+
             };
 
             $scope.clear = function() {

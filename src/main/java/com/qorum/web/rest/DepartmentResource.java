@@ -135,4 +135,13 @@ public class DepartmentResource {
         List<Department> departmentList = departmentRepository.getDepartmentsByOrgId(orgId);
         return new ResponseEntity<>(departmentList, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/departments/getByProjectId/{projectId}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Department>> getByProjectId(@PathVariable Long projectId) {
+        List<Department> departmentList = departmentRepository.getByProjectId(projectId);
+        return new ResponseEntity<>(departmentList, HttpStatus.OK);
+    }
 }
