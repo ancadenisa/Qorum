@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qorum.com.qorumapp.SearchFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchQuestionsView"
+        android:layout_gravity="left|top"
+        android:background="#b0bfd9"
+        android:layout_row="0"
+        android:layout_column="0" />
+
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchResults"
+        android:layout_gravity="left|bottom"
+       />
+
+</RelativeLayout>
