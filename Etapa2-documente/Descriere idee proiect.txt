@@ -1,2 +1,0 @@
-Proiectul isi propune sa imbunatateasca interactiunea dintre utilizator si o platforma colaborativa accesibila online prin 
-propunerea si implementarea unor specificatii noi si inovative. 
