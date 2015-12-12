@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Comment.
@@ -143,6 +143,17 @@ public class CommentResource {
     public ResponseEntity<List<CommentDTO>> getCommentsByIssueId(@PathVariable Long issueId) {
         log.debug("REST request to get Comments of Issue with id : {}", issueId);
         List<Comment> commentList = commentRepository.findAllByIssueId(issueId);
+        Comparator<Comment> byCommentVotes = (e1, e2) -> e1.getVotes() >= e2.getVotes() ? -1 : 1;
+        try {
+            Comment solution = commentList.stream().filter(p -> p.getIs_solution() != 0L).findFirst().get();
+            commentList.removeIf(p -> p.getIs_solution() != 0L);
+            commentList = commentList.stream().sorted(byCommentVotes).collect(Collectors.toList());
+            commentList.add(0, solution);
+            return new ResponseEntity<List<CommentDTO>>(entityListToDto(commentList), HttpStatus.OK);
+        }catch(NoSuchElementException nse){
+            System.out.println("No Solution for this issue");
+        }
+        commentList = commentList.stream().sorted(byCommentVotes).collect(Collectors.toList());
         return new ResponseEntity<List<CommentDTO>>(entityListToDto(commentList), HttpStatus.OK);
     }
 

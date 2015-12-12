@@ -24,7 +24,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findOneByLogin(String login);
 
-    @Override
-    void delete(User t);
-
 }

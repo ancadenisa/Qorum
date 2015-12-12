@@ -5,8 +5,7 @@ angular.module('qorumApp')
         $scope.organizations = [];
         $scope.page = 0;
         $scope.loadAll = function() {
-            Organization.query({page: $scope.page, size: 20}, function(result, headers) {
-                $scope.links = ParseLinks.parse(headers('link'));
+            Organization.queryByUserAdmin({page: $scope.page, size: 20}, function(result) {
                 $scope.organizations = result;
             });
         };

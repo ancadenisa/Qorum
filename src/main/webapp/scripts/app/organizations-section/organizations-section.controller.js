@@ -11,8 +11,8 @@ angular.module('qorumApp')
                     $scope.userOrganizations = result;
                     for(var i = 0; i <  $scope.userOrganizations.length; i++){
                         $scope.userDepartments[($scope.userOrganizations[i]).id] = DepsSectionService.queryDepts({orgId: $scope.userOrganizations[i].id, userId : $scope.loggedUser.id}, function(result){
-                            for(dep in result){
-                                $scope.projects[(result[dep]).id] = ProjectSectionService.queryProjects({depId: (result[dep]).id, userId : $scope.loggedUser.id});
+                            for(var j = 0;  j <  result.length; j++){
+                                $scope.projects[result[j].id] = ProjectSectionService.queryProjects({depId: result[j].id, userId : $scope.loggedUser.id});
                             };
                         });
                     }
@@ -30,8 +30,13 @@ angular.module('qorumApp')
            IssuesSection.getIssuesByOrg(id).then(function(response){
                 $scope.issues = response.data;
            })
+           loadTopUsersFromOrg(id);
          }
 
+          function loadTopUsersFromOrg(orgId){
+            $scope.users = User.getTopUsersByPointsFromOrg({orgId: orgId});
+
+          }
           $scope.loadPostsFromDep = function(id){
             IssuesSection.getIssuesByDep(id).then(function(response){
                  $scope.issues = response.data;

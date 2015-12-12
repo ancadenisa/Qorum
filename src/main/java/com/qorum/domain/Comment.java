@@ -27,6 +27,9 @@ public class Comment extends AbstractAuditingEntity implements Serializable{
     @Column(name = "is_solution")
     private Long is_solution;
 
+    @Column(name="votes")
+    private Long votes;
+
     @ManyToOne
     private User user;
 
@@ -71,6 +74,14 @@ public class Comment extends AbstractAuditingEntity implements Serializable{
 
     public void setIssue(Issue issue) {
         this.issue = issue;
+    }
+
+    public Long getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Long votes) {
+        this.votes = votes;
     }
 
     @Override

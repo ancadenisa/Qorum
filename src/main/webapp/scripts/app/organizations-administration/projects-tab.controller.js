@@ -5,20 +5,6 @@ angular.module('qorumApp')
         $scope.departments = angular.element(document.getElementById('wrapperOrganizations')).scope().departments;
         $scope.organization = angular.element(document.getElementById('wrapperOrganizations')).scope().organization;
         $scope.users = [];
-        //TO DO ANCA - modifica dinamic userii atunci cand se selecteaz aun departament...cu un watcher
-        angular.forEach($scope.departments, function(department, value){
-            angular.forEach(department.users, function(user, value){
-                var existsUser = false;
-                angular.forEach($scope.users, function(userOnScope, value){
-                    if(userOnScope.id == user.id){
-                        existsUser = true;
-                    }
-                 });
-                if(existsUser == false){
-                   $scope.users.push(user);
-                }
-            });
-        });
 
         var onSaveFinished = function (result) {
             OrganizationsCrud.getProjectsByOrganization($scope.organization.id).then(
@@ -40,6 +26,23 @@ angular.module('qorumApp')
         $scope.clear = function() {
             $modalInstance.dismiss('cancel');
         };
+
+        $scope.$watch('project.departments', function(newValue, oldValue) {
+            $scope.users = [];
+            angular.forEach($scope.project.departments, function(department, value){
+                angular.forEach(department.users, function(user, value){
+                    var existsUser = false;
+                    angular.forEach($scope.users, function(userOnScope, value){
+                        if(userOnScope.id == user.id){
+                            existsUser = true;
+                        }
+                     });
+                    if(existsUser == false){
+                       $scope.users.push(user);
+                    }
+                });
+            });
+        });
 
 
    }

@@ -34,7 +34,7 @@ angular.module('qorumApp')
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/organizations-administration/organization-create-tabs.html',
+                        templateUrl: 'scripts/app/organizations-administration/organization-edit-tabs.html',
                         controller: 'OrganizationsCreateTabsController'
                     },
                 },
@@ -76,7 +76,7 @@ angular.module('qorumApp')
             })
             .state('edit-dep', {
                 parent: 'org-create-tabs',
-                url: '{orgId}/{depId}/new',
+                url: '{orgId}/{depId}/editDep',
                 data: {
                     authorities: [],
                     pageTitle: 'qorumApp.issue.detail.title'
@@ -131,7 +131,7 @@ angular.module('qorumApp')
             })
             .state('edit-proj', {
                 parent: 'org-create-tabs',
-                url: '/{id}/edit',
+                url: '/{id}/editProj',
                 data: {
                     authorities: [],
                     pageTitle: 'qorumApp.issue.detail.title'
@@ -148,6 +148,112 @@ angular.module('qorumApp')
                         }
                     }).result.then(function(result) {
                         $state.go('org-create-tabs', null, { reload: false });
+                    }, function() {
+                        $state.go('^');
+                    })
+                }]
+            })
+            .state('create-dep-on-edit-org', {
+                parent: 'org-edit-tabs',
+                url: '/edit/{orgId}/newDep',
+                data: {
+                    authorities: [],
+                    pageTitle: 'qorumApp.issue.detail.title'
+                },
+                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
+                    $modal.open({
+                        templateUrl: 'scripts/app/organizations-administration/departments-tab.html',
+                        controller: 'DepartmentsTabController',
+                        size: 'lg',
+                        resolve: {
+                            departmentToBeEdited: ['Department', function(Department) {
+                                return {id: null};
+                            }],
+                            organizationSaved: ['Organization', function(Organization) {
+                                return Organization.get({id : $stateParams.orgId});
+                            }]
+                          }
+                    }).result.then(function(result) {
+                        $state.go('org-edit-tabs', null, { reload: false });
+                    }, function() {
+                        $state.go('^');
+                    })
+                }]
+            })
+            .state('edit-dep-on-edit-org', {
+                parent:  'org-edit-tabs',
+                url: '/edit/{orgId}/{depId}/editDep',
+                data: {
+                    authorities: [],
+                    pageTitle: 'qorumApp.issue.detail.title'
+                },
+                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
+                    $modal.open({
+                        templateUrl: 'scripts/app/organizations-administration/departments-tab.html',
+                        controller: 'DepartmentsTabController',
+                        size: 'lg',
+                        resolve: {
+                            departmentToBeEdited: ['Department', function(Department) {
+                                return Department.get({id : $stateParams.depId});
+                            }],
+                            organizationSaved: ['Organization', function(Organization) {
+                                return Organization.get({id : $stateParams.orgId});
+                                }]
+                          }
+                    }).result.then(function(result) {
+                        $state.go('org-edit-tabs', null, { reload: false });
+                    }, function() {
+                        $state.go('^');
+                    })
+                }]
+            })
+            .state('create-proj-on-edit-org', {
+                parent: 'org-edit-tabs',
+                url: '/edit/newProj',
+                data: {
+                    authorities: [],
+                    pageTitle: 'qorumApp.issue.detail.title'
+                },
+                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
+                    $modal.open({
+                        templateUrl: 'scripts/app/organizations-administration/projects-tab.html',
+                        controller: 'ProjectsTabController',
+                        size: 'lg',
+                        resolve: {
+                            entity: function () {
+                                return {
+                                    name: null,
+                                    description: null,
+                                    id: null
+                                };
+                            }
+                        }
+                    }).result.then(function(result) {
+                        $state.go('org-edit-tabs', null, { reload: false});
+                    }, function() {
+                        $state.go('^');
+                    })
+                }]
+            })
+            .state('edit-proj-on-edit-org', {
+                parent: 'org-edit-tabs',
+                url: '/edit/editProj/{id}',
+                data: {
+                    authorities: [],
+                    pageTitle: 'qorumApp.issue.detail.title'
+                },
+                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
+                    $modal.open({
+                        templateUrl: 'scripts/app/organizations-administration/projects-tab.html',
+                        controller: 'ProjectsTabController',
+                        size: 'lg',
+                        resolve: {
+                            entity: ['Project', function(Project) {
+                                return Project.get({id : $stateParams.id});
+                            }]
+                        }
+                    }).result.then(function(result) {
+                        $state.go('org-edit-tabs', null, { reload: false });
                     }, function() {
                         $state.go('^');
                     })

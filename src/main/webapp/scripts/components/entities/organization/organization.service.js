@@ -11,6 +11,10 @@ angular.module('qorumApp')
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': { method:'PUT' },
+            'queryByUserAdmin': {
+                 url : 'api/organtizations/filteredByLoggedUserAdmin',
+                 method: 'GET',
+                isArray: true}
         });
     });

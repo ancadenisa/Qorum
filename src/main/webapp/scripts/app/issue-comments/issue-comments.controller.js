@@ -147,5 +147,24 @@ angular.module('qorumApp')
             return existsAdmin;
         }
 
+        $scope.voteUp = function(comment){
+            if(comment.votes == null){
+                comment.votes = 1;
+            }else{
+                comment.votes++;
+            }
+            Comment.update(comment);
+        }
+
+        $scope.voteDown = function(comment){
+            if(comment.votes == null){
+                comment.votes = -1;
+            }else{
+                comment.votes--;
+            }
+            Comment.update(comment);
+        }
+
+
     }
 );

@@ -40,6 +40,10 @@ public class UserDTO {
     @Size(min = 2, max = 5)
     private String langKey;
 
+
+
+    private Long points;
+
     private Set<String> authorities;
 
     public UserDTO() {
@@ -95,6 +99,14 @@ public class UserDTO {
 
     public Set<String> getAuthorities() {
         return authorities;
+    }
+
+    public Long getPoints() {
+        return points;
+    }
+
+    public void setPoints(Long points) {
+        this.points = points;
     }
 
     @Override

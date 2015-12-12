@@ -34,6 +34,26 @@
             <div class="col-lg-8">
                 <div ui-view="issuesz"></div>
             </div>
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-gg-circle"></i> Top Users
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item" ng-repeat="user in users">
+                                <i class="fa fa-user"></i> {{user.login}}
+                                    <span class="pull-right text-muted small"><em>{{user.points}}</em>
+                                    </span>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+
+            </div>
         </div>
     </div>
 </div>

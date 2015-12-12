@@ -18,6 +18,7 @@
     <include file="classpath:config/liquibase/changelog/20151209144923_add_isSolution_Field_Issue.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20151209144924_modify_isssue_comment.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/201512091449245_modify_isssue_comment.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/201512121_add_votes_column_on_comment.xml" relativeToChangelogFile="false"/>
 
 
     <!-- JHipster will add liquibase changelogs here -->

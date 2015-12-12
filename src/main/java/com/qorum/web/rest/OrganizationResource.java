@@ -3,7 +3,9 @@ package com.qorum.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.qorum.domain.Organization;
 import com.qorum.repository.OrganizationRepository;
+import com.qorum.security.SecurityUtils;
 import com.qorum.service.OrganizationService;
+import com.qorum.service.UserService;
 import com.qorum.web.rest.util.HeaderUtil;
 import com.qorum.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -33,6 +35,8 @@ public class OrganizationResource {
 
     @Inject
     private OrganizationRepository organizationRepository;
+    @Inject
+    private UserService userService;
 
     @Inject
     OrganizationService organizationService;
@@ -123,6 +127,16 @@ public class OrganizationResource {
     public ResponseEntity<List<Organization>> getOrganizationsByUserId(@PathVariable Long id) {
         log.debug("REST request to get Organizations of User with the id : {}", id);
         List<Organization> organizationList = organizationService.getOrganizationsByUserLoggedId(id);
+        return new ResponseEntity<>(organizationList, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/organtizations/filteredByLoggedUserAdmin",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Organization>> getOrganizationsFilteredByLoggedUserAdmin() {
+        log.debug("REST request to get Organizations of current user admin");
+
+        List<Organization> organizationList = organizationRepository.getOrganizationsByOrgAdmin(userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).get().getId());
         return new ResponseEntity<>(organizationList, HttpStatus.OK);
     }
 }

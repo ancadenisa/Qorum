@@ -11,6 +11,11 @@ angular.module('qorumApp')
                         return data;
                     }
                 },
-                'update': { method:'PUT' }
+                'update': { method:'PUT' },
+                'getTopUsersByPointsFromOrg': {
+                    url : "api/topUsersByPointsFromOrg/:orgId",
+                    method: 'GET',
+                    isArray: true,
+                }
             });
         });

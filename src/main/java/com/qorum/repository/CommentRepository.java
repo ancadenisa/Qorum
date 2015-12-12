@@ -20,4 +20,8 @@ public interface CommentRepository extends JpaRepository<Comment,Long> {
 
     @Query("select count(comment) from Comment comment where comment.issue.id = :issueId")
     Long countByIssueId(@Param("issueId") Long issueId);
+
+
+    @Query("select comment from Comment comment where comment.user.id = :userId")
+    List<Comment> findCommentByUserAuthor(@Param("userId") Long userId);
 }

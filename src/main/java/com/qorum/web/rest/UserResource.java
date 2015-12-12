@@ -2,9 +2,10 @@ package com.qorum.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.qorum.domain.Authority;
+import com.qorum.domain.Comment;
+import com.qorum.domain.Issue;
 import com.qorum.domain.User;
-import com.qorum.repository.AuthorityRepository;
-import com.qorum.repository.UserRepository;
+import com.qorum.repository.*;
 import com.qorum.security.AuthoritiesConstants;
 import com.qorum.security.SecurityUtils;
 import com.qorum.service.UserService;
@@ -68,6 +69,15 @@ public class UserResource {
 
     @Inject
     private UserService userService;
+
+    @Inject
+    OrganizationRepository organizationRepository;
+
+    @Inject
+    IssueRepository issueRepository;
+
+    @Inject
+    CommentRepository commentRepository;
 
     /**
      * POST  /users -> Create a new user.
@@ -160,5 +170,46 @@ public class UserResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @RequestMapping(value = "/topUsersByPointsFromOrg/{orgId}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<UserDTO>> topUsersByPoints(@PathVariable Long orgId) {
+        log.debug("REST request to get User : {}", orgId);
+        Set<User> users =  organizationRepository.findOneWithEagerRelationships(orgId).getUsers();
+        List<UserDTO> result =  new ArrayList<>();
+        for(User user : users){
+            user.setAuthorities(new HashSet<>());
+            UserDTO userDTO =  new UserDTO(user);
+            userDTO.setPoints(calculatePointsForUser(user));
+            result.add(userDTO);
+        }
+        return new ResponseEntity<List<UserDTO>>(result, HttpStatus.OK);
+    }
+
+    private Long calculatePointsForUser(User user) {
+        List<Issue> issuesByUser = issueRepository.findIssuesByUserAuthor(user.getId());
+        List<Comment> commentsByUser = commentRepository.findCommentByUserAuthor(user.getId());
+        Comment solution  = null;
+        Long commentPoints =  0L, issuePoints = 0L;
+        if(!commentsByUser.isEmpty()) {
+            try {
+                solution = commentsByUser.stream().filter(p -> p.getIs_solution() != 0L).findFirst().get();
+            }catch (NoSuchElementException e){
+                log.debug("User did not give any solution");
+            }
+            commentPoints = commentsByUser.stream()
+                .map(comment -> comment.getVotes())
+                .reduce((first, last) -> first + last).get();
+        }
+        if(!issuesByUser.isEmpty()) {
+            issuePoints = issuesByUser.stream()
+                .map(issue -> issue.getRating())
+                .reduce((first, last) -> first + last).get();
+        }
+        Long result = commentPoints + issuePoints + (solution != null ? 50L : 0);
+
+        return result;
+    }
 
 }

@@ -135,7 +135,14 @@ public class ProjectResource {
     @Timed
     public ResponseEntity<List<Project>> getProjectsByDeptIdAndUserId(@PathVariable Long deptId, @PathVariable Long userId ) {
         log.debug("REST request to get Projects of User with the id : {}", userId, "belonging the organisation with the id ", deptId);
-            List<Project> projectList = projectService.getProjectsByDepartmentAndByUserLogged(deptId, userId);
+        Department department = departmentRepository.findOneWithEagerRelationships(deptId);
+        if(department.getOrganization().getOrgAdmin().getId().equals(userId)){
+            List<Project> projsAdmin = new ArrayList<>();
+            projsAdmin.addAll(department.getProjects());
+            return new ResponseEntity<>(projsAdmin, HttpStatus.OK);
+        }
+
+        List<Project> projectList = projectService.getProjectsByDepartmentAndByUserLogged(deptId, userId);
         return new ResponseEntity<>(projectList, HttpStatus.OK);
     }
 

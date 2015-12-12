@@ -2,7 +2,9 @@ package com.qorum.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.qorum.domain.Department;
+import com.qorum.domain.Organization;
 import com.qorum.repository.DepartmentRepository;
+import com.qorum.repository.OrganizationRepository;
 import com.qorum.service.DepartmentService;
 import com.qorum.web.rest.util.HeaderUtil;
 import com.qorum.web.rest.util.PaginationUtil;
@@ -19,8 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * REST controller for managing Department.
@@ -36,6 +37,9 @@ public class DepartmentResource {
 
     @Inject
     private DepartmentService departmentService;
+
+    @Inject
+    private OrganizationRepository organizationRepository;
 
     /**
      * POST  /departments -> Create a new department.
@@ -122,7 +126,15 @@ public class DepartmentResource {
     @Timed
     public ResponseEntity<List<Department>> getDepartmentsByUserIdAnByOrgId(@PathVariable Long orgId, @PathVariable Long userId) {
         log.debug("REST request to get Departments of User with the id ", userId, "and wich belong to Organization with the id ", orgId);
+
+        Organization org = organizationRepository.findOneWithEagerRelationships(orgId);
+        if(org.getOrgAdmin().getId().equals(userId)){
+            List<Department> depsAdmin = new ArrayList<>();
+            depsAdmin.addAll(org.getDepartments());
+            return new ResponseEntity<>(depsAdmin, HttpStatus.OK);
+        }
         List<Department> departmentList = departmentService.getDepartmentsByOrgAndByUserLogged(orgId, userId);
+
         return new ResponseEntity<>(departmentList, HttpStatus.OK);
     }
 

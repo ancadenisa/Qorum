@@ -27,7 +27,11 @@ public class CommentDTO {
 
     private ZonedDateTime lastModifiedDate = ZonedDateTime.now();
 
-    public CommentDTO(Long id, String content, Long is_solution, User user, Issue issue, String createdBy, ZonedDateTime createdDate, String lastModifiedBy, ZonedDateTime lastModifiedDate) {
+
+
+    private Long votes;
+
+    public CommentDTO(Long id, String content, Long is_solution, User user, Issue issue, String createdBy, ZonedDateTime createdDate, String lastModifiedBy, ZonedDateTime lastModifiedDate, Long votes) {
         this.id = id;
         this.content = content;
         this.is_solution = is_solution;
@@ -37,11 +41,12 @@ public class CommentDTO {
         this.createdDate = createdDate;
         this.lastModifiedBy = lastModifiedBy;
         this.lastModifiedDate = lastModifiedDate;
+        this.votes  = votes;
     }
 
     public CommentDTO(Comment comment){
         this(comment.getId(), comment.getContent(), comment.getIs_solution(), comment.getUser(), comment.getIssue(), comment.getCreatedBy(),
-            comment.getCreatedDate(), comment.getLastModifiedBy(), comment.getLastModifiedDate());
+            comment.getCreatedDate(), comment.getLastModifiedBy(), comment.getLastModifiedDate(), comment.getVotes());
     }
 
     public String getContent() {
@@ -114,5 +119,13 @@ public class CommentDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Long votes) {
+        this.votes = votes;
     }
 }

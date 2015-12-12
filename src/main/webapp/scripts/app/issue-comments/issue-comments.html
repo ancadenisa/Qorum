@@ -78,59 +78,67 @@
 
         <div class="row" ng-repeat="comment in comments">
             <div class="col-lg-2"></div>
-            <div class="panel  col-lg-8 media" style="background-color: #FFFFCC">
-                <div ng-show="((issue != null &&  loggedUser != null) && ((loggedUser.id == issue.user.id && checkSolution() == -100)  || checkSolution() == comment.id))"
-                    class="pull-left">
-                    <br/>
-                    <a ng-click="markOrUnmarkSolution(comment)">
-                        <span id="solution{{comment.id}}" style=    "font-size:2.5em; color: grey"
-                              class="glyphicon glyphicon-ok-circle"></span>
-                    </a>
-                </div>
-
-                <div class="media-body">
-                    <div ng-show="(issue != null &&  loggedUser != null) &&  (loggedUser.id == comment.user.id)" class="pull-right">
-                        <a ng-click="editCommentIntention(comment)">
-                            <span id="edit{{comment.id}}" style="font-size:1em; color: #0099FF"
-                                  class="glyphicon glyphicon-pencil"></span>
-                        </a>
-                        <a ng-click="deleteCommentIntention(comment)">
-                            <span id="delete{{comment.id}}" style="font-size:1em; color: red"
-                                  class="glyphicon glyphicon-remove-circle"></span>
-                        </a>
-                    </div>
-                    <h4 class="media-heading">
-                        <small>by {{comment.user.login}}, {{comment.createdDate | date:'medium'}}
-                        </small>
+            <div class="panel  col-lg-8" style="background-color: #FFFFCC">
+                <div class="row">
+                    <div class="col-lg-1">
                         <br/>
-                    </h4>
-                    <br>
-                    <!--if in editing state, div will show an input box which will update current comment-->
-                    <p ng-show="onEditComm==false" style="word-wrap: break-word">{{comment.content}}</p>
-                    <div ng-show="onEditComm==true && commentToBeEdited.id == comment.id" class="form-group">
-                        <form>
-                            <input type="text" popover-placement="top" popover-trigger="mouseenter" popover="Apasati Enter sau Esc!" ng-keyup="$event.keyCode == 13 ? editComment(comment) : $event.keyCode == 27 ? cancelEdit() :  null " ng-model="comment.content" class="form-control" style="height:80px; word-wrap: break-word; word-break: break-word;"/>
-                        </form>
+                        <a ng-show="((issue != null &&  loggedUser != null) && ((loggedUser.id == issue.user.id && checkSolution() == -100)  || checkSolution() == comment.id))" ng-click="markOrUnmarkSolution(comment)">
+                            <span id="solution{{comment.id}}" style=    "font-size:2.5em; color: grey"
+                                  class="glyphicon glyphicon-ok-circle"></span>
+                        </a>
                     </div>
-                    <!-- Nested Comment -->
-                    <!--TO DO ANCA reply to comment-->
-                    <!--<hr>-->
-                    <!--<div class="media" style="margin-left:20px">
 
-                        <div class="media-body">
-                            <h4 class="media-heading">
-                                <small>August 25, 2014 at 9:30 PM, by User reply</small>
-                            </h4>
-                            <br>
-                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                            sollicitudin
-                            commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
-                            condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                    <div class="col-lg-10">
+                        <div ng-show="(issue != null &&  loggedUser != null) &&  (loggedUser.id == comment.user.id)" class="pull-right">
+                            <a ng-click="editCommentIntention(comment)">
+                                <span id="edit{{comment.id}}" style="font-size:1em; color: #0099FF"
+                                      class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                            <a ng-click="deleteCommentIntention(comment)">
+                                <span id="delete{{comment.id}}" style="font-size:1em; color: red"
+                                      class="glyphicon glyphicon-remove-circle"></span>
+                            </a>
                         </div>
-                    </div>
-                    --><!-- End Nested Comment -->
-                </div>
+                        <h4 class="media-heading">
+                            <small>by {{comment.user.login}}, {{comment.createdDate | date:'medium'}}
+                            </small>
+                            <br/>
+                        </h4>
+                        <br>
+                        <!--if in editing state, div will show an input box which will update current comment-->
+                        <p ng-show="onEditComm==false" style="word-wrap: break-word">{{comment.content}}</p>
+                        <div ng-show="onEditComm==true && commentToBeEdited.id == comment.id" class="form-group">
+                            <form>
+                                <input type="text" popover-placement="top" popover-trigger="mouseenter" popover="Apasati Enter sau Esc!" ng-keyup="$event.keyCode == 13 ? editComment(comment) : $event.keyCode == 27 ? cancelEdit() :  null " ng-model="comment.content" class="form-control" style="height:80px; word-wrap: break-word; word-break: break-word;"/>
+                            </form>
+                        </div>
+                        <!-- Nested Comment -->
+                        <!--TO DO ANCA reply to comment-->
+                        <!--<hr>-->
+                        <!--<div class="media" style="margin-left:20px">
 
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                    <small>August 25, 2014 at 9:30 PM, by User reply</small>
+                                </h4>
+                                <br>
+                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                sollicitudin
+                                commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
+                                condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                            </div>
+                        </div>
+                        --><!-- End Nested Comment -->
+                    </div>
+                    <div ng-show="((issue != null &&  loggedUser != null && comments != null) && (loggedUser.id != comment.user.id))"
+                         class="col-lg-1">
+                        <br/>
+                        <div  id="increaseButtonComm"><a ng-click="voteUp(comment)"><span class="glyphicon glyphicon-chevron-up"
+                                                            title="+1 Vote Up (This is useful)"></span></a></div>
+                        <div style="color:#737373; padding-left: 2px" id="votesComm" title="Number of user votes">{{comment.votes ==  null  ? 0 : comment.votes}}</div>
+                        <div id="decreaseButtonComm"><a ng-click="voteDown(comment)"><span class="glyphicon glyphicon-chevron-down" title="-1 Vote Down"></span></a></div>
+                    </div>
+                </div>
                 <hr>
 
                 <!-- Comments Form -->

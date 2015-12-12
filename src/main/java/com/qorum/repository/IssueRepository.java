@@ -20,6 +20,9 @@ public interface IssueRepository extends JpaRepository<Issue, Long> {
     @Query("select issue from Issue issue where issue.user.login = ?#{principal.username}")
     List<Issue> findByUserIsCurrentUser();
 
+    @Query("select issue from Issue issue where issue.user.id = :userId")
+    List<Issue> findIssuesByUserAuthor(@Param("userId") Long userId);
+
     @Query("select distinct issue from Issue issue left join fetch issue.tags")
     List<Issue> findAllWithEagerRelationships();
 
