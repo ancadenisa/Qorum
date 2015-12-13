@@ -3,6 +3,7 @@ package com.qorum.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.qorum.domain.Department;
 import com.qorum.domain.Organization;
+import com.qorum.domain.User;
 import com.qorum.repository.DepartmentRepository;
 import com.qorum.repository.OrganizationRepository;
 import com.qorum.service.DepartmentService;
@@ -54,9 +55,33 @@ public class DepartmentResource {
             return ResponseEntity.badRequest().header("Failure", "A new department cannot already have an ID").body(null);
         }
         Department result = departmentRepository.save(department);
+        updateOrganizationUsers(department);
         return ResponseEntity.created(new URI("/api/departments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("department", result.getId().toString()))
             .body(result);
+    }
+
+    private void updateOrganizationUsers(Department department) {
+        Organization organization = organizationRepository.findOneWithEagerRelationships(department.getOrganization().getId());
+        Set<User> usersOnDep = department.getUsers();
+        Set<User> usersOnOrg = organization.getUsers();
+        List<Department> departmentsOnOrg = departmentRepository.getDepartmentsByOrgId(organization.getId());
+        /*//deelete removed users
+        for (User user : usersOnOrg){
+            for (Department department1 : departmentsOnOrg) {
+                if(!department1.getUsers().stream().filter(p -> p.getId().equals(user.getId())).findFirst().equals(Optional.<User>empty())){
+                    break;
+                }
+            }
+            organization.getUsers().remove(user);
+        }*/
+        for(User user : usersOnDep){
+            if(usersOnOrg.stream().filter(p -> p.getId().equals(user.getId())).findFirst().equals(Optional.<User>empty())){
+                organization.getUsers().add(user);
+            }
+        }
+
+        organizationRepository.save(organization);
     }
 
     /**
@@ -72,6 +97,7 @@ public class DepartmentResource {
             return createDepartment(department);
         }
         Department result = departmentRepository.save(department);
+        updateOrganizationUsers(department);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("department", department.getId().toString()))
             .body(result);
