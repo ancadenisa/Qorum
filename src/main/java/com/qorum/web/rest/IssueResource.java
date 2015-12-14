@@ -111,8 +111,10 @@ public class IssueResource {
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(requestBody);
-        List<Tag> tags = mapper.convertValue(node.get("tags"), new TypeReference<List<Tag>>() {});
-        List<Organization> organizations = mapper.convertValue(node.get("organizations"), new TypeReference<List<Organization>>() {});
+        List<Tag> tags = mapper.convertValue(node.get("tags"), new TypeReference<List<Tag>>() {
+        });
+        List<Organization> organizations = mapper.convertValue(node.get("organizations"), new TypeReference<List<Organization>>() {
+        });
 
         Long currentUserId = null;
         try {
@@ -125,25 +127,21 @@ public class IssueResource {
         Page<Issue> page = null;
 
         if (currentUserId == null) {
-            if (organizations != null && organizations.size()>0 && tags != null && tags.size()>0) {
+            if (organizations != null && organizations.size() > 0 && tags != null && tags.size() > 0) {
                 page = issueService.getPublicFilteredByNameAndTagsAndOrganizationsPage(pageable, tags, organizations, issueName);
-            }
-            else if (organizations != null && organizations.size()>0) {
+            } else if (organizations != null && organizations.size() > 0) {
                 page = issueService.getPublicFilteredByNameAndOrganizationsPage(pageable, organizations, issueName);
-            }
-            else if (tags != null && tags.size() > 0) {
+            } else if (tags != null && tags.size() > 0) {
                 page = issueService.getPublicFilteredByNameAndTagsPage(pageable, tags, issueName);
             } else {
                 page = issueService.getPublicFilteredByNamePage(pageable, issueName);
             }
         } else {
-            if (organizations != null && organizations.size()>0 && tags != null && tags.size()>0) {
+            if (organizations != null && organizations.size() > 0 && tags != null && tags.size() > 0) {
                 page = issueService.getFilteredByNameAndTagsAndOrganizationsPage(pageable, tags, organizations, issueName);
-            }
-            else if (organizations != null && organizations.size()>0) {
+            } else if (organizations != null && organizations.size() > 0) {
                 page = issueService.getFilteredByNameAndOrganizationsPage(pageable, organizations, issueName);
-            }
-            else if (tags != null && tags.size() > 0) {
+            } else if (tags != null && tags.size() > 0) {
                 page = issueService.getFilteredByNameAndTagsPage(pageable, tags, issueName);
             } else {
                 page = issueService.getFilteredByNamePage(pageable, issueName);
@@ -237,4 +235,39 @@ public class IssueResource {
         throws URISyntaxException {
         issueService.increaseViews(issueId);
     }
+
+    /**
+     * GET  /issues -> get all the issues.
+     */
+    @RequestMapping(value = "/issues/currentUser",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<IssueDTO>> getForCurrentUser(Pageable pageable)
+        throws URISyntaxException, IOException {
+
+
+        Long currentUserId = null;
+        try {
+            currentUserId = SecurityUtils.getCurrentUserId();
+        } catch (IllegalStateException e) {
+            log.debug("There is no user logged in !");
+        }
+
+        Page<Issue> page = null;
+        List<IssueDTO> issues = null;
+        HttpHeaders headers = null;
+        if (currentUserId != null) {
+            page = issueService.getForCurrentUser(pageable, currentUserId);
+
+            issues = page.getContent().stream()
+                .map(issue -> new IssueDTO(issue))
+                .collect(Collectors.toList());
+
+            headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/issues");
+        }
+
+        return new ResponseEntity<>(issues, headers, HttpStatus.OK);
+    }
+
 }

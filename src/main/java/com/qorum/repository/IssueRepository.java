@@ -76,4 +76,7 @@ public interface IssueRepository extends JpaRepository<Issue, Long> {
     @Query("select distinct issue from Issue issue join issue.departments depts join issue.tags t where t in (:tags) and depts in (:depts) and lower(issue.name) like :issueName and issue.is_public=true")
     Page<Issue> getPublicFilteredByNameAndTagsAndOrganizationsPage(Pageable pageable, @Param("tags") List<Tag> tags, @Param("depts") List<Department> depts, @Param("issueName") String issueName);
 
+    @Query("select distinct issue from Issue issue where issue.user.id=:userId")
+    Page<Issue> getForCurrentUser(Pageable page, @Param("userId") Long userId);
+
 }

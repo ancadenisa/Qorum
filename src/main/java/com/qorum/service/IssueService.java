@@ -42,4 +42,6 @@ public interface IssueService {
     Page<Issue> getPublicFilteredByNameAndTagsAndOrganizationsPage(Pageable pageable, List<Tag> tags, List<Organization> orgs, String issueName);
 
     void increaseViews(Long issueId);
+
+    Page<Issue> getForCurrentUser(Pageable page, Long userId);
 }

@@ -11,6 +11,11 @@ angular.module('qorumApp')
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': { method:'PUT' },
+            'getRecentSolutions' : {
+                url: 'api/public/comments/solutions',
+                method: 'GET',
+                isArray: true
+            }
         });
     });

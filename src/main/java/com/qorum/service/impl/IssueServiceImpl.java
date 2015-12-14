@@ -205,4 +205,9 @@ public class IssueServiceImpl implements IssueService {
     public void increaseViews(Long issueId) {
         issueRepository.increaseViews(issueId);
     }
+
+    @Override
+    public Page<Issue> getForCurrentUser(Pageable pageable, Long userId) {
+        return issueRepository.getForCurrentUser(pageable, userId);
+    }
 }

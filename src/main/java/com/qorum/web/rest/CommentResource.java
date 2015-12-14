@@ -5,6 +5,7 @@ import com.qorum.domain.Comment;
 import com.qorum.domain.Issue;
 import com.qorum.repository.CommentRepository;
 import com.qorum.repository.IssueRepository;
+import com.qorum.security.SecurityUtils;
 import com.qorum.web.rest.dto.CommentDTO;
 import com.qorum.web.rest.util.HeaderUtil;
 import com.qorum.web.rest.util.PaginationUtil;
@@ -157,6 +158,33 @@ public class CommentResource {
         return new ResponseEntity<List<CommentDTO>>(entityListToDto(commentList), HttpStatus.OK);
     }
 
+    /**
+     * GET  /comments -> get all the comments.
+     */
+    @RequestMapping(value = "/public/comments/solutions",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Comment>> getSolutionComments(Pageable pageable)
+        throws URISyntaxException {
+
+        Long currentUserId = null;
+        try {
+            currentUserId = SecurityUtils.getCurrentUserId();
+        } catch (IllegalStateException e) {
+            log.debug("There is no user logged in !");
+        }
+
+        Page<Comment> page = null;
+        if (currentUserId == null) {
+            page = commentRepository.findPublicSolutions(pageable);
+        }
+        else {
+            page = commentRepository.findSolutions(pageable);
+        }
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/public/comments/solutions");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
 
     private List<CommentDTO> entityListToDto(List<Comment> commentList){
         List<CommentDTO> commentDTOList =  new ArrayList<>();

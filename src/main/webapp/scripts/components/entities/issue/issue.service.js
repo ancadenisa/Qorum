@@ -34,6 +34,10 @@ angular.module('qorumApp')
                     data.created_date = DateUtils.convertDateTimeFromServer(data.created_date);
                     return data;
                 }
-            }
+            },
+            'getForCurrentUser': {
+                url : 'api/issues/currentUser',
+                method: 'GET',
+                isArray: true}
         });
     });

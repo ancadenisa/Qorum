@@ -1,12 +1,26 @@
 'use strict';
 
 angular.module('qorumApp')
-    .controller('SettingsController', function ($scope, Principal, Auth, Language, $translate) {
+    .controller('SettingsController', function ($scope, Principal, Auth, Language, $translate, Issue) {
         $scope.success = null;
         $scope.error = null;
         Principal.identity(true).then(function(account) {
             $scope.settingsAccount = account;
         });
+
+        Issue.getForCurrentUser({page: 0, size: 10, sort: 'rating,DESC'},
+            function (result) {
+                $scope.issuesTopRated = result;
+            });
+
+        $scope.timeago = function(date) {
+            if (date != null) {
+                return jQuery.timeago(date);
+            }
+            else {
+                return "Created date not available!";
+            }
+        }
 
         $scope.save = function () {
             Auth.updateAccount($scope.settingsAccount).then(function() {
