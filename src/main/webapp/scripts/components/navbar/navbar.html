@@ -21,7 +21,7 @@
                             <span class="hidden-sm" translate="global.menu.home">Home</span>
                         </a>
                     </li>
-                    <li ui-sref-active="active" ng-switch-when="true" class="dropdown pointer">
+                    <li ui-sref-active="active" ng-hide="true" ng-switch-when="true" class="dropdown pointer">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="">
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
@@ -94,11 +94,11 @@
                                                                                   data-target=".navbar-collapse.in"><span
                                 class="glyphicon glyphicon-plus-sign"></span>
                                 &#xA0;<span translate="global.menu.account.register">Register</span></a></li>
-                            <li ui-sref-active="active"><a ui-sref="org-create-tabs" data-toggle="collapse"
+                            <li ui-sref-active="active" ng-switch-when="true"><a ui-sref="org-create-tabs" data-toggle="collapse"
                                                            data-target=".navbar-collapse.in"><span
                                 class="glyphicon glyphicon-tasks"></span>
                                 &#xA0;Creaza o organizatie noua</a></li>
-                            <li ui-sref-active="active"><a ui-sref="orgs-admin-list" data-toggle="collapse"
+                            <li ui-sref-active="active" ng-switch-when="true"><a ui-sref="orgs-admin-list" data-toggle="collapse"
                                                            data-target=".navbar-collapse.in"><span
                                 class="glyphicon glyphicon-tasks"></span>
                                 &#xA0;Administreaza organizatiile</a></li>
