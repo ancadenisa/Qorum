@@ -90,6 +90,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.GET, "/api/organizations/**").permitAll()
             .antMatchers(HttpMethod.POST, "/api/issues/filtered/**").permitAll()
             .antMatchers(HttpMethod.GET, "/api/public/comments/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/api/comments/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/api/users/**").permitAll()
             .antMatchers("/api/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/audits/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/**").authenticated()
@@ -111,8 +113,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/configuration/ui").permitAll()
             .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/protected/**").authenticated()
-            .antMatchers("/api/comments/byIssue/**").permitAll()
-            .antMatchers("/api/comments/**").authenticated()
+            //.antMatchers("/api/users/get_current_user").permitAll()
             .and()
             .apply(securityConfigurerAdapter());
 

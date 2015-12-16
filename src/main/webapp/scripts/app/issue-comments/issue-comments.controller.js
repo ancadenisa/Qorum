@@ -1,6 +1,6 @@
 'use strict';
 angular.module('qorumApp')
-    .controller('IssueCommentsController',function ($scope, $rootScope, $window, $stateParams, entity, Issue, IssueComments, User, Comment, AlertService) {
+    .controller('IssueCommentsController',function ($scope, $rootScope, $window, $stateParams, entity, Issue, IssueComments, User, Comment, AlertService,  Auth, Principal, ENV) {
         entity.$promise.then(function(result){
             $scope.issue = result;
             loadComments(result.id);
@@ -41,6 +41,7 @@ angular.module('qorumApp')
                 $scope.newComment.is_solution = 0;
                 $scope.newComment.user =  $scope.loggedUser;
                 $scope.newComment.issue = entity;
+                $scope.newComment.votes = 0;
                 Comment.save($scope.newComment, function () {
                     loadComments($scope.issue.id);
                 });
@@ -164,6 +165,7 @@ angular.module('qorumApp')
             }
             Comment.update(comment);
         }
+        $scope.isAuthenticated = Principal.isAuthenticated;
 
 
     }
