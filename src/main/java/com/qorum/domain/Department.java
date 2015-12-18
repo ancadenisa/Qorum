@@ -25,7 +25,7 @@ public class Department implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @ManyToMany(fetch = FetchType.EAGER)    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "department_user",
                joinColumns = @JoinColumn(name="departments_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="ID"))
