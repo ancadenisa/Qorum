@@ -19,6 +19,7 @@
     <include file="classpath:config/liquibase/changelog/20151209144924_modify_isssue_comment.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/201512091449245_modify_isssue_comment.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/201512121_add_votes_column_on_comment.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20151221234_add_vote_table_link_between_user_and_comment.xml" relativeToChangelogFile="false"/>
 
 
     <!-- JHipster will add liquibase changelogs here -->

@@ -67,7 +67,17 @@ angular.module('qorumApp')
             }
         }
 
+        function checkUserEligibilityForIssue(){
+            angular.forEach($scope.issue.users, function(user, value){
+                if(user.id == $scope.loggedUsers.id){
+                    return false;
+                }
+            });
+            return true;
+        }
+
         $("#increaseButton").click(function () {
+            if(checkUserEligibilityForIssue() ==  true){
             if($scope.issue.user.id == $scope.loggedUser.id){
                 $scope.alerts.push({type:"danger", msg: 'Nu puteti creste rating-ul propriei dvs. postari!'});
                 $scope.$apply()
@@ -75,9 +85,13 @@ angular.module('qorumApp')
                 var newValue = 1 + parseInt($("#rating").text());
                 $("#rating").text(newValue);
                 updateRatingForIssue(newValue);
+            }}else{
+                $scope.alerts.push({type:"danger", msg: 'Ati acordat deja  rating  acestei postari'});
             }
         });
         $("#decreaseButton").click(function () {
+            checkUserEligibilityForIssue();
+            if(checkUserEligibilityForIssue() ==  true){
             if($scope.issue.user.id == $scope.loggedUser.id){
                 $scope.alerts.push({type:"danger", msg: 'Nu puteti descreste rating-ul propriei dvs. postari!'});
                 $scope.$apply()
@@ -85,6 +99,8 @@ angular.module('qorumApp')
                 var newValue = parseInt($("#rating").text()) - 1;
                 $("#rating").text(newValue);
                 updateRatingForIssue(newValue);
+            }}else{
+                $scope.alerts.push({type:"danger", msg: 'Ati acordat deja rating acestei postari'});
             }
         });
 

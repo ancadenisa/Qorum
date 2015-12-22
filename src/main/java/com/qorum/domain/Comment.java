@@ -36,6 +36,13 @@ public class Comment extends AbstractAuditingEntity implements Serializable{
     @ManyToOne
     private Issue issue;
 
+
+    @ManyToMany(fetch = FetchType.EAGER)    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "vote_user_comment",
+            joinColumns = @JoinColumn(name="comment_id", referencedColumnName="ID"),
+            inverseJoinColumns = @JoinColumn(name="user_id", referencedColumnName="ID"))
+    private Set<User> users = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -82,6 +89,14 @@ public class Comment extends AbstractAuditingEntity implements Serializable{
 
     public void setVotes(Long votes) {
         this.votes = votes;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     @Override

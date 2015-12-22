@@ -73,6 +73,13 @@ public class Issue implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Comment> commentSet = new HashSet<>();
 
+
+    @ManyToMany(fetch = FetchType.EAGER)    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "vote_user_issue",
+            joinColumns = @JoinColumn(name="issue_id", referencedColumnName="ID"),
+            inverseJoinColumns = @JoinColumn(name="user_id", referencedColumnName="ID"))
+    private Set<User> users = new HashSet<>();
+
     @Transient
     private Long commentsNo;
 
@@ -186,6 +193,14 @@ public class Issue implements Serializable {
 
     public void setHasSolution(Boolean hasSolution) {
         this.hasSolution = hasSolution;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     @Override

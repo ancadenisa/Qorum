@@ -79,6 +79,26 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Authority> authorities = new HashSet<>();
 
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "vote_user_comment",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "comment_id", referencedColumnName = "id")})
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Comment> votedComments = new HashSet<>();
+
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "vote_user_issue",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "issue_id", referencedColumnName = "id")})
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Issue> votedIssues= new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -173,6 +193,21 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public Set<Comment> getVotedComments() {
+        return votedComments;
+    }
+
+    public void setVotedComments(Set<Comment> votedComments) {
+        this.votedComments = votedComments;
+    }
+    public Set<Issue> getVotedIssues() {
+        return votedIssues;
+    }
+
+    public void setVotedIssues(Set<Issue> votedIssues) {
+        this.votedIssues = votedIssues;
     }
 
     @Override
