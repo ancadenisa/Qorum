@@ -26,7 +26,7 @@ public interface IssueRepository extends JpaRepository<Issue, Long> {
     @Query("select distinct issue from Issue issue left join fetch issue.tags")
     List<Issue> findAllWithEagerRelationships();
 
-    @Query("select issue from Issue issue left join fetch issue.tags left join fetch issue.departments where issue.id =:id")
+    @Query("select issue from Issue issue left join fetch issue.tags left join fetch issue.departments left join fetch issue.commentSet left join fetch issue.users where issue.id =:id")
     Issue findOneWithEagerRelationships(@Param("id") Long id);
 
     @Query("select distinct issue from Issue issue, Department department join fetch issue.departments department where department.organization.id = :organizationId")

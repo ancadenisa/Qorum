@@ -1,9 +1,12 @@
 package com.qorum.web.rest.dto;
 
 import com.qorum.domain.*;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Anca on 27-Nov-15.
@@ -27,11 +30,12 @@ public class CommentDTO {
 
     private ZonedDateTime lastModifiedDate = ZonedDateTime.now();
 
+    private Set<User> users;
 
 
     private Long votes;
 
-    public CommentDTO(Long id, String content, Long is_solution, User user, Issue issue, String createdBy, ZonedDateTime createdDate, String lastModifiedBy, ZonedDateTime lastModifiedDate, Long votes) {
+    public CommentDTO(Long id, String content, Long is_solution, User user, Issue issue, String createdBy, ZonedDateTime createdDate, String lastModifiedBy, ZonedDateTime lastModifiedDate, Long votes, Set<User> users) {
         this.id = id;
         this.content = content;
         this.is_solution = is_solution;
@@ -42,11 +46,12 @@ public class CommentDTO {
         this.lastModifiedBy = lastModifiedBy;
         this.lastModifiedDate = lastModifiedDate;
         this.votes  = votes;
+        this.users = users;
     }
 
     public CommentDTO(Comment comment){
         this(comment.getId(), comment.getContent(), comment.getIs_solution(), comment.getUser(), comment.getIssue(), comment.getCreatedBy(),
-            comment.getCreatedDate(), comment.getLastModifiedBy(), comment.getLastModifiedDate(), comment.getVotes());
+            comment.getCreatedDate(), comment.getLastModifiedBy(), comment.getLastModifiedDate(), comment.getVotes(), comment.getUsers());
     }
 
     public String getContent() {
@@ -127,5 +132,13 @@ public class CommentDTO {
 
     public void setVotes(Long votes) {
         this.votes = votes;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

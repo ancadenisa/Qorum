@@ -75,7 +75,7 @@ public class CommentResource {
         }
 
         if(comment.getIs_solution() != 0L) {
-            Issue issueBelongingToComment = comment.getIssue();
+            Issue issueBelongingToComment = issueRepository.findOneWithEagerRelationships(comment.getIssue().getId());
             issueBelongingToComment.setHasSolution(true);
             issueRepository.save(issueBelongingToComment);
         }
